@@ -1,3 +1,5 @@
+source('utilities.R')
+
 #' From a vector of numeric samples, create data frame of bin probabilities.
 #'
 #' @param x numeric vector of samples
@@ -277,19 +279,6 @@ trajectories_to_seasonal_binned_distributions <- function(
 
 
 
-############################
-### UTILITIES
-#####################
-
-rowMax <- function(trajectories){
-  retarr <- apply(trajectories,1,max)
-  return(retarr)
-}
-
-rowMaxWeek <- function(trajectories){
-  retarr <- apply(trajectories,1,which.max)
-  return(retarr)
-}
 
 
     
