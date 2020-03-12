@@ -60,7 +60,99 @@ categorical_samples_to_binned_distribution <- function(
   )
 }
 
+#' Convert a matrix of sampled trajectories to binned distributions for
+#' short-term and seasonal targets.
+#' 
+#' @param trajectories nsim by weeks in season matrix of simulated trajectories
+#' @param h_max integer, largest horizon to predict for short term targets
+#' @param bins numeric vector of bin start and end points.  For example:
+#'    c(seq(from = 0.0, to = 25.0, by = 0.1), 100.0)
+#' @param round_digits integer; if provided,
+#'    round(trajectories, digits = round_digits) is called before binning.
+#' 
+#' @return data frame with columns:
+#'    target: like “1 wk ahead”, “2 wk ahead”, etc.
+#'    type: populated with "Bin"
+#'    bin_start_incl: lower endpoints of bins
+#'    bin_end_notincl: upper endpoints of bins
+#'    value: proportion of trajectories falling in bin
+#' 
+#' @export
+trajectories_to_short_term_and_seasonal_binned_distributions <- function(
+  trajectories,
+  h_max,
+  bins,
+  season_start,
+  season_end,
+  current_time,
+  nsim,
+  round_digits
+)
+{
+  
+  short_term_results <- purrr::map_dfr(
+    seq(current_time+1,h_max),
+    function(h) {
+      numeric_samples_to_binned_distribution(
+        x = trajectories[, h],
+        bins = bins) %>%
+        mutate(
+          target = paste0(h-current_time, " wk ahead"),
+          type = "Bin"
+        )
+    }
+  )
+  
+  season_peak_percentage <- purrr::map_dfr(
+    1,
+    function(traj_idx) {
+      numeric_samples_to_binned_distribution(
+        x = rowMax(trajectories),
+        bins = bins) %>%
+        mutate(
+          target = "Peak Percentage",
+          type = "Bin"
+        )
+    }
+  )
+  
+  season_peak_week <- purrr::map_dfr(
+    1,
+    function(traj_idx) {
+      numeric_samples_to_binned_distribution(
+        x = rowMaxWeek(trajectories),
+        bins = bins) %>%
+        mutate(
+          target = "Peak Week",
+          type = "Bin"
+        )
+    }
+  )
+  
+  submission_df <- rbind(short_term_results,season_peak_week,season_peak_percentage)
+  
+  return (submission_df)
+  
+}
 
+
+### unit test
+
+unit_test_results <- trajectories_to_short_term_and_seasonal_binned_distributions(trajectories = matrix(rep(1:20,100),nrow=100,byrow = T),
+                                                             h_max = 6,
+                                                             bins = c(seq(0,13,by=.1),100),
+                                                             season_start = 1,
+                                                             season_end= 20,
+                                                             current_time = 10,
+                                                             nsim=100)
+                                                            
+
+
+
+
+#############################
+#### DEPRECATED
+####################
 
 #' Convert a matrix of sampled trajectories to binned distributions for
 #' short-term targets.
@@ -181,4 +273,23 @@ trajectories_to_seasonal_binned_distributions <- function(
   
   return(results)
 }
+
+
+
+
+############################
+### UTILITIES
+#####################
+
+rowMax <- function(trajectories){
+  retarr <- apply(trajectories,1,max)
+  return(retarr)
+}
+
+rowMaxWeek <- function(trajectories){
+  retarr <- apply(trajectories,1,which.max)
+  return(retarr)
+}
+
+
     
