@@ -91,7 +91,7 @@ trajectories_to_short_term_and_seasonal_binned_distributions <- function(
 {
   
   short_term_results <- purrr::map_dfr(
-    seq(current_time+1,h_max),
+    seq(current_time+1,current_time+h_max),
     function(h) {
       numeric_samples_to_binned_distribution(
         x = trajectories[, h],
@@ -121,7 +121,7 @@ trajectories_to_short_term_and_seasonal_binned_distributions <- function(
     function(traj_idx) {
       numeric_samples_to_binned_distribution(
         x = rowMaxWeek(trajectories),
-        bins = bins) %>%
+        bins = seq(season_start,season_end)) %>%
         mutate(
           target = "Peak Week",
           type = "Bin"
