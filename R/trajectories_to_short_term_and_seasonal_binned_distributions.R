@@ -28,35 +28,26 @@ function(
   )
   
   
-  season_peak_percentage <- purrr::map_dfr(
-    1,
-    function(traj_idx) {
-      numeric_samples_to_binned_distribution(
-        x = rowMax(trajectories),
-        bins = bins) %>%
-        mutate(
-          target = "Peak Percentage",
-          type = "Bin"
-        )
-    }
-  )
-  season_peak_week <- purrr::map_dfr(
-    1,
-    function(traj_idx) {
-      numeric_samples_to_binned_distribution(
-        x = rowMaxWeek(trajectories),
-        bins = seq(1,length(date_seq))) %>%
-        mutate(
-          target = "Peak Week",
-          type = "Bin"
-        )
-    }
-  )
+  season_peak_percentage <- numeric_samples_to_binned_distribution(
+      x = rowMax(trajectories),
+      bins = bins) %>%
+    mutate(
+      target = "Peak Percentage",
+      type = "Bin"
+    )
+  
+  season_peak_week <- numeric_samples_to_binned_distribution(
+      x = rowMaxWeek(trajectories),
+      bins = seq(1,length(date_seq))) %>%
+    mutate(
+      target = "Peak Week",
+      type = "Bin"
+    )
+  
   season_peak_week$bin_start_incl <- date_seq[1:(length(date_seq)-1)]
   season_peak_week$bin_end_notincl <- date_seq[2:(length(date_seq))]
   submission_df <- rbind(short_term_results,season_peak_week,season_peak_percentage)
   submission_df$forecast_week <- current_time
   
-  return (submission_df)
-  
+  return(submission_df)
 }
