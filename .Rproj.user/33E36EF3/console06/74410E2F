@@ -29,3 +29,181 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 ]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git add -A
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git commt [Ki[K[Kit -m "package build and  example"
+[master (root-commit) c806cab] package build and example
+ 85 files changed, 1534 insertions(+)
+ create mode 100644 .Rbuildignore
+ create mode 100644 .Rproj.user/33E36EF3/console06/74410E2F
+ create mode 100644 .Rproj.user/33E36EF3/console06/74410E2F.env
+ create mode 100644 .Rproj.user/33E36EF3/console06/INDEX001
+ create mode 100644 .Rproj.user/33E36EF3/cpp-definition-cache
+ create mode 100644 .Rproj.user/33E36EF3/pcs/files-pane.pper
+ create mode 100644 .Rproj.user/33E36EF3/pcs/source-pane.pper
+ create mode 100644 .Rproj.user/33E36EF3/pcs/windowlayoutstate.pper
+ create mode 100644 .Rproj.user/33E36EF3/pcs/workbench-pane.pper
+ create mode 100644 .Rproj.user/33E36EF3/persistent-state
+ create mode 100644 .Rproj.user/33E36EF3/rmd-outputs
+ create mode 100644 .Rproj.user/33E36EF3/saved_source_markers
+ create mode 100644 .Rproj.user/33E36EF3/sources/prop/130A33BF
+ create mode 100644 .Rproj.user/33E36EF3/sources/prop/1F402A71
+ create mode 100644 .Rproj.user/33E36EF3/sources/prop/68CFC00E
+ create mode 100644 .Rproj.user/33E36EF3/sources/prop/709E16C6
+ create mode 100644 .Rproj.user/33E36EF3/sources/prop/INDEX
+ create mode 100644 .Rproj.user/33E36EF3/sources/s-D8C4D429/215AB8E4
+ create mode 100644 .Rproj.user/33E36EF3/sources/s-D8C4D429/215AB8E4-contents
+ create mode 100644 .Rproj.user/33E36EF3/sources/s-D8C4D429/3D671088-contents
+ create mode 100644 .Rproj.user/33E36EF3/sources/s-D8C4D429/9EBF672F-contents
+ create mode 100644 .Rproj.user/33E36EF3/sources/s-D8C4D429/CBA3AE57-contents
+ create mode 100644 .Rproj.user/33E36EF3/sources/s-D8C4D429/E504F78C
+ create mode 100644 .Rproj.user/33E36EF3/sources/s-D8C4D429/E504F78C-contents
+ create mode 100644 .Rproj.user/33E36EF3/sources/s-D8C4D429/lock_file
+ create mode 100644 .Rproj.user/shared/notebooks/41B56354-sarimaTD_example/1/33E36EF3D8C4D429/chunks.json
+ create mode 100644 .Rproj.user/shared/notebooks/41B56354-sarimaTD_example/1/s/chunks.json
+ create mode 100644 .Rproj.user/shared/notebooks/85180FF8-sarimaTD_example/1/33E36EF3D8C4D429/chunks.json
+ create mode 100644 .Rproj.user/shared/notebooks/patch-chunk-names
+ create mode 100644 .Rproj.user/shared/notebooks/paths
+ create mode 100644 DESCRIPTION
+ create mode 100644 NAMESPACE
+ create mode 100644 R/R/data_utils.R
+ create mode 100644 R/R/trajectories-to-binned-distributions.R
+ create mode 100644 R/R/utilities.R
+ create mode 100644 R/cdcForecastUtils-internal.R
+ create mode 100644 R/date_start_and_end_to_date_seq.R
+ create mode 100644 R/download_and_preprocess_flu_data.R
+ create mode 100644 R/download_and_preprocess_hosp_data.R
+ create mode 100644 R/download_and_preprocess_state_flu_data.R
+ create mode 100644 R/fetch_delphi_data_multi_issue.R
+ create mode 100644 R/get_current_time_in_date_seq.R
+ create mode 100644 R/get_time_from_start_of_season.R
+ create mode 100644 R/get_time_left_in_season.R
+ create mode 100644 R/numeric_samples_to_binned_distribution.R
+ create mode 100644 R/rowMax.R
+ create mode 100644 R/rowMaxWeek.R
+ create mode 100644 R/trajectories_to_short_term_and_seasonal_binned_distributions.R
+ create mode 100644 R/trajectories_to_short_term_binned_distributions.R
+ create mode 100644 Read-and-delete-me
+ create mode 100644 cdcForecastUtils.Rproj
+ create mode 100644 data/back_to_dates.rda
+ create mode 100644 data/bins.rda
+ create mode 100644 data/current_date.rda
+ create mode 100644 data/current_date_in_cdc_format.rda
+ create mode 100644 data/current_time.rda
+ create mode 100644 data/date_end.rda
+ create mode 100644 data/date_seq.rda
+ create mode 100644 data/date_sequence.rda
+ create mode 100644 data/date_start.rda
+ create mode 100644 data/flu_data.rda
+ create mode 100644 data/h_max.rda
+ create mode 100644 data/idx_of_current_time.rda
+ create mode 100644 data/ma_data.rda
+ create mode 100644 data/nsim.rda
+ create mode 100644 data/preds.rda
+ create mode 100644 data/results.rda
+ create mode 100644 data/retarr.rda
+ create mode 100644 data/sarimaFit.rda
+ create mode 100644 data/season_end.rda
+ create mode 100644 data/season_peak_percentage.rda
+ create mode 100644 data/season_peak_week.rda
+ create mode 100644 data/season_start.rda
+ create mode 100644 data/short_term_results.rda
+ create mode 100644 data/submission_df.rda
+ create mode 100644 data/time_from_start_of_season.rda
+ create mode 100644 data/time_left_in_season.rda
+ create mode 100644 data/trajectories.rda
+ create mode 100644 data/trajectory_matrix.rda
+ create mode 100644 data/unit_test_results.rda
+ create mode 100644 data/week_end.rda
+ create mode 100644 data/week_start.rda
+ create mode 100644 data/year_end.rda
+ create mode 100644 data/year_start.rda
+ create mode 100644 vignettes/sarimaTD_example.Rmd
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git push origin as[K[Kmaster
+To https://github.com/reichlab/cdcForecastUtils.git
+ [31m! [rejected]       [m master -> master (fetch first)
+[31merror: failed to push some refs to 'https://github.com/reichlab/cdcForecastUtils.git'
+[m[33mhint: Updates were rejected because the remote contains work that you do[m
+[33mhint: not have locally. This is usually caused by another repository pushing[m
+[33mhint: to the same ref. You may want to first integrate the remote changes[m
+[33mhint: (e.g., 'git pull ...') before pushing again.[m
+[33mhint: See the 'Note about fast-forwards' in 'git push --help' for details.[m
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git pull
+warning: no common commits
+remote: Enumerating objects: 29, done.[K
+remote: Counting objects:   3% (1/29)[Kremote: Counting objects:   6% (2/29)[Kremote: Counting objects:  10% (3/29)[Kremote: Counting objects:  13% (4/29)[Kremote: Counting objects:  17% (5/29)[Kremote: Counting objects:  20% (6/29)[Kremote: Counting objects:  24% (7/29)[Kremote: Counting objects:  27% (8/29)[Kremote: Counting objects:  31% (9/29)[Kremote: Counting objects:  34% (10/29)[Kremote: Counting objects:  37% (11/29)[Kremote: Counting objects:  41% (12/29)[Kremote: Counting objects:  44% (13/29)[Kremote: Counting objects:  48% (14/29)[Kremote: Counting objects:  51% (15/29)[Kremote: Counting objects:  55% (16/29)[Kremote: Counting objects:  58% (17/29)[Kremote: Counting objects:  62% (18/29)[Kremote: Counting objects:  65% (19/29)[Kremote: Counting objects:  68% (20/29)[Kremote: Counting objects:  72% (21/29)[Kremote: Counting objects:  75% (22/29)[Kremote: Counting objects:  79% (23/29)[Kremote: Counting objects:  82% (24/29)[Kremote: Counting objects:  86% (25/29)[Kremote: Counting objects:  89% (26/29)[Kremote: Counting objects:  93% (27/29)[Kremote: Counting objects:  96% (28/29)[Kremote: Counting objects: 100% (29/29)[Kremote: Counting objects: 100% (29/29), done.[K
+remote: Compressing objects:   4% (1/22)[Kremote: Compressing objects:   9% (2/22)[Kremote: Compressing objects:  13% (3/22)[Kremote: Compressing objects:  18% (4/22)[Kremote: Compressing objects:  22% (5/22)[Kremote: Compressing objects:  27% (6/22)[Kremote: Compressing objects:  31% (7/22)[Kremote: Compressing objects:  36% (8/22)[Kremote: Compressing objects:  40% (9/22)[Kremote: Compressing objects:  45% (10/22)[Kremote: Compressing objects:  50% (11/22)[Kremote: Compressing objects:  54% (12/22)[Kremote: Compressing objects:  59% (13/22)[Kremote: Compressing objects:  63% (14/22)[Kremote: Compressing objects:  68% (15/22)[Kremote: Compressing objects:  72% (16/22)[Kremote: Compressing objects:  77% (17/22)[Kremote: Compressing objects:  81% (18/22)[Kremote: Compressing objects:  86% (19/22)[Kremote: Compressing objects:  90% (20/22)[Kremote: Compressing objects:  95% (21/22)[Kremote: Compressing objects: 100% (22/22)[Kremote: Compressing objects: 100% (22/22), done.[K
+remote: Total 29 (delta 6), reused 28 (delta 5), pack-reused 0[K
+Unpacking objects:   3% (1/29)   Unpacking objects:   6% (2/29)   Unpacking objects:  10% (3/29)   Unpacking objects:  13% (4/29)   Unpacking objects:  17% (5/29)   Unpacking objects:  20% (6/29)   Unpacking objects:  24% (7/29)   Unpacking objects:  27% (8/29)   Unpacking objects:  31% (9/29)   Unpacking objects:  34% (10/29)   Unpacking objects:  37% (11/29)   Unpacking objects:  41% (12/29)   Unpacking objects:  44% (13/29)   Unpacking objects:  48% (14/29)   Unpacking objects:  51% (15/29)   Unpacking objects:  55% (16/29)   Unpacking objects:  58% (17/29)   Unpacking objects:  62% (18/29)   Unpacking objects:  65% (19/29)   Unpacking objects:  68% (20/29)   Unpacking objects:  72% (21/29)   Unpacking objects:  75% (22/29)   Unpacking objects:  79% (23/29)   Unpacking objects:  82% (24/29)   Unpacking objects:  86% (25/29)   Unpacking objects:  89% (26/29)   Unpacking objects:  93% (27/29)   Unpacking objects:  96% (28/29)   Unpacking objects: 100% (29/29)   Unpacking objects: 100% (29/29), done.
+From https://github.com/reichlab/cdcForecastUtils
+ * [new branch]      master     -> origin/master
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> master
+
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git pullsh origin master
+To https://github.com/reichlab/cdcForecastUtils.git
+ [31m! [rejected]       [m master -> master (non-fast-forward)
+[31merror: failed to push some refs to 'https://github.com/reichlab/cdcForecastUtils.git'
+[m[33mhint: Updates were rejected because the tip of your current branch is behind[m
+[33mhint: its remote counterpart. Integrate the remote changes (e.g.[m
+[33mhint: 'git pull ...') before pushing again.[m
+[33mhint: See the 'Note about fast-forwards' in 'git push --help' for details.[m
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git push origin masterll[K
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> master
+
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git pull origin master
+From https://github.com/reichlab/cdcForecastUtils
+ * branch            master     -> FETCH_HEAD
+fatal: refusing to merge unrelated histories
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git pull origin master --allow-un related-histories
+From https://github.com/reichlab/cdcForecastUtils
+ * branch            master     -> FETCH_HEAD
+hint: Waiting for your editor to close the file... [?2004h[KMerge made by the 'recursive' strategy.
+ .gitignore                               |   5 [32m+[m
+ R/trajectories-to-binned-distributions.R | 289 [32m++++++++++++++++++++++++++++++++++++++++[m
+ utilities.R                              |  46 [32m+++++++[m
+ 3 files changed, 340 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 R/trajectories-to-binned-distributions.R
+ create mode 100644 utilities.R
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git pull origin master --allow-unrrelated-histories[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ksh origin master
+Enumerating objects: 105, done.
+Counting objects:   0% (1/105)   Counting objects:   1% (2/105)   Counting objects:   2% (3/105)   Counting objects:   3% (4/105)   Counting objects:   4% (5/105)   Counting objects:   5% (6/105)   Counting objects:   6% (7/105)   Counting objects:   7% (8/105)   Counting objects:   8% (9/105)   Counting objects:   9% (10/105)   Counting objects:  10% (11/105)   Counting objects:  11% (12/105)   Counting objects:  12% (13/105)   Counting objects:  13% (14/105)   Counting objects:  14% (15/105)   Counting objects:  15% (16/105)   Counting objects:  16% (17/105)   Counting objects:  17% (18/105)   Counting objects:  18% (19/105)   Counting objects:  19% (20/105)   Counting objects:  20% (21/105)   Counting objects:  21% (23/105)   Counting objects:  22% (24/105)   Counting objects:  23% (25/105)   Counting objects:  24% (26/105)   Counting objects:  25% (27/105)   Counting objects:  26% (28/105)   Counting objects:  27% (29/105)   Counting objects:  28% (30/105)   Counting objects:  29% (31/105)   Counting objects:  30% (32/105)   Counting objects:  31% (33/105)   Counting objects:  32% (34/105)   Counting objects:  33% (35/105)   Counting objects:  34% (36/105)   Counting objects:  35% (37/105)   Counting objects:  36% (38/105)   Counting objects:  37% (39/105)   Counting objects:  38% (40/105)   Counting objects:  39% (41/105)   Counting objects:  40% (42/105)   Counting objects:  41% (44/105)   Counting objects:  42% (45/105)   Counting objects:  43% (46/105)   Counting objects:  44% (47/105)   Counting objects:  45% (48/105)   Counting objects:  46% (49/105)   Counting objects:  47% (50/105)   Counting objects:  48% (51/105)   Counting objects:  49% (52/105)   Counting objects:  50% (53/105)   Counting objects:  51% (54/105)   Counting objects:  52% (55/105)   Counting objects:  53% (56/105)   Counting objects:  54% (57/105)   Counting objects:  55% (58/105)   Counting objects:  56% (59/105)   Counting objects:  57% (60/105)   Counting objects:  58% (61/105)   Counting objects:  59% (62/105)   Counting objects:  60% (63/105)   Counting objects:  61% (65/105)   Counting objects:  62% (66/105)   Counting objects:  63% (67/105)   Counting objects:  64% (68/105)   Counting objects:  65% (69/105)   Counting objects:  66% (70/105)   Counting objects:  67% (71/105)   Counting objects:  68% (72/105)   Counting objects:  69% (73/105)   Counting objects:  70% (74/105)   Counting objects:  71% (75/105)   Counting objects:  72% (76/105)   Counting objects:  73% (77/105)   Counting objects:  74% (78/105)   Counting objects:  75% (79/105)   Counting objects:  76% (80/105)   Counting objects:  77% (81/105)   Counting objects:  78% (82/105)   Counting objects:  79% (83/105)   Counting objects:  80% (84/105)   Counting objects:  81% (86/105)   Counting objects:  82% (87/105)   Counting objects:  83% (88/105)   Counting objects:  84% (89/105)   Counting objects:  85% (90/105)   Counting objects:  86% (91/105)   Counting objects:  87% (92/105)   Counting objects:  88% (93/105)   Counting objects:  89% (94/105)   Counting objects:  90% (95/105)   Counting objects:  91% (96/105)   Counting objects:  92% (97/105)   Counting objects:  93% (98/105)   Counting objects:  94% (99/105)   Counting objects:  95% (100/105)   Counting objects:  96% (101/105)   Counting objects:  97% (102/105)   Counting objects:  98% (103/105)   Counting objects:  99% (104/105)   Counting objects: 100% (105/105)   Counting objects: 100% (105/105), done.
+Delta compression using up to 4 threads
+Compressing objects:   1% (1/88)   Compressing objects:   2% (2/88)   Compressing objects:   3% (3/88)   Compressing objects:   4% (4/88)   Compressing objects:   5% (5/88)   Compressing objects:   6% (6/88)   Compressing objects:   7% (7/88)   Compressing objects:   9% (8/88)   Compressing objects:  10% (9/88)   Compressing objects:  11% (10/88)   Compressing objects:  12% (11/88)   Compressing objects:  13% (12/88)   Compressing objects:  14% (13/88)   Compressing objects:  15% (14/88)   Compressing objects:  17% (15/88)   Compressing objects:  18% (16/88)   Compressing objects:  19% (17/88)   Compressing objects:  20% (18/88)   Compressing objects:  21% (19/88)   Compressing objects:  22% (20/88)   Compressing objects:  23% (21/88)   Compressing objects:  25% (22/88)   Compressing objects:  26% (23/88)   Compressing objects:  27% (24/88)   Compressing objects:  28% (25/88)   Compressing objects:  29% (26/88)   Compressing objects:  30% (27/88)   Compressing objects:  31% (28/88)   Compressing objects:  32% (29/88)   Compressing objects:  34% (30/88)   Compressing objects:  35% (31/88)   Compressing objects:  36% (32/88)   Compressing objects:  37% (33/88)   Compressing objects:  38% (34/88)   Compressing objects:  39% (35/88)   Compressing objects:  40% (36/88)   Compressing objects:  42% (37/88)   Compressing objects:  43% (38/88)   Compressing objects:  44% (39/88)   Compressing objects:  45% (40/88)   Compressing objects:  46% (41/88)   Compressing objects:  47% (42/88)   Compressing objects:  48% (43/88)   Compressing objects:  50% (44/88)   Compressing objects:  51% (45/88)   Compressing objects:  52% (46/88)   Compressing objects:  53% (47/88)   Compressing objects:  54% (48/88)   Compressing objects:  55% (49/88)   Compressing objects:  56% (50/88)   Compressing objects:  57% (51/88)   Compressing objects:  59% (52/88)   Compressing objects:  60% (53/88)   Compressing objects:  61% (54/88)   Compressing objects:  62% (55/88)   Compressing objects:  63% (56/88)   Compressing objects:  64% (57/88)   Compressing objects:  65% (58/88)   Compressing objects:  67% (59/88)   Compressing objects:  68% (60/88)   Compressing objects:  69% (61/88)   Compressing objects:  70% (62/88)   Compressing objects:  71% (63/88)   Compressing objects:  72% (64/88)   Compressing objects:  73% (65/88)   Compressing objects:  75% (66/88)   Compressing objects:  76% (67/88)   Compressing objects:  77% (68/88)   Compressing objects:  78% (69/88)   Compressing objects:  79% (70/88)   Compressing objects:  80% (71/88)   Compressing objects:  81% (72/88)   Compressing objects:  82% (73/88)   Compressing objects:  84% (74/88)   Compressing objects:  85% (75/88)   Compressing objects:  86% (76/88)   Compressing objects:  87% (77/88)   Compressing objects:  88% (78/88)   Compressing objects:  89% (79/88)   Compressing objects:  90% (80/88)   Compressing objects:  92% (81/88)   Compressing objects:  93% (82/88)   Compressing objects:  94% (83/88)   Compressing objects:  95% (84/88)   Compressing objects:  96% (85/88)   Compressing objects:  97% (86/88)   Compressing objects:  98% (87/88)   Compressing objects: 100% (88/88)   Compressing objects: 100% (88/88), done.
+Writing objects:   0% (1/103)   Writing objects:   1% (2/103)   Writing objects:   2% (3/103)   Writing objects:   3% (4/103)   Writing objects:   4% (5/103)   Writing objects:   5% (6/103)   Writing objects:   6% (7/103)   Writing objects:   7% (8/103)   Writing objects:   8% (9/103)   Writing objects:   9% (10/103)   Writing objects:  10% (11/103)   Writing objects:  11% (12/103)   Writing objects:  12% (13/103)   Writing objects:  13% (14/103)   Writing objects:  14% (15/103)   Writing objects:  15% (16/103)   Writing objects:  16% (17/103)   Writing objects:  17% (18/103)   Writing objects:  18% (19/103)   Writing objects:  19% (20/103)   Writing objects:  20% (21/103)   Writing objects:  21% (22/103)   Writing objects:  22% (23/103)   Writing objects:  23% (24/103)   Writing objects:  24% (25/103)   Writing objects:  25% (26/103)   Writing objects:  26% (27/103)   Writing objects:  27% (28/103)   Writing objects:  28% (29/103)   Writing objects:  29% (30/103)   Writing objects:  30% (31/103)   Writing objects:  31% (32/103)   Writing objects:  32% (33/103)   Writing objects:  33% (34/103)   Writing objects:  34% (36/103)   Writing objects:  35% (37/103)   Writing objects:  36% (38/103)   Writing objects:  37% (39/103)   Writing objects:  38% (40/103)   Writing objects:  39% (41/103)   Writing objects:  40% (42/103)   Writing objects:  41% (43/103)   Writing objects:  42% (44/103)   Writing objects:  43% (45/103)   Writing objects:  44% (46/103)   Writing objects:  45% (47/103)   Writing objects:  46% (48/103)   Writing objects:  47% (49/103)   Writing objects:  48% (50/103)   Writing objects:  49% (51/103)   Writing objects:  50% (52/103)   Writing objects:  51% (53/103)   Writing objects:  52% (54/103)   Writing objects:  53% (55/103)   Writing objects:  54% (56/103)   Writing objects:  55% (57/103)   Writing objects:  56% (58/103)   Writing objects:  57% (59/103)   Writing objects:  58% (60/103)   Writing objects:  59% (61/103)   Writing objects:  60% (62/103)   Writing objects:  61% (63/103)   Writing objects:  62% (64/103)   Writing objects:  63% (65/103)   Writing objects:  64% (66/103)   Writing objects:  65% (67/103)   Writing objects:  66% (68/103)   Writing objects:  67% (70/103)   Writing objects:  68% (71/103)   Writing objects:  69% (72/103)   Writing objects:  70% (73/103)   Writing objects:  71% (74/103)   Writing objects:  72% (75/103)   Writing objects:  73% (76/103)   Writing objects:  74% (77/103)   Writing objects:  75% (78/103)   Writing objects:  76% (79/103)   Writing objects:  77% (80/103)   Writing objects:  78% (81/103)   Writing objects:  79% (82/103)   Writing objects:  80% (83/103)   Writing objects:  81% (84/103)   Writing objects:  82% (85/103)   Writing objects:  83% (86/103)   Writing objects:  84% (87/103)   Writing objects:  85% (88/103)   Writing objects:  86% (89/103)   Writing objects:  87% (90/103)   Writing objects:  88% (91/103)   Writing objects:  89% (92/103)   Writing objects:  90% (93/103)   Writing objects:  91% (94/103)   Writing objects:  92% (95/103)   Writing objects:  93% (96/103)   Writing objects:  94% (97/103)   Writing objects:  95% (98/103)   Writing objects:  96% (99/103)   Writing objects:  97% (100/103)   Writing objects:  98% (101/103)   Writing objects:  99% (102/103)   Writing objects: 100% (103/103)   Writing objects: 100% (103/103), 545.35 KiB | 3.13 MiB/s, done.
+Total 103 (delta 10), reused 0 (delta 0)
+remote: Resolving deltas:   0% (0/10)[Kremote: Resolving deltas:  10% (1/10)[Kremote: Resolving deltas:  20% (2/10)[Kremote: Resolving deltas:  60% (6/10)[Kremote: Resolving deltas:  90% (9/10)[Kremote: Resolving deltas: 100% (10/10)[Kremote: Resolving deltas: 100% (10/10), done.[K
+To https://github.com/reichlab/cdcForecastUtils.git
+   ccd85ad..98189d8  master -> master
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   .Rproj.user/33E36EF3/console06/74410E2F[m
+	[31mmodified:   .Rproj.user/33E36EF3/console06/INDEX001[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ ls
+DESCRIPTION		Read-and-delete-me	utilities.R
+NAMESPACE		cdcForecastUtils.Rproj	vignettes
+R			data
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ rm utilities.R 
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ gi[K[Krm [K[K[Kvim .gitignore 
+[?2004h]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git add -a[KA
