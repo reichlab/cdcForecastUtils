@@ -12,3 +12,4 @@
 - If backfill: bind together backfill matrix of `nsim*time_from_start_of_season` and trajectory matrix
 - If no backfill: create a matrix of rep(observed_data,nsim) and cbind to trajectory matrix
 - Call `trajectories_to_short_term_and_seasonal_binned_distributions` to produce the submission df
+- Call `generate_csv_from_submission_df` to produce the csv

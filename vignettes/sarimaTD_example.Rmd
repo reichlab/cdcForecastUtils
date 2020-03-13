@@ -5,7 +5,7 @@ date: "3/13/2020"
 output: pdf_document
 ---
 
-# An example of cdcForecastUtils for the sarimaTD model
+# An example of cdcForecast Utils for the sarimaTD model
 
 First we load up sarimaTD and grab the cdc ILI data for Massachusetts.
 
@@ -33,7 +33,7 @@ sarimaFit <- sarimaTD::fit_sarima(tail(ma_data$unweighted_ili,200),
 Next, we generate a matrix of nsim by time till end of season. In order to do that we first get the current date and figure out how many steps there are left in the current season. We know that the season ends on YYYY-EW20.
 
 ```{r}
-current_date_in_cdc_format <-paste0(tail(ma_data$year,1),"-EW", ifelse(length(tail(ma_data$week,1))==2,tail(ma_data$week,1),paste0("0",tail(ma_data$week,1))))
+current_date_in_cdc_format <-paste0(tail(ma_data$year,1),"-EW", ifelse(nchar(tail(ma_data$week,1))==2,tail(ma_data$week,1),paste0("0",tail(ma_data$week,1))))
 season_end <- "2020-EW20"
 time_left_in_season <- get_time_left_in_season(current_date_in_cdc_format,season_end)
 
@@ -72,5 +72,6 @@ submission_df <- trajectories_to_short_term_and_seasonal_binned_distributions(tr
                                                              h_max=6 )
 
 head(submission_df)
+generate_csv_from_submission_df(submission_df,"./")
 ```
 

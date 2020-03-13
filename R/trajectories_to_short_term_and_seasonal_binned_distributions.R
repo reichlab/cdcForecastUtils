@@ -54,8 +54,8 @@ function(
   )
   season_peak_week$bin_start_incl <- date_seq[1:(length(date_seq)-1)]
   season_peak_week$bin_end_notincl <- date_seq[2:(length(date_seq))]
-  
   submission_df <- rbind(short_term_results,season_peak_week,season_peak_percentage)
+  submission_df$forecast_week <- current_time
   
   return (submission_df)
   

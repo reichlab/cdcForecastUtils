@@ -1,4 +1,3 @@
-source('utilities.R')
 
 #' From a vector of numeric samples, create data frame of bin probabilities.
 #'

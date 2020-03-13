@@ -243,3 +243,24 @@ NAMESPACE		cdcForecastUtils.Rproj
 R			data
 ]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ cd[K[Kvim G[KGUIDE.RM[K[KMD
 [?2004h]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git add -A
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git commmit -m "added guide[Kance do c"
+git: 'commmit' is not a git command. See 'git --help'.
+
+The most similar command is
+	commit
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git pcommmit -m "added guidance docc"[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cit -m "added guidance doc"[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+[master b85d9fb] added guidance doc
+ 7 files changed, 43 insertions(+), 8 deletions(-)
+ create mode 100644 GUIDE.MD
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git pish [K[K[K[Kush origin master
+Enumerating objects: 28, done.
+Counting objects:   3% (1/28)   Counting objects:   7% (2/28)   Counting objects:  10% (3/28)   Counting objects:  14% (4/28)   Counting objects:  17% (5/28)   Counting objects:  21% (6/28)   Counting objects:  25% (7/28)   Counting objects:  28% (8/28)   Counting objects:  32% (9/28)   Counting objects:  35% (10/28)   Counting objects:  39% (11/28)   Counting objects:  42% (12/28)   Counting objects:  46% (13/28)   Counting objects:  50% (14/28)   Counting objects:  53% (15/28)   Counting objects:  57% (16/28)   Counting objects:  60% (17/28)   Counting objects:  64% (18/28)   Counting objects:  67% (19/28)   Counting objects:  71% (20/28)   Counting objects:  75% (21/28)   Counting objects:  78% (22/28)   Counting objects:  82% (23/28)   Counting objects:  85% (24/28)   Counting objects:  89% (25/28)   Counting objects:  92% (26/28)   Counting objects:  96% (27/28)   Counting objects: 100% (28/28)   Counting objects: 100% (28/28), done.
+Delta compression using up to 4 threads
+Compressing objects:   6% (1/15)   Compressing objects:  13% (2/15)   Compressing objects:  20% (3/15)   Compressing objects:  26% (4/15)   Compressing objects:  33% (5/15)   Compressing objects:  40% (6/15)   Compressing objects:  46% (7/15)   Compressing objects:  53% (8/15)   Compressing objects:  60% (9/15)   Compressing objects:  66% (10/15)   Compressing objects:  73% (11/15)   Compressing objects:  80% (12/15)   Compressing objects:  86% (13/15)   Compressing objects:  93% (14/15)   Compressing objects: 100% (15/15)   Compressing objects: 100% (15/15), done.
+Writing objects:   6% (1/15)   Writing objects:  13% (2/15)   Writing objects:  20% (3/15)   Writing objects:  26% (4/15)   Writing objects:  33% (5/15)   Writing objects:  40% (6/15)   Writing objects:  46% (7/15)   Writing objects:  53% (8/15)   Writing objects:  60% (9/15)   Writing objects:  66% (10/15)   Writing objects:  73% (11/15)   Writing objects:  80% (12/15)   Writing objects:  86% (13/15)   Writing objects:  93% (14/15)   Writing objects: 100% (15/15)   Writing objects: 100% (15/15), 2.32 KiB | 59.00 KiB/s, done.
+Total 15 (delta 8), reused 0 (delta 0)
+remote: Resolving deltas:   0% (0/8)[Kremote: Resolving deltas:  12% (1/8)[Kremote: Resolving deltas:  25% (2/8)[Kremote: Resolving deltas:  37% (3/8)[Kremote: Resolving deltas:  50% (4/8)[Kremote: Resolving deltas:  62% (5/8)[Kremote: Resolving deltas:  75% (6/8)[Kremote: Resolving deltas:  87% (7/8)[Kremote: Resolving deltas: 100% (8/8)[Kremote: Resolving deltas: 100% (8/8), completed with 8 local objects.[K
+To https://github.com/reichlab/cdcForecastUtils.git
+   516287b..b85d9fb  master -> master
+]0;~/Downloads/cdcForecastUtils[?1034h(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ [K(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git d[Kadd -a[KA
