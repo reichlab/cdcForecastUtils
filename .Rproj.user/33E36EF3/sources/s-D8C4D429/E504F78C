@@ -7,14 +7,14 @@
     "folds" : "",
     "hash" : "0",
     "id" : "E504F78C",
-    "lastKnownWriteTime" : 1584103203,
-    "last_content_update" : 1584103203143,
+    "lastKnownWriteTime" : 1584111071,
+    "last_content_update" : 1584111071486,
     "path" : "~/Downloads/cdcForecastUtils/vignettes/sarimaTD_example.Rmd",
     "project_path" : "vignettes/sarimaTD_example.Rmd",
     "properties" : {
-        "cursorPosition" : "17,35",
+        "cursorPosition" : "65,17",
         "last_setup_crc32" : "D8C4D42981198932",
-        "scrollLine" : "11"
+        "scrollLine" : "65"
     },
     "relative_order" : 3,
     "source_on_save" : false,

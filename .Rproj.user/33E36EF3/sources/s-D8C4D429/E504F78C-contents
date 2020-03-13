@@ -30,7 +30,7 @@ sarimaFit <- sarimaTD::fit_sarima(tail(ma_data$unweighted_ili,200),
 ```
 
 
-Next, we generate a matrix of nsim till end of season. In order to do that we first get the current date and figure out how many steps there are left in the current season. We know that the season ends on YYYY-EW20.
+Next, we generate a matrix of nsim by time till end of season. In order to do that we first get the current date and figure out how many steps there are left in the current season. We know that the season ends on YYYY-EW20.
 
 ```{r}
 current_date_in_cdc_format <-paste0(tail(ma_data$year,1),"-EW", ifelse(length(tail(ma_data$week,1))==2,tail(ma_data$week,1),paste0("0",tail(ma_data$week,1))))
