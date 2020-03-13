@@ -207,3 +207,19 @@ R			data
 ]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ rm utilities.R 
 ]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ gi[K[Krm [K[K[Kvim .gitignore 
 [?2004h]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git add -a[KA
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git commit -m "update"
+[master f69f742] update
+ 3 files changed, 180 insertions(+), 48 deletions(-)
+ rewrite .Rproj.user/33E36EF3/console06/INDEX001 (71%)
+ delete mode 100644 utilities.R
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git push origin master
+Enumerating objects: 13, done.
+Counting objects:   7% (1/13)   Counting objects:  15% (2/13)   Counting objects:  23% (3/13)   Counting objects:  30% (4/13)   Counting objects:  38% (5/13)   Counting objects:  46% (6/13)   Counting objects:  53% (7/13)   Counting objects:  61% (8/13)   Counting objects:  69% (9/13)   Counting objects:  76% (10/13)   Counting objects:  84% (11/13)   Counting objects:  92% (12/13)   Counting objects: 100% (13/13)   Counting objects: 100% (13/13), done.
+Delta compression using up to 4 threads
+Compressing objects:  14% (1/7)   Compressing objects:  28% (2/7)   Compressing objects:  42% (3/7)   Compressing objects:  57% (4/7)   Compressing objects:  71% (5/7)   Compressing objects:  85% (6/7)   Compressing objects: 100% (7/7)   Compressing objects: 100% (7/7), done.
+Writing objects:  14% (1/7)   Writing objects:  28% (2/7)   Writing objects:  42% (3/7)   Writing objects:  57% (4/7)   Writing objects:  71% (5/7)   Writing objects:  85% (6/7)   Writing objects: 100% (7/7)   Writing objects: 100% (7/7), 5.04 KiB | 198.00 KiB/s, done.
+Total 7 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas:   0% (0/3)[Kremote: Resolving deltas:  33% (1/3)[Kremote: Resolving deltas:  66% (2/3)[Kremote: Resolving deltas: 100% (3/3)[Kremote: Resolving deltas: 100% (3/3), completed with 3 local objects.[K
+To https://github.com/reichlab/cdcForecastUtils.git
+   98189d8..f69f742  master -> master
+]0;~/Downloads/cdcForecastUtils(base) gcgibsons-MacBook-Pro:cdcForecastUtils gcgibson$ git add -A
