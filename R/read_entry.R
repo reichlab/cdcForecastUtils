@@ -9,19 +9,16 @@
 #' @export
 read_entry = function(file) {
   
-  entry <- read.csv(file,
-                    colClasses = "character",      
+  entry <- read.csv(file, 
+                    # colClasses = "character", 
                     stringsAsFactors = FALSE)
   
   names(entry) <- tolower(names(entry))
   
-  entry <- entry %>%
-    dplyr::mutate(value = as.numeric(value),
-           bin = trimws(replace(bin,
-                                !is.na(bin) & bin != "none",
-                                format(round(as.numeric(
-                                  bin[!is.na(bin) & bin != "none"])
-                                             , 1), nsmall = 1))))
+  # entry <- entry %>%
+  #   dplyr::mutate(value = as.numeric(value),
+  #          bin = trimws(replace(bin,!is.na(bin) & bin != "none",
+  #                               format(round(as.numeric(bin[!is.na(bin) & bin != "none"]),1), nsmall = 1))))
 
   # Add forecast week to imported data
   forecast_week <- as.numeric(gsub("EW", "", 
@@ -30,7 +27,6 @@ read_entry = function(file) {
   
   if (length(forecast_week > 0))
     entry <- dplyr::mutate(entry, forecast_week  = forecast_week)
-  
   
   cdcForecastUtils::arrange_entry(entry = entry)
 }
