@@ -159,11 +159,10 @@ head(submission_df)
 submission_df %>%
   distinct(state, target) %>%
   as.data.frame()
-
+submission_df$location <-submission_df$state
 head(submission_df)
 
 generate_csv_from_submission_df(submission_df,"./")
-load("../data/full_entry_score_new.rda")
 sub_file<-read_entry("./2020-EW10.csv")
 ```
 
