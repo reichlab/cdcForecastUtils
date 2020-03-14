@@ -18,11 +18,16 @@ read_entry = function(file) {
   
   entry <- entry %>%
     mutate(value = as.numeric(value),
-           bin = trimws(replace(bin,
-                                !is.na(bin) & bin != "none",
-                                format(round(as.numeric(
-                                  bin[!is.na(bin) & bin != "none"])
-                                             , 1), nsmall = 1))))
+           bin_start_incl = trimws(replace(bin_start_incl,
+                                           !is.na(bin_start_incl) & bin_start_incl != "none",
+                                           format(round(as.numeric(
+                                             bin_start_incl[!is.na(bin_start_incl) & bin_start_incl != "none"])
+                                             , 1), nsmall = 1))),
+           bin_end_notincl = trimws(replace(bin_end_notincl,
+                                            !is.na(bin_end_notincl) & bin_end_notincl != "none",
+                                            format(round(as.numeric(
+                                              bin_end_notincl[!is.na(bin_end_notincl) & bin_end_notincl != "none"])
+                                              , 1), nsmall = 1))))
   
   # Add forecast week to imported data
   forecast_week <- as.numeric(gsub("EW", "", 

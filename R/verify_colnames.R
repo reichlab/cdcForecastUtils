@@ -15,7 +15,7 @@ verify_colnames <- function(entry, check_week = T) {
   names(entry) <- tolower(names(entry))
   
   entry_names <- colnames(entry)
-  valid_names <- colnames(cdcForecastUtils::full_entry_score_new)
+  valid_names <- colnames(FluSight::full_entry_score)
   
   missing_names <- setdiff(valid_names, entry_names)
   extra_names   <- setdiff(entry_names, valid_names)
