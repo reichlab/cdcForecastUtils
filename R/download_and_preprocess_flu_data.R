@@ -1,26 +1,27 @@
+#' Download and preprocess the latest CDC flu data, both national and regional
+#'
+#' @param latest_year year through which data should be downloaded, defaults to current year
+#'
+#' @return data frame with latest flu data, preprocessed
+#' @export
 download_and_preprocess_flu_data <-
 function(latest_year = as.numeric(format(Sys.Date(), "%Y"))) {
-  require(cdcfluview)
-  require(lubridate)
-  require(dplyr)
-  require(MMWRweek)
-  
-  regionflu <- ilinet(region="hhs", years= 1997:latest_year)
+  regionflu <- cdcfluview::ilinet(region="hhs", years= 1997:latest_year)
   regionflu$region <- as.character(regionflu$region)
   
-  usflu <- ilinet(region="national", years= 1997:latest_year)
+  usflu <- cdcfluview::ilinet(region="national", years= 1997:latest_year)
   
-  flu_data <- bind_rows(regionflu, usflu)
+  flu_data <- dplyr::bind_rows(regionflu, usflu)
   
   ## set rows with denominator zeroes to NAs
   flu_data[which(flu_data$total_patients==0),"weighted_ili"] <- NA
   
-  flu_data <- transmute(flu_data,
+  flu_data <- dplyr::transmute(flu_data,
                         region_type = region_type,
                         region = as.factor(region),
                         year = year,
                         week = week,
-                        time = as.POSIXct(MMWRweek2Date(year, week)),
+                        time = as.POSIXct(MMWRweek::MMWRweek2Date(year, week)),
                         weighted_ili = weighted_ili)
   
   ## Add time_index column: the number of days since some origin date
@@ -45,7 +46,7 @@ function(latest_year = as.numeric(format(Sys.Date(), "%Y"))) {
   ## which is not exported from that package's namespace!!!
   flu_data$season_week <- ifelse(
     flu_data$week <= 30,
-    flu_data$week + MMWRweek(MMWRweek:::start_date(flu_data$year) - 1)$MMWRweek - 30,
+    flu_data$week + MMWRweek::MMWRweek(MMWRweek:::start_date(flu_data$year) - 1)$MMWRweek - 30,
     flu_data$week - 30
   )
   

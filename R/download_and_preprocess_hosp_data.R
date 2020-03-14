@@ -1,14 +1,9 @@
 download_and_preprocess_hosp_data <-
 function(latest_year = as.numeric(format(Sys.Date(), "%Y"))) {
-  
-  require(cdcfluview)
-  require(MMWRweek)
-  require(dplyr)
-  require(lubridate)
-  
   flu_data_raw_hosp <-cdcfluview::hospitalizations(years=2009:latest_year)
   flu_data_raw_hosp$week <- flu_data_raw_hosp$year_wk_num
-  flu_data <- mutate(flu_data_raw_hosp, time = as.POSIXct(MMWRweek2Date(year, week)))
+  flu_data <- dplyr::mutate(flu_data_raw_hosp,
+    time = as.POSIXct(MMWRweek::MMWRweek2Date(year, week)))
   
   ## set rows with denominator zeroes to NAs
   #flu_data[which(flu_data$total_patients==0),"weighted_ili"] <- NA
@@ -35,7 +30,7 @@ function(latest_year = as.numeric(format(Sys.Date(), "%Y"))) {
   ## which is not exported from that package's namespace!!!
   flu_data$season_week <- ifelse(
     flu_data$week <= 30,
-    flu_data$week + MMWRweek(MMWRweek:::start_date(flu_data$year) - 1)$MMWRweek - 30,
+    flu_data$week + MMWRweek::MMWRweek(MMWRweek:::start_date(flu_data$year) - 1)$MMWRweek - 30,
     flu_data$week - 30
   )
   

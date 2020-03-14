@@ -1,3 +1,13 @@
+#' Fetch and combine data from the Delphi Epidata API
+#' 
+#' @param source currently, one of "fluview", "twitter", or "wiki"
+#' @param regions character vector of region codes
+#' @param issues issues to fetch, e.g. c(201040, 201041, 201042); used only for fluview
+#' @param epiweeks_range range of epiweeks to fetch, e.g. c(201040, 201530)
+#' 
+#' @return data frame with all results from Epidata
+#' 
+#' @export
 fetch_delphi_data_multi_issue <-
 function(
   source = c("fluview", "twitter", "wiki"),

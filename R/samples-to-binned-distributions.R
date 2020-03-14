@@ -63,10 +63,10 @@ categorical_samples_to_binned_distribution <- function(
 
 ### unit test
 
-unit_test_results <- trajectories_to_short_term_and_seasonal_binned_distributions(trajectories = matrix(rep(1:20,100),nrow=100,byrow = T),
-                                                             h_max = 6,
-                                                             bins = c(seq(0,13,by=.1),100),
-                                                             season_start = "2018-EW40",
-                                                             season_end= "2019-EW20",
-                                                             current_time = "2018-EW42",
-                                                             nsim=100)
+# unit_test_results <- trajectories_to_short_term_and_seasonal_binned_distributions(trajectories = matrix(rep(1:20,100),nrow=100,byrow = T),
+#                                                              h_max = 6,
+#                                                              bins = c(seq(0,13,by=.1),100),
+#                                                              season_start = "2018-EW40",
+#                                                              season_end= "2019-EW20",
+#                                                              current_time = "2018-EW42",
+#                                                              nsim=100)

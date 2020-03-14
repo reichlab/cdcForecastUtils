@@ -12,6 +12,7 @@ First we load up sarimaTD and grab the cdc ILI data for Massachusetts.
 ```{r setup, include=T}
 library(sarimaTD)
 library(cdcForecastUtils)
+library(lubridate)
 
 flu_data <- download_and_preprocess_state_flu_data()
 ma_data <- flu_data[flu_data$region == "Massachusetts",]
@@ -63,13 +64,12 @@ Finally, we convert the predicted trajectory matrix to a submission data frame.
 
 
 ```{r}
-submission_df <- trajectories_to_short_term_and_seasonal_binned_distributions(trajectories = trajectory_matrix,
+submission_df <- trajectories_to_binned_distributions(trajectories = trajectory_matrix,
                                                              bins = c(seq(0,13,by=.1),100),
-                                                             season_start = season_start,
-                                                             season_end = season_end,
-                                                             current_time=current_date_in_cdc_format,
-                                                              nsim=1000,
-                                                             h_max=6 )
+                                                             season_start_ew = season_start,
+                                                             season_end_ew = season_end,
+                                                             cdc_report_ew = current_date_in_cdc_format,
+                                                             h_max = 6)
 
 head(submission_df)
 generate_csv_from_submission_df(submission_df,"./")

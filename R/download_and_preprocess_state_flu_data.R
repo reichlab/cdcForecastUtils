@@ -1,14 +1,14 @@
+#' Download and preprocess the latest CDC flu data, state-level
+#'
+#' @param latest_year year through which data should be downloaded, defaults to current year
+#'
+#' @return data frame with latest state-level flu data, preprocessed
+#' @export
 download_and_preprocess_state_flu_data <-
 function(latest_year = as.numeric(format(Sys.Date(), "%Y"))) {
+  flu_data_raw <- cdcfluview::ilinet(region="state", years=1997:latest_year)
   
-  require(cdcfluview)
-  require(MMWRweek)
-  require(dplyr)
-  require(lubridate)
-  
-  flu_data_raw <- ilinet(region="state", years=1997:latest_year)
-  
-  flu_data <- mutate(flu_data_raw, time = as.POSIXct(MMWRweek2Date(year, week)))
+  flu_data <- dplyr::mutate(flu_data_raw, time = as.POSIXct(MMWRweek::MMWRweek2Date(year, week)))
   
   ## set rows with denominator zeroes to NAs
   flu_data[which(flu_data$total_patients==0),"weighted_ili"] <- NA
@@ -36,7 +36,7 @@ function(latest_year = as.numeric(format(Sys.Date(), "%Y"))) {
   ## which is not exported from that package's namespace!!!
   flu_data$season_week <- ifelse(
     flu_data$week <= 30,
-    flu_data$week + MMWRweek(MMWRweek:::start_date(flu_data$year) - 1)$MMWRweek - 30,
+    flu_data$week + MMWRweek::MMWRweek(MMWRweek:::start_date(flu_data$year) - 1)$MMWRweek - 30,
     flu_data$week - 30
   )
   
