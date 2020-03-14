@@ -22,7 +22,7 @@ the forecast probabilities are non-negative and sum to a value between
 }
 \examples{
 file <- system.file("extdata", "valid-test.csv", package="cdcfluutils")
-verify_entry_file(full_entry_new) # TRUE
+verify_entry_file(file) # TRUE
 }
 \seealso{
 \code{\link{verify_entry}}

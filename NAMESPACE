@@ -12,31 +12,14 @@ export(multi_trajectories_to_binned_distributions)
 export(numeric_samples_to_binned_distribution)
 export(read_entry)
 export(trajectories_to_binned_distributions)
-<<<<<<< HEAD
 export(verify_bins)
 export(verify_colnames)
 export(verify_entry)
 export(verify_entry_file)
-=======
-export(read_entry)
-export(arrange_entry)
-export(verify_bins)
-export(verify_colnames)
->>>>>>> db31e783812d6c65dc69f5bea0dd130f85277145
 export(verify_locations)
 export(verify_point)
 export(verify_probabilities)
 export(verify_targets)
 export(verify_types)
-<<<<<<< HEAD
 import(dplyr)
-=======
-export(date_start_and_end_to_date_seq)
-export(get_current_time_in_date_seq)
-export(get_time_left_in_season)
-export(get_time_from_start_of_season)
-export(rowMax)
-export(rowMaxWeek)
->>>>>>> db31e783812d6c65dc69f5bea0dd130f85277145
 importFrom(dplyr,`%>%`)
-
