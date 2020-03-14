@@ -163,6 +163,7 @@ submission_df %>%
 head(submission_df)
 
 generate_csv_from_submission_df(submission_df,"./")
-#sub_file<-read_entry("./2020-EW10.csv")
+load("../data/full_entry_score_new.rda")
+sub_file<-read_entry("./2020-EW10.csv")
 ```
 
