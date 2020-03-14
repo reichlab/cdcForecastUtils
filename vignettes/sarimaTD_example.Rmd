@@ -1,6 +1,6 @@
 ---
 title: "sarimaTD_example"
-author: "Graham Casey Gibson"
+author: "Graham Casey Gibson, Evan L. Ray"
 date: "3/13/2020"
 output: pdf_document
 ---
@@ -13,7 +13,10 @@ First we load up sarimaTD and grab the cdc ILI data for Massachusetts.
 library(sarimaTD)
 library(cdcForecastUtils)
 library(lubridate)
+library(dplyr)
+```
 
+```{r}
 flu_data <- download_and_preprocess_state_flu_data()
 ma_data <- flu_data[flu_data$region == "Massachusetts",]
 plot(ma_data$unweighted_ili,type='l')
@@ -73,5 +76,89 @@ submission_df <- trajectories_to_binned_distributions(trajectories = trajectory_
 
 head(submission_df)
 generate_csv_from_submission_df(submission_df,"./")
+```
+
+
+### Multiple States
+
+```{r}
+states <- unique(flu_data$region)[1:5]
+states
+```
+
+Function to do all the steps to get the trajectories matrix for a single state:
+
+```{r}
+get_trajectories_one_state <- function(state, flu_data) {
+  # subset to state data
+  state_data <- flu_data[flu_data$region == state,]
+  
+  # fit sarima model
+  sarimaFit <- sarimaTD::fit_sarima(tail(state_data$unweighted_ili,200),
+    bc_gamma = 0.05,
+    ts_frequency = 52)
+  
+  # times (could really be done once outside this function)
+  current_date_in_cdc_format <-paste0(tail(state_data$year,1),"-EW", ifelse(nchar(tail(state_data$week,1))==2,tail(state_data$week,1),paste0("0",tail(state_data$week,1))))
+  season_end <- "2020-EW20"
+  time_left_in_season <- get_time_left_in_season(current_date_in_cdc_format,season_end)
+  
+  # predictions
+  preds <- simulate(
+          object = sarimaFit,
+          nsim = 1000,
+          seed = 1,
+          newdata = state_data$unweighted_ili,
+          h = time_left_in_season
+        )
+
+  # prepend observed data
+  season_start <- "2019-EW40"
+  time_from_start_of_season <- get_time_from_start_of_season(season_start,current_date_in_cdc_format)
+  
+  trajectory_matrix <- cbind(matrix(rep(tail(ma_data$unweighted_ili,time_from_start_of_season),1000),nrow=1000,byrow = T),preds)
+  
+  trajectory_matrix[trajectory_matrix < 0.0] <- 0.0
+  
+  return(trajectory_matrix)
+}
+```
+
+Call the function once for each state; assemble matrices in a tibble
+
+```{r}
+trajectories_by_state <- tibble(
+  state = states
+) %>%
+  mutate(
+    trajectories = purrr::map(
+      states,
+      get_trajectories_one_state,
+      flu_data = flu_data)
+  )
+```
+
+```{r}
+trajectories_by_state
+```
+
+```{r}
+submission_df <- multi_trajectories_to_binned_distributions(
+  multi_trajectories = trajectories_by_state,
+  bins = c(seq(0, 13, by = .1), 100),
+  season_start_ew = season_start,
+  season_end_ew = season_end,
+  cdc_report_ew = current_date_in_cdc_format,
+  h_max = 6)
+```
+
+```{r}
+head(submission_df)
+```
+
+```{r}
+submission_df %>%
+  distinct(state, target) %>%
+  as.data.frame()
 ```
 
