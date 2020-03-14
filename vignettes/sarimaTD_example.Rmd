@@ -1,6 +1,6 @@
 ---
 title: "sarimaTD_example"
-author: "Graham Casey Gibson, Evan L. Ray"
+author: "Graham Casey Gibson, Evan L. Ray, Nutcha Wattanachit"
 date: "3/13/2020"
 output: pdf_document
 ---
