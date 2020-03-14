@@ -21,7 +21,7 @@ numeric_samples_to_binned_distribution <- function(
   num_bins <- length(bins) - 1
   return(
     data.frame(
-      bins = bins[seq_len(num_bins)],
+      bin = bins[seq_len(num_bins)],
       value = bin_counts / sum(bin_counts),
       stringsAsFactors = FALSE
     )
