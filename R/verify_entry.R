@@ -12,12 +12,11 @@
 #' @seealso \code{\link{verify_entry}}
 #' @examples
 #' file <- system.file("extdata", "valid-test.csv", package="cdcfluutils")
-#' verify_entry_file(full_entry_new) # TRUE
+#' verify_entry_file(file) # TRUE
 verify_entry_file <- function(file, challenge = "ilinet") {
-  entry <- FluSight::read_entry(file)
-  FluSight::verify_entry(entry, challenge, check_week = F)
+  entry <- cdcForecastUtils::read_entry(file)
+  cdcForecastUtils::verify_entry(entry, challenge, check_week = F)
 }
-
 
 
 #' Verify entry stored as an R data.frame
@@ -33,7 +32,7 @@ verify_entry_file <- function(file, challenge = "ilinet") {
 #' @export
 #' @seealso \code{\link{verify_entry_file}}
 #' @examples
-#' verify_entry(full_entry_new)
+#' verify_entry(full_entry_score_new)
 verify_entry <- function(entry, challenge = "ilinet", check_week = T) {
   
   if (!(challenge %in% c("ilinet", "state_ili"))) {

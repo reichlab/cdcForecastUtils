@@ -17,7 +17,7 @@ read_entry = function(file) {
   
   
   entry <- entry %>%
-    mutate(value = as.numeric(value),
+    dplyr::mutate(value = as.numeric(value),
            bin = trimws(replace(bin,
                                 !is.na(bin) & bin != "none",
                                 format(round(as.numeric(
