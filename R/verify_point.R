@@ -14,28 +14,28 @@ verify_point <- function(entry) {
   names(entry) <- tolower(names(entry))
   
   point <- entry %>%
-    filter(type == "Point") %>%
-    mutate(miss     = is.na(value),
+    dplyr::filter(type == "point") %>%
+    dplyr::mutate(miss     = is.na(value),
            negative = (!is.na(value) & value < 0))
   
   # Report warning for missing point predictions
   if (any(point$miss)) {
     tmp <- point %>%
-      filter(miss)
+      dplyr::filter(miss)
     
     warning(paste0("WARNING: Missing point predictions detected in ",
                    paste(tmp$location, tmp$target), ". \n",
-                   "Please take a look at the generate_point_forecasts function.\n"))
+                   "Please take a look at FluSight::generate_point_forecasts().\n"))
   }
   
   # Report error for negative point predictions
   if (any(point$negative)) {
     tmp <- point %>%
-      filter(negative)
+      dplyr::filter(negative)
     
     stop(paste0("ERROR: Negative point predictions detected in ",
                 paste(tmp$location, tmp$target), ". \n",
-                "Please take a look at the generate_point_forecasts function.\n"))
+                "Please take a look at FluSight::generate_point_forecasts().\n"))
   }
   
   return(invisible(TRUE))
