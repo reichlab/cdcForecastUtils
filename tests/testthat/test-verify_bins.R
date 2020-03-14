@@ -5,6 +5,7 @@ test_that("Correct entries are successful.",{
   expect_true(verify_bins(full_entry_state_new, challenge = "state_ili"))
 })
 
+
 test_that("Missing bins report errors.", {
   rand_target <- sample(full_entry_new$target, 1)
   
