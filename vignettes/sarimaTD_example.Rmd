@@ -1,6 +1,6 @@
 ---
 title: "sarimaTD_example"
-author: "Graham Casey Gibson, Evan L. Ray"
+author: "Graham Casey Gibson, Evan L. Ray, Nutcha Wattanachit"
 date: "3/13/2020"
 output: pdf_document
 ---
@@ -95,7 +95,6 @@ get_trajectories_one_state <- function(state, flu_data) {
   
   # fit sarima model
   sarimaFit <- sarimaTD::fit_sarima(tail(state_data$unweighted_ili,200),
-    bc_gamma = 0.05,
     ts_frequency = 52)
   
   # times (could really be done once outside this function)
@@ -160,5 +159,10 @@ head(submission_df)
 submission_df %>%
   distinct(state, target) %>%
   as.data.frame()
+submission_df$location <-submission_df$state
+head(submission_df)
+
+generate_csv_from_submission_df(submission_df,"./")
+sub_file<-read_entry("./2020-EW10.csv")
 ```
 

@@ -21,8 +21,7 @@ numeric_samples_to_binned_distribution <- function(
   num_bins <- length(bins) - 1
   return(
     data.frame(
-      bin_start_incl = bins[seq_len(num_bins)],
-      bin_end_notincl = bins[seq_len(num_bins) + 1],
+      bin = bins[seq_len(num_bins)],
       value = bin_counts / sum(bin_counts),
       stringsAsFactors = FALSE
     )
@@ -53,8 +52,7 @@ categorical_samples_to_binned_distribution <- function(
   num_bins <- length(bins) - 1
   return(
     data.frame(
-      bin_start_incl = bins,
-      bin_end_notincl = bins,
+      bins = bins,
       value = bin_counts / sum(bin_counts),
       stringsAsFactors = FALSE
     )
