@@ -16,7 +16,7 @@ function(latest_year = as.numeric(format(Sys.Date(), "%Y"))) {
   
   ## Add time_index column: the number of days since some origin date
   ## (1970-1-1 in this case).  The origin is arbitrary.
-  flu_data$time_index <- as.integer(lubridate::date(flu_data$time) -  ymd("1970-01-01"))
+  flu_data$time_index <- as.integer(lubridate::date(flu_data$time) - lubridate::ymd("1970-01-01"))
   
   ## Season column: for example, weeks of 2010 up through and including week 30
   ## get season 2009/2010; weeks after week 30 get season 2010/2011
