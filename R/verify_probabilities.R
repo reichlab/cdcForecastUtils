@@ -15,6 +15,7 @@ verify_probabilities <- function(entry) {
   
   probabilities <- entry %>%
     dplyr::filter(type == "bin",target!="Below baseline for 3 weeks") %>%
+    dplyr::mutate(value=as.numeric(value)) %>%
     dplyr::group_by(location, target) %>%
     dplyr::summarize(
               miss     = any(is.na(value)),
@@ -23,6 +24,7 @@ verify_probabilities <- function(entry) {
   
   probabilities_binary <- entry %>%
     dplyr::filter(type == "bin",target=="Below baseline for 3 weeks") %>%
+    dplyr::mutate(value=as.numeric(value)) %>%
     dplyr::group_by(location) %>%
     dplyr::summarize(
       miss     = any(is.na(value)),
