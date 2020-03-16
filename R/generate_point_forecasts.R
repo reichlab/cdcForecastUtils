@@ -20,7 +20,7 @@ generate_point_forecasts <- function(entry, method =
   entry <- entry %>%
     dplyr::filter(type == "bin") %>%
     dplyr::group_by(location, target) %>%
-    FluSight::generate_point_forecast(., method) %>%
+    cdcForecastUtils::generate_point_forecast(., method) %>%
     dplyr::ungroup()
   return(entry)
   
