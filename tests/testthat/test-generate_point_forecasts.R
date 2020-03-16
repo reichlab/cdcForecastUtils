@@ -9,3 +9,5 @@ test_that("Point forecasts exist report warning.", {
   generate_point_forecasts(full_entry_new)
   generate_point_forecasts(full_entry_state_new, challenge = "state_ili")
 })
+
+

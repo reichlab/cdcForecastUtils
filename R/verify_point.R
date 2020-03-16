@@ -22,7 +22,8 @@ verify_point <- function(entry) {
     dplyr::filter(type == "point",target %in% c("Peak week","First week below baseline")) %>%
     dplyr::mutate(weekrange=ifelse(!(is.na(value)), 
                                gsub("EW", "", regmatches(bin, regexpr("(?:EW)[0-9]{2}", bin))),value),
-                  check_range=(weekrange>35 |weekrange<10)
+                  check_range=(weekrange>35 |weekrange<10),
+                  check_char=(regmatches("2020-EW",regexpr("2020-EW[0-90-9]",value))=="2020-EW")
                   )
   
   # Report warning for missing point predictions
@@ -52,6 +53,15 @@ verify_point <- function(entry) {
     stop(paste0("ERROR: Out-of-range point predictions for week targets detected in ",
                 paste(tmp$location, tmp$target), ". \n",
                 "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
+  }
+  
+  if (any(point_char$check_char)) {
+    tmp <- point_char %>%
+      dplyr::filter(point_char)
+    
+    stop(paste0("ERROR: Incorrect point prediction format for week targets detected in ",
+                paste(tmp$location, tmp$target), ". \n",
+                "Please take a look at the template and at cdcForecastUtils::generate_point_forecasts().\n"))
   }
   return(invisible(TRUE))
 }

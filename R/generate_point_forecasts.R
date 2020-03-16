@@ -96,7 +96,7 @@ generate_point_forecast <- function(d, method =
     temp <- d %>%
       dplyr::mutate(cumulative = cumsum(value),
                     type = "point") %>%
-      dplyr::filter(row_number() == min(which(cumulative >= 0.5))) %>%
+      dplyr::filter(dplyr::row_number() == min(which(cumulative >= 0.5))) %>%
       dplyr::select(location, target, value = bin, type) %>%
       dplyr::mutate(value = ifelse(target %in% c("Peak week","First week below baseline"),
                                    paste0("2020-EW",value),value))
