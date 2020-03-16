@@ -65,14 +65,14 @@ generate_point_forecast <- function(d, method =
   # get a data frame for non-week targets
   d1 <- d %>% 
     dplyr::filter(!(target %in% c("Peak week","First week below baseline","Below baseline for 3 weeks"))) %>%
-    dplyr::mutate(bin = suppressWarnings(as.numeric(bin)))
+    dplyr::mutate(bin = suppressWarnings(as.numeric(bin)),value = suppressWarnings(as.numeric(value)))
   
   # get a data frame for week targets, assuming we don't go into the fall
   d2 <- d %>% 
     dplyr::filter(target %in% c("Peak week","First week below baseline")) %>%
     dplyr::mutate(bin=replace(bin, !(is.na(bin)), 
                               gsub("EW", "", regmatches(bin, regexpr("(?:EW)[0-9]{2}", bin))))) %>%
-    dplyr::mutate(bin=as.numeric(bin))
+    dplyr::mutate(bin=as.numeric(bin),value = suppressWarnings(as.numeric(value)))
   
   # combine with bin being numeric
   d3 <- rbind(d1,d2) %>%
