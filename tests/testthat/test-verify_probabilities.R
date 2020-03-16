@@ -6,9 +6,6 @@ test_that("Valid entry passes", {
   expect_true(verify_probabilities(full_entry_state_new))
 })
 
-test_that("Invalid challenge throws errors", {
-  expect_error(verify_probabilities(full_entry_new, challenge = "hosp"))
-})
 
 test_that("Missing probabilities throw errors", {
   rand_target <- sample(unique(full_entry_new$target), 1)
