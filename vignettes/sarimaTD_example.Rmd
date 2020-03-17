@@ -34,6 +34,11 @@ states
 Function to do all the steps to get the trajectories matrix for a single state:
 
 ```{r}
+season_start <- "2020-EW10"
+
+season_end <- "2020-EW35"
+current_date_in_cdc_format <-paste0(tail(flu_data$year,1),"-EW", ifelse(nchar(tail(flu_data$week,1))==2,tail(flu_data$week,1),paste0("0",tail(flu_data$week,1))))
+
 get_trajectories_one_state <- function(location, flu_data) {
   # subset to state data
   state_data <- flu_data[flu_data$region == location,]
@@ -43,8 +48,7 @@ get_trajectories_one_state <- function(location, flu_data) {
     ts_frequency = 52)
   
   # times (could really be done once outside this function)
-  current_date_in_cdc_format <-paste0(tail(state_data$year,1),"-EW", ifelse(nchar(tail(state_data$week,1))==2,tail(state_data$week,1),paste0("0",tail(state_data$week,1))))
-  season_end <- "2020-EW20"
+  
   time_left_in_season <- get_time_left_in_season(current_date_in_cdc_format,season_end)
   
   # predictions
@@ -57,7 +61,6 @@ get_trajectories_one_state <- function(location, flu_data) {
         )
 
   # prepend observed data
-  season_start <- "2019-EW40"
   time_from_start_of_season <- get_time_from_start_of_season(season_start,current_date_in_cdc_format)
   
   trajectory_matrix <- cbind(matrix(rep(tail(ma_data$unweighted_ili,time_from_start_of_season),1000),nrow=1000,byrow = T),preds)
