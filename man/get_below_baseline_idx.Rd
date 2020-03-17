@@ -3,7 +3,7 @@
 \name{get_below_baseline_idx}
 \alias{get_below_baseline_idx}
 \title{Compute first week when incidence falls below baseline and remains below for
-at least three weeks in a row.}
+at least lookahead_length weeks in a row.}
 \usage{
 get_below_baseline_idx(trajectory, baseline, lookahead_length)
 }
@@ -23,5 +23,5 @@ the smallest index i such that every entry of
 }
 \description{
 Compute first week when incidence falls below baseline and remains below for
-at least three weeks in a row.
+at least lookahead_length weeks in a row.
 }

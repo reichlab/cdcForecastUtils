@@ -55,6 +55,28 @@ function(
   date_seq <- date_start_and_end_to_date_seq(season_start_ew,season_end_ew)
   idx_of_current_time <- get_current_time_in_date_seq(cdc_report_ew,date_seq)
   
+  # validate trajectory lengths
+  # minimum length as determined by baseline targets
+  baseline_targets <- c("Below baseline for 3 weeks", "First week below baseline")
+  if(any(baseline_targets %in% targets)) {
+    min_length_a <- length(date_seq) + 2
+  } else {
+    min_length_a <- length(date_seq)
+  }
+  
+  # minimum length as determined by week ahead targets
+  # e.g. if number of weeks in season is 27 and idx_of_current_time is 25 we need 27 + 4
+  if("wk ahead" %in% targets) {
+    min_length_b <- length(date_seq) + h_max - (length(date_seq) - idx_of_current_time)
+  } else {
+    min_length_b <- length(date_seq)
+  }
+  min_length <- max(min_length_a, min_length_b)
+  
+  if(ncol(trajectories) < min_length) {
+    stop("trajectories does not have enough columns for the requested targets.  Must provide at least h_max weeks after cdc_report_ew for wk ahead target and 2 weeks after season_end_ew for baseline targets.")
+  }
+  
   # wk ahead
   if("wk ahead" %in% targets) {
     short_term_results <- purrr::map_dfr(
@@ -84,7 +106,7 @@ function(
       stop("Requested target involving baseline, but did not provide long enough trajectories.")
     }
     
-    trajectories_for_baseline_calc <- trajectories[, seq_len(length(date_seq) + 3), drop = FALSE]
+    trajectories_for_baseline_calc <- trajectories[, seq_len(length(date_seq) + 2), drop = FALSE]
     below_baseline_idx_by_trajectory <- apply(
       trajectories_for_baseline_calc,
       1,
