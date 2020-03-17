@@ -1,4 +1,12 @@
-date_start_and_end_to_date_seq <- function(date_start,date_end){
+#' Get sequence of epidemic weeks between start and end points
+#' 
+#' @param date_start character: epidemic week in format "2020-EW10"
+#' @param date_end character: epidemic week in format "2020-EW40"
+#' 
+#' @return character: sequence of epidemic weeks from date_start to date_end, inclusive
+#' 
+#' @export
+date_start_and_end_to_date_seq <- function(date_start, date_end) {
   year_start <- as.numeric(substr(date_start,1,4))
   week_start <- as.numeric(substr(date_start,8,10))
   

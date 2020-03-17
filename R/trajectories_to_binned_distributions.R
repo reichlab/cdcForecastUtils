@@ -40,38 +40,21 @@ function(
   cdc_report_ew
 )
 {
-  # validate targets
-  valid_targets <- c("wk ahead", "Below baseline for 3 weeks",
-    "First week below baseline", "Peak height", "Peak week")
-  valid_targets_lower <- tolower(valid_targets)
-  user_targets <- match.arg(tolower(targets), valid_targets_lower, several.ok = TRUE)
-  if(length(user_targets) < length(targets)) {
-    warning(paste0("Unsupported target requested; targets must be one or more of: ",
-              paste(valid_targets, collapse = ", ")))
-  }
-  targets <- valid_targets[valid_targets_lower %in% user_targets]
+  # validate/standardize targets
+  targets <- standardize_targets(targets)
   
   # set up globals
   date_seq <- date_start_and_end_to_date_seq(season_start_ew,season_end_ew)
   idx_of_current_time <- get_current_time_in_date_seq(cdc_report_ew,date_seq)
   
   # validate trajectory lengths
-  # minimum length as determined by baseline targets
-  baseline_targets <- c("Below baseline for 3 weeks", "First week below baseline")
-  if(any(baseline_targets %in% targets)) {
-    min_length_a <- length(date_seq) + 2
-  } else {
-    min_length_a <- length(date_seq)
-  }
-  
-  # minimum length as determined by week ahead targets
-  # e.g. if number of weeks in season is 27 and idx_of_current_time is 25 we need 27 + 4
-  if("wk ahead" %in% targets) {
-    min_length_b <- length(date_seq) + h_max - (length(date_seq) - idx_of_current_time)
-  } else {
-    min_length_b <- length(date_seq)
-  }
-  min_length <- max(min_length_a, min_length_b)
+  required_horizon <- get_required_forecast_horizon(
+    targets,
+    h_max = h_max,
+    season_end_ew,
+    cdc_report_ew
+  )
+  min_length <- idx_of_current_time + required_horizon
   
   if(ncol(trajectories) < min_length) {
     stop("trajectories does not have enough columns for the requested targets.  Must provide at least h_max weeks after cdc_report_ew for wk ahead target and 2 weeks after season_end_ew for baseline targets.")

@@ -49,7 +49,12 @@ get_trajectories_one_state <- function(location, flu_data) {
   
   # times (could really be done once outside this function)
   
-  time_left_in_season <- get_time_left_in_season(current_date_in_cdc_format,season_end)
+  forecast_horizon <- get_required_forecast_horizon(
+    targets = c("wk ahead", "Peak height", "Peak week"),
+    h_max = 6,
+    season_end_ew = season_end,
+    cdc_report_ew = current_date_in_cdc_format
+  )
   
   # predictions
   preds <- simulate(
@@ -57,7 +62,7 @@ get_trajectories_one_state <- function(location, flu_data) {
           nsim = 1000,
           seed = 1,
           newdata = state_data$unweighted_ili,
-          h = time_left_in_season
+          h = forecast_horizon
         )
 
   # prepend observed data
