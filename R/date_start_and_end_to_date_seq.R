@@ -1,3 +1,13 @@
+#' Compute the sequence of dates in CDCEpi format from the start date to the end date
+#'
+#' @param date_start Start of the date sequence
+#' @param date_end End of the date sequence
+#' @return Array of dates between date_start and date_end in CDCEpi format
+#' @export
+#' @keywords internal
+#' @seealso \code{\link{date_start_and_end_to_date_seq}}
+
+
 date_start_and_end_to_date_seq <- function(date_start,date_end){
   year_start <- as.numeric(substr(date_start,1,4))
   week_start <- as.numeric(substr(date_start,8,10))
