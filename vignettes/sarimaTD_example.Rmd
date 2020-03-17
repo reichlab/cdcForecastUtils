@@ -4,17 +4,134 @@ author: "Graham Casey Gibson, Evan L. Ray, Nutcha Wattanachit"
 date: "3/13/2020"
 output: pdf_document
 ---
-
-# An example of cdcForecast Utils for the sarimaTD model
-
-First we load up sarimaTD and grab the cdc ILI data for Massachusetts.
-
+# An example of cdcForecast Utils for the sarimaTD model at the regional level
 ```{r setup, include=T}
 library(sarimaTD)
 library(cdcForecastUtils)
 library(lubridate)
 library(dplyr)
 ```
+
+First we get the ILI data for the regions
+
+```{r}
+flu_data <- download_and_preprocess_flu_data()
+
+
+```
+
+Next, we define the date parameters we need for the current challenge.
+
+```{r}
+season_start <- "2020-EW10"
+season_end <- "2020-EW35"
+current_date_in_cdc_format <- get_current_date_from_flu_data(flu_data)
+```
+
+We also define a list of targets relevant to the spatial scale we are forecasting.
+
+```{r}
+targets <-  c("wk ahead", "Peak height", "Peak week","First week below baseline","Below baseline for 3 weeks")
+
+```
+Next, we need a funtion that computes a "trajectory-matrix", which is an (nsim,time_left_in_season) matrix where each row is a forecast "trajectory". We first define this relative to a single geography.
+
+```{r}
+
+get_trajectories_one_region <- function(location, flu_data) {
+  # subset to current region
+  region_data <- flu_data[flu_data$region == location,]
+  
+  # fit sarima model
+  sarimaFit <- sarimaTD::fit_sarima(tail(region_data$weighted_ili,200),
+    ts_frequency = 52)
+  
+  # times (could really be done once outside this function)
+  
+  forecast_horizon <- get_required_forecast_horizon(
+    targets = targets,
+    h_max = 6,
+    season_end_ew = season_end,
+    cdc_report_ew = current_date_in_cdc_format
+  )
+  
+  # predictions
+  preds <- simulate(
+          object = sarimaFit,
+          nsim = 1000,
+          seed = 1,
+          newdata = region_data$weighted_ili,
+          h = forecast_horizon
+        )
+
+  # compute time from start of season
+  time_from_start_of_season <- get_time_from_start_of_season(season_start = season_start,current_time = current_date_in_cdc_format)
+  #append observed data to trajectories
+  # NOTE: this is where you would add a backfill model on the 
+  # observed data
+  trajectory_matrix <- cbind(matrix(rep(tail(region_data$weighted_ili,time_from_start_of_season),1000),nrow=1000,byrow = T),preds)
+  
+  
+  ## remove trajectories that do not respect ILI bounds
+  trajectory_matrix[trajectory_matrix < 0.0] <- 0.0
+  trajectory_matrix[trajectory_matrix > 100] <- 100
+
+  return(trajectory_matrix)
+}
+```
+
+
+
+```{r}
+trajectories_by_region <- tibble(
+  location = c("Region 1","National")
+) %>%
+  mutate(
+    trajectories = purrr::map(
+      c("Region 1","National"),
+      get_trajectories_one_region,
+      flu_data = flu_data)
+  )
+
+```
+
+We now have a list of trajectories that we can map to a submission data frame.  
+
+```{r}
+submission_df <- multi_trajectories_to_binned_distributions(
+  multi_trajectories = trajectories_by_region,
+  targets = targets,
+  h_max = 6,
+  bins = c(seq(0, 25, by = .1), 100),
+  season_start_ew = season_start,
+  season_end_ew = season_end,
+  cdc_report_ew = current_date_in_cdc_format)
+```
+
+Finally, we add the point forecasts and verify
+
+```{r}
+submission_df %>%
+  distinct(location, target) %>%
+  as.data.frame()
+head(submission_df)
+
+point_forecasts <- generate_point_forecasts(submission_df,method="Median")
+
+submission_df_w_point_fcasts <- rbind(submission_df,point_forecasts)
+
+submission_df_w_point_fcasts$location <- as.factor(submission_df_w_point_fcasts$location)
+submission_df_w_point_fcasts$location <-
+  dplyr::recode(submission_df_w_point_fcasts$location,"Region 1" = "HHS Region 1","National"="US National")
+verify_entry(submission_df_w_point_fcasts,challenge='ilinet')
+```
+
+
+# An example of cdcForecast Utils for the sarimaTD model at the state level
+
+First we load up sarimaTD and grab the cdc ILI data for states
+
+
 
 ```{r}
 flu_data <- download_and_preprocess_state_flu_data()
@@ -34,10 +151,7 @@ states
 Function to do all the steps to get the trajectories matrix for a single state:
 
 ```{r}
-season_start <- "2020-EW10"
 
-season_end <- "2020-EW35"
-current_date_in_cdc_format <-paste0(tail(flu_data$year,1),"-EW", ifelse(nchar(tail(flu_data$week,1))==2,tail(flu_data$week,1),paste0("0",tail(flu_data$week,1))))
 
 get_trajectories_one_state <- function(location, flu_data) {
   # subset to state data

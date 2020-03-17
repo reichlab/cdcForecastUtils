@@ -85,7 +85,7 @@ function(
       stop("Requested target involving baseline, but baseline not provided.")
     }
     
-    if(ncol(trajectories) < length(date_seq)+3) {
+    if(ncol(trajectories) < length(date_seq)+2) {
       stop("Requested target involving baseline, but did not provide long enough trajectories.")
     }
     

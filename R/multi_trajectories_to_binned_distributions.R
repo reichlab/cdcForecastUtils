@@ -37,12 +37,30 @@ multi_trajectories_to_binned_distributions <- function(
   season_end_ew,
   cdc_report_ew
 ) {
+  if ("First week below baseline" %in% targets | "Below baseline for 3 weeks" %in% targets){
+    return_df <- data.frame()
+    for (location in multi_trajectories$location){
+      local_baseline <- get_ili_baseline(location,year=2015)
+      tmp_df <- trajectories_to_binned_distributions(multi_trajectories[multi_trajectories$location == location,]$trajectories[[1]],
+                                           targets = targets,
+                                           baseline = local_baseline,
+                                           h_max = h_max,
+                                           bins = bins,
+                                           season_start_ew = season_start_ew,
+                                           season_end_ew = season_end_ew,
+                                           cdc_report_ew = cdc_report_ew)                        
+      tmp_df$location <- location
+      return_df <- rbind(return_df,tmp_df)
+    }
+    return (return_df)
+  } else{
   return(
     multi_trajectories %>%
       dplyr::mutate(
         summaries = purrr::map(
           trajectories,
           trajectories_to_binned_distributions,
+          baseline=FALSE,
           targets = targets,
           h_max = h_max,
           bins = bins,
@@ -54,4 +72,5 @@ multi_trajectories_to_binned_distributions <- function(
       dplyr::select(-trajectories) %>%
       tidyr::unnest(cols = summaries)
   )
+  }
 }
