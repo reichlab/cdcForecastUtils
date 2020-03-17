@@ -1,13 +1,11 @@
 context("verify_entry")
 
-valid_file <- system.file("data/EW44-2019-valid_national.csv", package="cdcForecastUtils")
+valid_file <- system.file("extdata/EW10-2019-valid_national_template.csv", package="cdcForecastUtils")
 valid_entry <- cdcForecastUtils::read_entry(valid_file)
-valid_state_file <- system.file("data/EW44-2019-valid_state.csv", package = "cdcForecastUtils")
+valid_state_file <- system.file("extdata/EW10-2019-valid_state_template.csv", package = "cdcForecastUtils")
 valid_state_entry <- cdcForecastUtils::read_entry(valid_state_file)
 
-invalid_file_col <- system.file("data/EW01-2020-national_invalidCols.csv", package="cdcForecastUtils")
-invalid_file_NA <- system.file("data/EW44-2019-national_templatewithNA.csv", package="cdcForecastUtils")
-invalid_state_NA <- system.file("data/EW44-2019-state_templatewithNA.csv", package = "cdcForecastUtils")
+invalid_file_col <- system.file("extdata/EW01-2020-national_invalidCols.csv", package="cdcForecastUtils")
 
 test_that("Valid entry passes", {
   expect_true(verify_entry_file(valid_file))

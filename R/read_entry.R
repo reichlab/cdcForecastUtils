@@ -14,9 +14,9 @@ read_entry = function(file) {
 
   names(entry) <- tolower(names(entry))
   
-  entry <- entry %>%
-    dplyr::mutate(value = as.numeric(value),
-                  bin = as.numeric(bin))
+  # entry <- entry %>%
+  #   dplyr::mutate(value = as.numeric(value),
+  #                 bin = as.numeric(bin))
 
   # Add forecast week to imported data
   forecast_week <- as.numeric(gsub("EW", "", 

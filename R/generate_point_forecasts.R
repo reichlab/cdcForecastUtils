@@ -112,10 +112,5 @@ generate_point_forecast <- function(d, method =
                                    paste0("2020-EW",value),value))
   }
   
-  # Reset weeks back to MMWR format
-  temp <- temp %>%
-    dplyr::mutate(bin = ifelse(target %in% c("Peak week","First week below baseline"),
-                               paste0("2020-EW",bin),bin))
-  
   return(temp)
 }
