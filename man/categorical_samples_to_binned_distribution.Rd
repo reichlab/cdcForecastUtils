@@ -13,8 +13,7 @@ categorical_samples_to_binned_distribution(x, bins)
 }
 \value{
 Data frame with columns:
-   bin_start_incl: lower endpoints of bins
-   bin_end_notincl: upper endpoints of bins
+   bin: bin name
    value: proportion of x falling in bin
 }
 \description{

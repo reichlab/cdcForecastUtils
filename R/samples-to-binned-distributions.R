@@ -6,8 +6,7 @@
 #'    c(seq(from = 0.0, to = 25.0, by = 0.1), 100.0)
 #'
 #' @return Data frame with columns:
-#'    bin_start_incl: lower endpoints of bins
-#'    bin_end_notincl: upper endpoints of bins
+#'    bin: lower endpoints of bins
 #'    value: proportion of x falling in bin
 #'
 #' @export
@@ -36,8 +35,7 @@ numeric_samples_to_binned_distribution <- function(
 #' @param bins character vector of bin values.
 #' 
 #' @return Data frame with columns:
-#'    bin_start_incl: lower endpoints of bins
-#'    bin_end_notincl: upper endpoints of bins
+#'    bin: bin name
 #'    value: proportion of x falling in bin
 #'
 #' @export
@@ -45,14 +43,26 @@ categorical_samples_to_binned_distribution <- function(
   x,
   bins
 ) {
+  # convert everything to character
+  x <- as.character(x)
+  bins <- as.character(bins)
+  if(!all(x %in% bins)) {
+    stop("Sample values x are not all in bins")
+  }
+  
   # counts in each bin
-  bin_counts <- sapply(bins, function(bin) {sum(bins == x, na.rm = TRUE)})
+  bin_counts <- sapply(
+    bins,
+    function(bin) {
+      sum(x == bin, na.rm = TRUE)
+    }
+  )
   
   # results data frame
   num_bins <- length(bins) - 1
   return(
     data.frame(
-      bins = bins,
+      bin = bins,
       value = bin_counts / sum(bin_counts),
       stringsAsFactors = FALSE
     )

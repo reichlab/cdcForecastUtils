@@ -14,8 +14,7 @@ c(seq(from = 0.0, to = 25.0, by = 0.1), 100.0)}
 }
 \value{
 Data frame with columns:
-   bin_start_incl: lower endpoints of bins
-   bin_end_notincl: upper endpoints of bins
+   bin: lower endpoints of bins
    value: proportion of x falling in bin
 }
 \description{
