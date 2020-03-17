@@ -40,6 +40,7 @@ function(
   cdc_report_ew
 )
 {
+  trajectories[trajectories > 100] <- 100
   # validate targets
   valid_targets <- c("wk ahead", "Below baseline for 3 weeks",
     "First week below baseline", "Peak height", "Peak week")
@@ -65,7 +66,7 @@ function(
           bins = bins) %>%
           dplyr::mutate(
             target = paste0(h-idx_of_current_time, " wk ahead"),
-            type = "Bin"
+            type = "bin"
           )
       }
     )
@@ -97,7 +98,7 @@ function(
     if("Below baseline for 3 weeks" %in% targets) {
       below_baseline <- data.frame(
         target = "Below baseline for 3 weeks",
-        type = "Bin",
+        type = "bin",
         bin = "true",
         value = mean(!is.na(below_baseline_idx_by_trajectory))
       )
@@ -127,7 +128,7 @@ function(
         bin = bins) %>%
       dplyr::mutate(
         target = "Peak height",
-        type = "Bin"
+        type = "bin"
       )
   } else {
     season_peak_height <- NULL
@@ -139,8 +140,8 @@ function(
         x = rowMaxWeek(trajectories),
         bin = seq(1,length(date_seq)+1)) %>%
       dplyr::mutate(
-        target = "Peak Week",
-        type = "Bin"
+        target = "Peak week",
+        type = "bin"
       )
     
     season_peak_week$bin <- date_seq[1:(length(date_seq))]

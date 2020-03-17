@@ -24,71 +24,6 @@ plot(ma_data$unweighted_ili,type='l')
 
 
 
-We then fit sarimaTD up to the current date
-
-```{r}
-
-sarimaFit <- sarimaTD::fit_sarima(tail(ma_data$unweighted_ili,200),
-                         ts_frequency = 52)
-
-```
-
-
-Next, we generate a matrix of nsim by time till end of season.  In order to do that we first get the current date and figure out how many steps there are left in the current season. We know that the season ends on YYYY-EW20.
-
-```{r}
-current_date_in_cdc_format <-paste0(tail(ma_data$year,1),"-EW", ifelse(nchar(tail(ma_data$week,1))==2,tail(ma_data$week,1),paste0("0",tail(ma_data$week,1))))
-season_end <- "2020-EW20"
-time_left_in_season <- get_time_left_in_season(current_date_in_cdc_format,season_end)
-
-
-preds <- simulate(
-        object = sarimaFit,
-        nsim = 1000,
-        seed = 1,
-        newdata = ma_data$unweighted_ili,
-        h = time_left_in_season
-      )
-   
-```
-
-We next append the observed data from the current season which we know starts on YYYY-EW40 to the predictions to create a trajectory matrix. 
-
-
-```{r}
-season_start <- "2019-EW40"
-time_from_start_of_season <- get_time_from_start_of_season(season_start,current_date_in_cdc_format)
-
-trajectory_matrix <- cbind(matrix(rep(tail(ma_data$unweighted_ili,time_from_start_of_season),1000),nrow=1000,byrow = T),preds)
-
-```
-
-Finally, we convert the predicted trajectory matrix to a submission data frame.
-
-
-```{r}
-submission_df <- trajectories_to_binned_distributions(
-  trajectories = trajectory_matrix,
-  targets = c("wk ahead", "Peak height", "Peak week"),
-  h_max = 6,
-  bins = c(seq(0, 25, by = .1), 100),
-  season_start_ew = season_start,
-  season_end_ew = season_end,
-  cdc_report_ew = current_date_in_cdc_format) %>%
-  mutate(location = "Massachusetts")
-
-head(submission_df)
-
-# Throwing errors!
-#
-#cdcForecastUtils::verify_entry(
-#  submission_df %>% mutate(type = tolower(type)),
-#  challenge = "state_ili")
-
-generate_csv_from_submission_df(submission_df %>% mutate(type = tolower(type)),"./")
-```
-
-
 ### Multiple States
 
 ```{r}
@@ -99,17 +34,21 @@ states
 Function to do all the steps to get the trajectories matrix for a single state:
 
 ```{r}
+season_start <- "2020-EW10"
+
+season_end <- "2020-EW35"
+current_date_in_cdc_format <-paste0(tail(flu_data$year,1),"-EW", ifelse(nchar(tail(flu_data$week,1))==2,tail(flu_data$week,1),paste0("0",tail(flu_data$week,1))))
+
 get_trajectories_one_state <- function(location, flu_data) {
   # subset to state data
   state_data <- flu_data[flu_data$region == location,]
   
   # fit sarima model
-  sarimaFit <- sarimaTD::fit_sarima(tail(state_data$unweighted_ili,200),
+  sarimaFit <- sarimaTD::fit_sarima(tail(state_data$unweighted_ili,100),
     ts_frequency = 52)
   
   # times (could really be done once outside this function)
-  current_date_in_cdc_format <-paste0(tail(state_data$year,1),"-EW", ifelse(nchar(tail(state_data$week,1))==2,tail(state_data$week,1),paste0("0",tail(state_data$week,1))))
-  season_end <- "2020-EW20"
+  
   time_left_in_season <- get_time_left_in_season(current_date_in_cdc_format,season_end)
   
   # predictions
@@ -122,7 +61,6 @@ get_trajectories_one_state <- function(location, flu_data) {
         )
 
   # prepend observed data
-  season_start <- "2019-EW40"
   time_from_start_of_season <- get_time_from_start_of_season(season_start,current_date_in_cdc_format)
   
   trajectory_matrix <- cbind(matrix(rep(tail(ma_data$unweighted_ili,time_from_start_of_season),1000),nrow=1000,byrow = T),preds)
