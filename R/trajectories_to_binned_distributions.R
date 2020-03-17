@@ -52,7 +52,7 @@ function(
   targets <- valid_targets[valid_targets_lower %in% user_targets]
   
   # set up globals
-  date_seq <-date_start_and_end_to_date_seq(season_start_ew,season_end_ew)
+  date_seq <- date_start_and_end_to_date_seq(season_start_ew,season_end_ew)
   idx_of_current_time <- get_current_time_in_date_seq(cdc_report_ew,date_seq)
   
   # wk ahead
@@ -84,7 +84,7 @@ function(
       stop("Requested target involving baseline, but did not provide long enough trajectories.")
     }
     
-    trajectories_for_baseline_calc <- trajectories[, seq_len(length(date_seq) + 3)]
+    trajectories_for_baseline_calc <- trajectories[, seq_len(length(date_seq) + 3), drop = FALSE]
     below_baseline_idx_by_trajectory <- apply(
       trajectories_for_baseline_calc,
       1,
@@ -99,7 +99,8 @@ function(
         target = "Below baseline for 3 weeks",
         type = "bin",
         bin = "true",
-        value = mean(!is.na(below_baseline_idx_by_trajectory))
+        value = mean(!is.na(below_baseline_idx_by_trajectory)),
+        stringsAsFactors = FALSE
       )
     } else {
       below_baseline <- NULL
@@ -107,11 +108,15 @@ function(
     
     # first week below baseline
     non_na_idx <- below_baseline_idx_by_trajectory[!is.na(below_baseline_idx_by_trajectory)]
-    if("First week below baseline" %in% targets && length(non_na_ix) > 0) {
+    if("First week below baseline" %in% targets && length(non_na_idx) > 0) {
       first_below_baseline <- categorical_samples_to_binned_distribution(
         date_seq[non_na_idx],
         date_seq
-      )
+      ) %>%
+        dplyr::mutate(
+          target = "First week below baseline",
+          type = "bin"
+        )
     } else {
       first_below_baseline <- NULL
     }
@@ -149,8 +154,12 @@ function(
   }
 
   # assemble and return
-  submission_df <- rbind(short_term_results,season_peak_week,season_peak_height)
-  submission_df$forecast_week <- cdc_report_ew
-  
+  submission_df <- rbind(
+    short_term_results,
+    season_peak_week,
+    season_peak_height,
+    below_baseline,
+    first_below_baseline)
+
   return(submission_df)
 }
