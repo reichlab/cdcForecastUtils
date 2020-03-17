@@ -104,7 +104,7 @@ get_trajectories_one_state <- function(location, flu_data) {
   state_data <- flu_data[flu_data$region == location,]
   
   # fit sarima model
-  sarimaFit <- sarimaTD::fit_sarima(tail(state_data$unweighted_ili,200),
+  sarimaFit <- sarimaTD::fit_sarima(tail(state_data$unweighted_ili,100),
     ts_frequency = 52)
   
   # times (could really be done once outside this function)
