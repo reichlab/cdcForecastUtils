@@ -23,7 +23,7 @@ verify_point <- function(entry) {
     dplyr::mutate(weekrange=ifelse(!(is.na(value)), 
                                gsub("EW", "", regmatches(bin, regexpr("(?:EW)[0-9]{2}", bin))),value),
                   check_range=(weekrange>35 |weekrange<10),
-                  check_char=(regmatches("2020-EW",regexpr("2020-EW[0-90-9]",value))=="2020-EW")
+                  check_char=(regmatches(value,regexpr("2020-EW",value))=="2020-EW")
                   )
   
   # Report warning for missing point predictions

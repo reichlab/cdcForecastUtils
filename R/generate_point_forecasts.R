@@ -73,11 +73,11 @@ generate_point_forecast <- function(d, method =
     dplyr::mutate(bin=replace(bin, !(is.na(bin)), 
                               gsub("EW", "", regmatches(bin, regexpr("(?:EW)[0-9]{2}", bin))))) %>%
     dplyr::mutate(bin=as.numeric(bin),value = suppressWarnings(as.numeric(value)))
-  
+
   # combine with bin being numeric
   d3 <- rbind(d1,d2) %>%
     dplyr::arrange(location, target, bin)
-  
+
   # Expected Value method
   if (method == "Expected Value") {
     temp <- d3 %>%
@@ -93,7 +93,7 @@ generate_point_forecast <- function(d, method =
   
   # Median method
   if (method == "Median") {
-    temp <- d %>%
+    temp <- d3 %>%
       dplyr::mutate(cumulative = cumsum(value),
                     type = "point") %>%
       dplyr::filter(dplyr::row_number() == min(which(cumulative >= 0.5))) %>%
@@ -104,13 +104,17 @@ generate_point_forecast <- function(d, method =
   
   # Mode method
   if (method == "Mode") {
-    temp <- d %>%
+    temp <- d3 %>%
       dplyr::filter(value == max(value)) %>%
       dplyr::select(location, target, value = bin, type) %>%
       dplyr::mutate(type = "point",
                     value = ifelse(target %in% c("Peak week","First week below baseline"),
                                    paste0("2020-EW",value),value))
   }
+  
+  temp <- temp %>%
+    dplyr::mutate(bin=NA)
+    dplyr::select(location, target, type, value)
   
   return(temp)
 }
