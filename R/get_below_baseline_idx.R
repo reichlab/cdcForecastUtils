@@ -1,5 +1,5 @@
 #' Compute first week when incidence falls below baseline and remains below for
-#' at least three weeks in a row.
+#' at least lookahead_length weeks in a row.
 #'
 #' @param trajectory a numeric vector with incidence for each time point in a 
 #'   season
