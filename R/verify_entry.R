@@ -49,7 +49,7 @@ verify_entry <- function(entry, challenge = "ilinet", check_week = T) {
     dplyr::ungroup() %>%
     unique() 
   set <- paste(set$location,set$target,sep="-")
-  message("Forecasts detected for the following set of targets/locations: ", paste(set,sep=""))
+  message("Forecasts detected for the following set of targets/locations: ", paste(set,sep=", "))
   
   # Verify column contents
   cdcForecastUtils::verify_locations(entry, challenge)
