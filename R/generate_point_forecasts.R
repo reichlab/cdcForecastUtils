@@ -78,10 +78,11 @@ generate_point_forecast <- function(d, method =
   d3 <- rbind(d1,d2) %>%
     dplyr::arrange(location, target, bin)
 
+
   # Expected Value method
   if (method == "Expected Value") {
     temp <- d3 %>%
-      stats::na.omit() %>% # Remove the NA for no onset to calculate mean
+      stats::na.omit() %>% 
       dplyr::mutate(probability = value/sum(value),
                     value       = as.numeric(bin)) %>%
       dplyr::summarize(value = sum(value*probability)) %>%
@@ -99,9 +100,9 @@ generate_point_forecast <- function(d, method =
       dplyr::filter(dplyr::row_number() == min(which(cumulative >= 0.5))) %>%
       dplyr::select(location, target, value = bin, type) %>%
       dplyr::mutate(value = ifelse(target %in% c("Peak week","First week below baseline"),
-                                   paste0("2020-EW",value),value))
+                                   paste0("2020-EW",as.character(value)),as.character(value))) 
   }
-  
+
   # Mode method
   if (method == "Mode") {
     temp <- d3 %>%
@@ -109,12 +110,12 @@ generate_point_forecast <- function(d, method =
       dplyr::select(location, target, value = bin, type) %>%
       dplyr::mutate(type = "point",
                     value = ifelse(target %in% c("Peak week","First week below baseline"),
-                                   paste0("2020-EW",value),value))
+                                   paste0("2020-EW",as.character(value)),as.character(value))) 
   }
   
   temp <- temp %>%
-    dplyr::mutate(bin=NA)
-    dplyr::select(location, target, type, value)
+    dplyr::mutate(bin=NA) %>%
+    dplyr::select(location, target, type, bin, value)
   
   return(temp)
 }
