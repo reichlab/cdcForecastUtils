@@ -21,9 +21,9 @@ verify_point <- function(entry) {
   point_char <- entry %>%
     dplyr::filter(type == "point",target %in% c("Peak week","First week below baseline")) %>%
     dplyr::mutate(weekrange=ifelse(!(is.na(value)), 
-                               gsub("EW", "", regmatches(bin, regexpr("(?:EW)[0-9]{2}", bin))),value),
+                               as.numeric(substr(value,8,10))),
                   check_range=(weekrange>35 |weekrange<10),
-                  check_char=(regmatches(value,regexpr("2020-EW",value))=="2020-EW")
+                  check_char=(regmatches(value,regexpr("2020-EW",value))!="2020-EW")
                   )
   
   # Report warning for missing point predictions
@@ -37,7 +37,7 @@ verify_point <- function(entry) {
   }
   
   # Report error for negative point predictions
-  if (any(point$negative)) {
+  if (any(point[point$target %in% c(paste(1:4, " wk ahead")),]$negative)) {
     tmp <- point %>%
       dplyr::filter(negative)
     

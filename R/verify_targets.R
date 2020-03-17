@@ -37,7 +37,7 @@ verify_targets <- function(entry, challenge = "ilinet") {
     message("Please check if this is intended - Missing these targets: ", paste(missing_targets))
   
   if (length(extra_targets)>0)
-    warning("These extra targets are not valid and are ignored: ", paste(extra_targets))
+    warning("These extra targets are not valid and are ignored. Please check capitalization or spelling: ", paste(extra_targets))
   
   return(invisible(TRUE))
 }

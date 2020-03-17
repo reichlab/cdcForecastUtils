@@ -40,11 +40,11 @@ verify_bins <- function(entry, challenge = "ilinet") {
     extra_bins <- setdiff(entry_bins, valid_bins)
     
     if (length(missing_bins) > 0)
-      errors <- c(errors, paste0("Missing these bins for ", 
+      errors <- c(errors, paste0("Please check bin range - missing these bins for ", 
                                  entry_targets[i], ": ", missing_bins, "\n"))
     
     if (length(extra_bins) > 0)
-      warnings <- c(warnings, paste0("These extra bins for ",
+      warnings <- c(warnings, paste0("Please check bin range - these extra bins for ",
                                      entry_targets[i], " are ignored: ",
                                      extra_bins, "\n"))
   }
