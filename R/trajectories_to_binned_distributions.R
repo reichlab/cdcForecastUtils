@@ -40,7 +40,6 @@ function(
   cdc_report_ew
 )
 {
-  trajectories[trajectories > 100] <- 100
   # validate targets
   valid_targets <- c("wk ahead", "Below baseline for 3 weeks",
     "First week below baseline", "Peak height", "Peak week")
