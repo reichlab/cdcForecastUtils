@@ -7,8 +7,10 @@ short-term and/or seasonal targets.}
 \usage{
 trajectories_to_binned_distributions(
   trajectories,
+  targets,
   h_max,
   bins,
+  baseline,
   season_start_ew,
   season_end_ew,
   cdc_report_ew
@@ -21,11 +23,16 @@ time points needed to calculate seasonal and short-term targets}
 
 \item{h_max}{largest horizon for short-term targets}
 
-\item{bins:}{named list of bin start and end points.  For example:
-list(
-  "season peak incidence" = c(seq(from = 0.0, to = 25.0, by = 0.1), 100.0),
-  "season peak timing" = c(seq(from = 40, to = 53), seq(from = 1, to = 20)),
-  "onset timing" = c(as.character(c(seq(from = 40, to = 53), seq(from = 1, to = 20))), "none")}
+\item{targets:}{character vector specifying targets to compute. May include:
+"wk ahead", "Below baseline for 3 weeks", "First week below baseline",
+"Peak height", "Peak week"}
+
+\item{bins:}{vector of start and end points for incidence targets.
+For example: c(seq(from = 0.0, to = 25.0, by = 0.1), 100.0)}
+
+\item{baseline:}{baseline for this unit, if applicable; required if
+"onset timing", "Below baseline for 3 weeks", or
+"First week below baseline" are among the targets to forecast}
 
 \item{season_start_ew:}{character specification of season start epidemic
 week, formatted as "2019-EW40"}
@@ -38,10 +45,10 @@ to most recent cdc report, formatted as "2019-EW40"}
 }
 \value{
 data frame with columns:
-   target: with values coming from names(bins)
+   target: with values coming from targets
    type: populated with "Bin"
-   bin_start_incl: lower endpoints of bins
-   bin_end_notincl: upper endpoints of bins
+   bin: name of bin for categorical targets, lower endpoint of bin for
+       numeric targets
    value: proportion of trajectories falling in bin
 }
 \description{

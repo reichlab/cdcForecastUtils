@@ -6,12 +6,12 @@
 #'    `trajectories` containing simulated trajectories.   Other
 #'    columns may also be provided which are treated as uniquely
 #'    identifying units such as locations or age groups.
+#' @param targets: character vector specifying targets to compute. May include:
+#'    "wk ahead", "Below baseline for 3 weeks", "First week below baseline",
+#'    "Peak height", "Peak week"
 #' @param h_max largest horizon for short-term targets
-#' @param bins: named list of bin start and end points.  For example:
-#'    list(
-#'      "season peak incidence" = c(seq(from = 0.0, to = 25.0, by = 0.1), 100.0),
-#'      "season peak timing" = c(seq(from = 40, to = 53), seq(from = 1, to = 20)),
-#'      "onset timing" = c(as.character(c(seq(from = 40, to = 53), seq(from = 1, to = 20))), "none")
+#' @param bins: vector of start and end points for incidence targets.
+#'    For example: c(seq(from = 0.0, to = 25.0, by = 0.1), 100.0)
 #' @param season_start_ew: character specification of season start epidemic
 #'    week, formatted as "2019-EW40"
 #' @param season_end_ew: character specification of season end epidemic week,
@@ -23,13 +23,14 @@
 #'    ...: columns in multi_trajectories other than `trajectories`
 #'    target: with values coming from names(bins)
 #'    type: populated with "Bin"
-#'    bin_start_incl: lower endpoints of bins
-#'    bin_end_notincl: upper endpoints of bins
+#'    bin: name of bin for categorical targets, lower endpoint of bin for
+#'        numeric targets
 #'    value: proportion of trajectories falling in bin
 #' 
 #' @export
 multi_trajectories_to_binned_distributions <- function(
   multi_trajectories,
+  targets,
   h_max,
   bins,
   season_start_ew,
@@ -42,6 +43,7 @@ multi_trajectories_to_binned_distributions <- function(
         summaries = purrr::map(
           trajectories,
           trajectories_to_binned_distributions,
+          targets = targets,
           h_max = h_max,
           bins = bins,
           season_start_ew = season_start_ew,
@@ -49,7 +51,7 @@ multi_trajectories_to_binned_distributions <- function(
           cdc_report_ew = cdc_report_ew
         )
       ) %>%
-      select(-trajectories) %>%
+      dplyr::select(-trajectories) %>%
       tidyr::unnest(cols = summaries)
   )
 }

@@ -34,7 +34,7 @@ sarimaFit <- sarimaTD::fit_sarima(tail(ma_data$unweighted_ili,200),
 ```
 
 
-Next, we generate a matrix of nsim by time till end of season. In order to do that we first get the current date and figure out how many steps there are left in the current season. We know that the season ends on YYYY-EW20.
+Next, we generate a matrix of nsim by time till end of season.  In order to do that we first get the current date and figure out how many steps there are left in the current season. We know that the season ends on YYYY-EW20.
 
 ```{r}
 current_date_in_cdc_format <-paste0(tail(ma_data$year,1),"-EW", ifelse(nchar(tail(ma_data$week,1))==2,tail(ma_data$week,1),paste0("0",tail(ma_data$week,1))))
@@ -67,15 +67,25 @@ Finally, we convert the predicted trajectory matrix to a submission data frame.
 
 
 ```{r}
-submission_df <- trajectories_to_binned_distributions(trajectories = trajectory_matrix,
-                                                             bins = c(seq(0,13,by=.1),100),
-                                                             season_start_ew = season_start,
-                                                             season_end_ew = season_end,
-                                                             cdc_report_ew = current_date_in_cdc_format,
-                                                             h_max = 6)
+submission_df <- trajectories_to_binned_distributions(
+  trajectories = trajectory_matrix,
+  targets = c("wk ahead", "Peak height", "Peak week"),
+  h_max = 6,
+  bins = c(seq(0, 25, by = .1), 100),
+  season_start_ew = season_start,
+  season_end_ew = season_end,
+  cdc_report_ew = current_date_in_cdc_format) %>%
+  mutate(location = "Massachusetts")
 
 head(submission_df)
-generate_csv_from_submission_df(submission_df,"./")
+
+# Throwing errors!
+#
+#cdcForecastUtils::verify_entry(
+#  submission_df %>% mutate(type = tolower(type)),
+#  challenge = "state_ili")
+
+generate_csv_from_submission_df(submission_df %>% mutate(type = tolower(type)),"./")
 ```
 
 
@@ -89,9 +99,9 @@ states
 Function to do all the steps to get the trajectories matrix for a single state:
 
 ```{r}
-get_trajectories_one_state <- function(state, flu_data) {
+get_trajectories_one_state <- function(location, flu_data) {
   # subset to state data
-  state_data <- flu_data[flu_data$region == state,]
+  state_data <- flu_data[flu_data$region == location,]
   
   # fit sarima model
   sarimaFit <- sarimaTD::fit_sarima(tail(state_data$unweighted_ili,200),
@@ -127,7 +137,7 @@ Call the function once for each state; assemble matrices in a tibble
 
 ```{r}
 trajectories_by_state <- tibble(
-  state = states
+  location = states
 ) %>%
   mutate(
     trajectories = purrr::map(
@@ -144,11 +154,12 @@ trajectories_by_state
 ```{r}
 submission_df <- multi_trajectories_to_binned_distributions(
   multi_trajectories = trajectories_by_state,
-  bins = c(seq(0, 13, by = .1), 100),
+  targets = c("wk ahead", "Peak height", "Peak week"),
+  h_max = 6,
+  bins = c(seq(0, 25, by = .1), 100),
   season_start_ew = season_start,
   season_end_ew = season_end,
-  cdc_report_ew = current_date_in_cdc_format,
-  h_max = 6)
+  cdc_report_ew = current_date_in_cdc_format)
 ```
 
 ```{r}
@@ -157,9 +168,8 @@ head(submission_df)
 
 ```{r}
 submission_df %>%
-  distinct(state, target) %>%
+  distinct(location, target) %>%
   as.data.frame()
-submission_df$location <-submission_df$state
 head(submission_df)
 
 generate_csv_from_submission_df(submission_df,"./")

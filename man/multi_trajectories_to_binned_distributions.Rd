@@ -8,6 +8,7 @@ short-term and/or seasonal targets.}
 \usage{
 multi_trajectories_to_binned_distributions(
   multi_trajectories,
+  targets,
   h_max,
   bins,
   season_start_ew,
@@ -23,11 +24,12 @@ identifying units such as locations or age groups.}
 
 \item{h_max}{largest horizon for short-term targets}
 
-\item{bins:}{named list of bin start and end points.  For example:
-list(
-  "season peak incidence" = c(seq(from = 0.0, to = 25.0, by = 0.1), 100.0),
-  "season peak timing" = c(seq(from = 40, to = 53), seq(from = 1, to = 20)),
-  "onset timing" = c(as.character(c(seq(from = 40, to = 53), seq(from = 1, to = 20))), "none")}
+\item{targets:}{character vector specifying targets to compute. May include:
+"wk ahead", "Below baseline for 3 weeks", "First week below baseline",
+"Peak height", "Peak week"}
+
+\item{bins:}{vector of start and end points for incidence targets.
+For example: c(seq(from = 0.0, to = 25.0, by = 0.1), 100.0)}
 
 \item{season_start_ew:}{character specification of season start epidemic
 week, formatted as "2019-EW40"}
@@ -43,8 +45,8 @@ data frame with columns:
    ...: columns in multi_trajectories other than `trajectories`
    target: with values coming from names(bins)
    type: populated with "Bin"
-   bin_start_incl: lower endpoints of bins
-   bin_end_notincl: upper endpoints of bins
+   bin: name of bin for categorical targets, lower endpoint of bin for
+       numeric targets
    value: proportion of trajectories falling in bin
 }
 \description{
