@@ -66,7 +66,8 @@ get_trajectories_one_state <- function(location, flu_data) {
   trajectory_matrix <- cbind(matrix(rep(tail(ma_data$unweighted_ili,time_from_start_of_season),1000),nrow=1000,byrow = T),preds)
   
   trajectory_matrix[trajectory_matrix < 0.0] <- 0.0
-  
+  trajectory_matrix[trajectory_matrix > 100] <- 100
+
   return(trajectory_matrix)
 }
 ```
