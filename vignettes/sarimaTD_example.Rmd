@@ -115,6 +115,17 @@ point_forecasts$forecast_week <- unique(submission_df$forecast_week)
 point_forecasts
 submission_df_w_point_fcasts <- rbind(submission_df,point_forecasts)
 
+submission_df_w_point_fcasts$bin <- unlist(lapply(submission_df_w_point_fcasts$bin,function(x){
+  if (!is.na(x)){
+     if (nchar(x) <=2){
+      return (paste0(x,".0"))
+    }else{
+      return (x)
+    }
+  }else{
+    return (x)
+  }
+}))
 verify_entry(submission_df_w_point_fcasts,challenge='state_ili')
 
 generate_csv_from_submission_df(submission_df,"./")

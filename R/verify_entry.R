@@ -48,7 +48,7 @@ verify_entry <- function(entry, challenge = "ilinet", check_week = T) {
     dplyr::select(location,target) %>%
     dplyr::ungroup() %>%
     unique() 
-  set <- paste(set_check$location,set_check$target,sep="-")
+  set <- paste(set$location,set$target,sep="-")
   message("Forecasts detected for the following set of targets/locations: ", paste(set,sep=""))
   
   # Verify column contents
