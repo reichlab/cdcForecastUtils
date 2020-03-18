@@ -13,7 +13,7 @@ get_viz_from_submission_df <- function(submission_df){
   # plot_list
   plot_list <- list()
   plot_list[[1]] <- p_1_6
-  plot_list[[1]] <- p_seasonal
+  plot_list[[2]] <- p_seasonal
   
   return (plot_list)
 }
