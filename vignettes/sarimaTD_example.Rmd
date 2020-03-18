@@ -124,6 +124,9 @@ submission_df_w_point_fcasts$location <- as.factor(submission_df_w_point_fcasts$
 submission_df_w_point_fcasts$location <-
   dplyr::recode(submission_df_w_point_fcasts$location,"Region 1" = "HHS Region 1","National"="US National")
 verify_entry(submission_df_w_point_fcasts,challenge='ilinet')
+
+density_plots <- get_viz_from_submission_df(submission_df_w_point_fcasts)
+
 ```
 
 
