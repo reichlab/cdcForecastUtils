@@ -35,20 +35,10 @@ verify_bins <- function(entry, challenge = "ilinet") {
     entry_bins_unformatted <- unique(entry$bin[entry$target == entry_targets[i] & 
                                                 entry$type == "bin"])
     
-    entry_bins <- unlist(lapply(entry_bins_unformatted,function(x){
-      if (!is.na(x)){
-        if (nchar(x) <=2){
-          return (paste0(x,".0"))
-        }else{
-          return (x)
-        }
-      }else{
-        return (x)
-      }
-    }))
-    
+    entry_bins <- format_entry_bins(entry_bins_unformatted,entry_targets[i])
     valid_bins <- unique(valid$bin[valid$target == entry_targets[i] &
                                                 valid$type == "bin"])
+    
     missing_bins <- setdiff(valid_bins, entry_bins)
     extra_bins <- setdiff(entry_bins, valid_bins)
     
