@@ -128,6 +128,8 @@ verify_entry(submission_df_w_point_fcasts,challenge='ilinet')
 density_plots <- get_viz_from_submission_df(submission_df_w_point_fcasts)
 density_plots[[1]]
 density_plots[[2]]
+density_plots[[8]]
+
 ```
 
 
