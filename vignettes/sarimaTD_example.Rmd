@@ -7,7 +7,7 @@ output: pdf_document
 
 # An example of cdcForecast Utils for the sarimaTD model
 
-First we load up sarimaTD and grab the cdc ILI data for Massachusetts.
+We will use the following packages:
 
 ```{r setup, include=T}
 library(sarimaTD)
@@ -16,60 +16,96 @@ library(lubridate)
 library(dplyr)
 ```
 
+### Load Data
+
+Here we are using the `cdcForecastUtils::download_and_preprocess_state_flu_data` function to download state level ILINet data.
+
 ```{r}
 flu_data <- download_and_preprocess_state_flu_data()
+```
+
+Here is a plot of the data for Massachusetts
+
+```{r}
 ma_data <- flu_data[flu_data$region == "Massachusetts",]
 plot(ma_data$unweighted_ili,type='l')
 ```
 
+### Forecasts for Multiple States
 
-
-### Multiple States
+Let's generate a submission file for the first 5 states:
 
 ```{r}
 states <- unique(flu_data$region)[1:5]
 states
 ```
 
-Function to do all the steps to get the trajectories matrix for a single state:
+#### Model-specific helper function
+
+We define a function that creates a matrix of forecast trajectories from a SARIMA model for a single state.  This will look different for different models.  Here, the basic steps are:
+
+ * Subset to the data for a single state (this model looks at one state at a time)
+ * Fit a sarima model to the data for that state
+ * Determine the `forecast_horizon`: how many steps ahead we need to forecast.  This will depend on the targets we are interested in and where we are in the current season.
+ * Simulate "trajectories" of incidence.  At this point, we have an `nsims` by `forecast_horizon` matrix, where each row is one simulated trajectory of forecasted incidence after the most recent ILINet report.
+ * Prepend reported data.  Here we prepend the most recent values from ILINet.  Note that this does not make any adjustments for backfill.
 
 ```{r}
-season_start <- "2020-EW10"
+# Epidemic weeks for season start, season end, and most recent ILINet report
+# These are used in the calculations below
+season_start_ew <- "2020-EW10"
+season_end_ew <- "2020-EW35"
+cdc_report_ew <- paste0(tail(flu_data$year,1),"-EW", ifelse(nchar(tail(flu_data$week,1))==2,tail(flu_data$week,1),paste0("0",tail(flu_data$week,1))))
 
-season_end <- "2020-EW35"
-current_date_in_cdc_format <-paste0(tail(flu_data$year,1),"-EW", ifelse(nchar(tail(flu_data$week,1))==2,tail(flu_data$week,1),paste0("0",tail(flu_data$week,1))))
-
-get_trajectories_one_state <- function(location, flu_data) {
+#' Function to fit a sarimaTD model and generate predictions for a single
+#' state.
+#'
+#' @param nsim number of simulated trajectories to generate
+#' @param location name of state
+#' @param flu_data dataframe of ILINet data as returned by 
+#'    cdcForecastUtils::download_and_preprocess_state_flu_data
+#' 
+#' @return nsims by forercast_horizon matrix of combined reported ILINet data
+#'    (for past weeks) and simulated values for times after the most recent
+#'    ILINet report.
+get_trajectories_one_state <- function(nsim, location, flu_data) {
   # subset to state data
   state_data <- flu_data[flu_data$region == location,]
   
-  # fit sarima model
+  # fit sarima model -- model-specific code
   sarimaFit <- sarimaTD::fit_sarima(tail(state_data$unweighted_ili,100),
     ts_frequency = 52)
   
-  # times (could really be done once outside this function)
-  
+  # determine forecast horizon
+  # get_required_forecast_horizon is provided by the cdcForecastUtils package
   forecast_horizon <- get_required_forecast_horizon(
     targets = c("wk ahead", "Peak height", "Peak week"),
     h_max = 6,
-    season_end_ew = season_end,
-    cdc_report_ew = current_date_in_cdc_format
+    season_end_ew = season_end_ew,
+    cdc_report_ew = cdc_report_ew
   )
   
-  # predictions
+  # predictions -- model-specific code
   preds <- simulate(
-          object = sarimaFit,
-          nsim = 1000,
-          seed = 1,
-          newdata = state_data$unweighted_ili,
-          h = forecast_horizon
-        )
+    object = sarimaFit,
+    nsim = nsim,
+    seed = 1,
+    newdata = state_data$unweighted_ili,
+    h = forecast_horizon
+  )
 
   # prepend observed data
-  time_from_start_of_season <- get_time_from_start_of_season(season_start,current_date_in_cdc_format)
+  time_from_start_of_season <- get_time_from_start_of_season(season_start_ew,cdc_report_ew)
+  trajectory_matrix <- cbind(
+    matrix(
+      rep(tail(ma_data$unweighted_ili,time_from_start_of_season),1000),
+      nrow=1000,
+      byrow = T),
+    preds)
   
-  trajectory_matrix <- cbind(matrix(rep(tail(ma_data$unweighted_ili,time_from_start_of_season),1000),nrow=1000,byrow = T),preds)
-  
+  # this demonstration model isn't that great, and sometimes generates
+  # predictions outside the range of valid bins.
+  # Here we truncate them to be between 0 and 100
   trajectory_matrix[trajectory_matrix < 0.0] <- 0.0
   trajectory_matrix[trajectory_matrix > 100] <- 100
 
@@ -77,7 +113,9 @@ get_trajectories_one_state <- function(location, flu_data) {
 }
 ```
 
-Call the function once for each state; assemble matrices in a tibble
+#### Assemble simulated incidence trajectories across all locations of interest
+
+We now call the function defined above once for each state, and assemble the resulting matrices in a tibble.  **This is the required input to the `multi_trajectories_to_binned_distributions` function below.**
 
 ```{r}
 trajectories_by_state <- tibble(
@@ -85,8 +123,9 @@ trajectories_by_state <- tibble(
 ) %>%
   mutate(
     trajectories = purrr::map(
-      states,
+      location,
       get_trajectories_one_state,
+      nsim = 1000,
       flu_data = flu_data)
   )
 ```
@@ -95,36 +134,87 @@ trajectories_by_state <- tibble(
 trajectories_by_state
 ```
 
+The `trajectories_by_state` object is a tibble with the `trajectories` column being a list of matrices.  The first component of this list is a 1000 by 26 matrix of incidence trajectories:
+ * 1000 is the number of simulated trajectories we generated
+ * To generate predictions for the "1 wk ahead", ..., "6 wk ahead", "Peak height", and "Peak week" targets at this point in the season, we need simulated trajectories covering all 26 epidemic weeks between the season start and season end, inclusive.
+
+#### Convert incidence trajectories to a submission data frame and output to csv
+
 ```{r}
-submission_df <- multi_trajectories_to_binned_distributions(
+distributional_submission_df <- multi_trajectories_to_binned_distributions(
   multi_trajectories = trajectories_by_state,
   targets = c("wk ahead", "Peak height", "Peak week"),
   h_max = 6,
   bins = c(seq(0, 25, by = .1), 100),
-  season_start_ew = season_start,
-  season_end_ew = season_end,
-  cdc_report_ew = current_date_in_cdc_format)
+  season_start_ew = season_start_ew,
+  season_end_ew = season_end_ew,
+  cdc_report_ew = cdc_report_ew)
 ```
 
 ```{r}
-head(submission_df)
+head(distributional_submission_df)
 ```
 
 ```{r}
-submission_df %>%
+distributional_submission_df %>%
   distinct(location, target) %>%
   as.data.frame()
-head(submission_df)
+head(distributional_submission_df)
 
-point_forecasts <- generate_point_forecasts(submission_df,method="Median")
+point_forecasts <- generate_point_forecasts(distributional_submission_df,method="Median")
 
-submission_df_w_point_fcasts <- rbind(submission_df,point_forecasts)
+submission_df <- rbind(distributional_submission_df,point_forecasts)
 
-
-
-verify_entry(submission_df_w_point_fcasts,challenge='state_ili')
+verify_entry(submission_df,challenge='state_ili')
 
 generate_csv_from_submission_df(submission_df,"./")
 sub_file<-read_entry("./2020-EW10.csv")
 ```
+
+
+
+### Plot to see how simulated trajectories line up with intervals derived from submission df
+
+```{r}
+ps <- c(0.5, 0.005, 0.995, 0.025, 0.975, 0.10, 0.90, 0.25, 0.75)
+sample_summaries <- submission_df_w_point_fcasts %>%
+  filter(type == "bin") %>%
+  group_by(location, target) %>%
+  do(
+    setNames(
+      binned_distribution_quantile(bins = bins, bin_probabilities = value, p = ps),
+      paste0("q", ps)
+    )
+  )
+
+us_flu <- us_flu  %>%
+  mutate(
+    region = ifelse(
+      region == "National",
+      "US National",
+      paste0("HHS ", region)
+    )
+  )
+
+ggplot() +
+  geom_line(
+    data = us_flu %>%
+      filter(season != predict_season, !is.na(weighted_ili)),
+    mapping = aes(x = season_week, y = weighted_ili, group = season), color = "cornflowerblue", alpha = 0.4) +
+  geom_line(data = sample_summaries, mapping = aes(x = season_week, y = median_ili_hat)) +
+  geom_point(data = sample_summaries, mapping = aes(x = season_week, y = median_ili_hat)) +
+  geom_ribbon(data = sample_summaries, mapping = aes(x = season_week, ymin = q0.005, ymax = q0.995), alpha = 0.1) +
+  geom_ribbon(data = sample_summaries, mapping = aes(x = season_week, ymin = q0.025, ymax = q0.975), alpha = 0.1) +
+  geom_ribbon(data = sample_summaries, mapping = aes(x = season_week, ymin = q0.10, ymax = q0.90), alpha = 0.1) +
+  geom_ribbon(data = sample_summaries, mapping = aes(x = season_week, ymin = q0.25, ymax = q0.75), alpha = 0.1) +
+  geom_line(
+    data = us_flu %>% filter(season == predict_season, !is.na(weighted_ili)),
+    mapping = aes(x = season_week, y = weighted_ili), color = "orange", linetype = 1) +
+  geom_point(
+    data = us_flu %>% filter(season == predict_season, !is.na(weighted_ili)),
+    mapping = aes(x = season_week, y = weighted_ili), color = "orange") +
+  facet_wrap( ~ region) +
+  theme_bw()
+```
+
 
