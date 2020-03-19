@@ -1,9 +1,12 @@
 ---
 title: "sarimaTD_example"
-author: "Graham Casey Gibson, Evan L. Ray, Nutcha Wattanachit"
-date: "3/13/2020"
+author: "Graham Casey Gibson, Evan L. Ray, Nutcha Wattanachit, Nicholas Reich"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: pdf_document
+fontsize: 11pt
+geometry: margin=1in
 ---
+
 
 
 ```{r setup, include=T}
@@ -14,7 +17,7 @@ knitr::opts_chunk$set(message=FALSE, warning=FALSE)
 
 We will use the following packages:
 
-```{r packages, include=T}
+```{r packages}
 library(sarimaTD)
 library(cdcForecastUtils)
 library(lubridate)
@@ -218,7 +221,7 @@ density_plots[[8]]
 ### Plot to verify that simulated trajectories line up with intervals derived from submission df
 
 
-```{r}
+```{r plot}
 plot_trajectories_and_intervals(
   flu_data = flu_data,
   target_variable = "weighted_ili",
