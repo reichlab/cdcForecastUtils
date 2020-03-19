@@ -16,12 +16,12 @@ get_targets_regions<- function(sanitized_file) {
     dplyr::ungroup() %>%
     unique()
   model_name<-substr(basename(sanitized_file),11,nchar(basename(sanitized_file))-4)
-  forecast_week<-as.numeric(gsub("EW", "", 
-                                 regmatches(sanitized_file, regexpr("(?:EW)[0-9]{2}", sanitized_file))))
+  forecast_week<-as.numeric(gsub("ew", "", 
+                                 regmatches(sanitized_file, regexpr("(?:ew)[0-9]{2}", sanitized_file))))
   date_file <- cdcForecastUtils::covid_19_forecast_dates
   set$model_name <- model_name
   set$forecasts_due <- date_file$forecasts_due[
-    which(as.numeric(gsub("EW", "", regmatches(date_file$ilinet_data_thru_ew, 
-                                               regexpr("(?:EW)[0-9]{2}", date_file$ilinet_data_thru_ew))))==forecast_week)]
+    which(as.numeric(gsub("ew", "", regmatches(date_file$ilinet_data_thru_ew, 
+                                               regexpr("(?:ew)[0-9]{2}", date_file$ilinet_data_thru_ew))))==forecast_week)]
   return(set)
 }

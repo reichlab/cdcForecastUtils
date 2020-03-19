@@ -13,8 +13,8 @@ read_entry = function(file) {
                     stringsAsFactors = FALSE)
 
   # Add forecast week to imported data
-  forecast_week <- as.numeric(gsub("EW", "", 
-                                   regmatches(file, regexpr("(?:EW)[0-9]{2}", file))))
+  forecast_week <- as.numeric(gsub("ew", "", 
+                                   regmatches(file, regexpr("(?:ew)[0-9]{2}", file))))
   
   if (length(forecast_week > 0))
     entry <- dplyr::mutate(entry, forecast_week  = forecast_week)
