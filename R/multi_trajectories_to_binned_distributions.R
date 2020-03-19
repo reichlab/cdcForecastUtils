@@ -40,7 +40,7 @@ multi_trajectories_to_binned_distributions <- function(
   if ("First week below baseline" %in% targets | "Below baseline for 3 weeks" %in% targets){
     return_df <- data.frame()
     for (location in multi_trajectories$location){
-      local_baseline <- get_ili_baseline(location,year=2015)
+      local_baseline <- get_ili_baseline(location,year=2019)
       tmp_df <- trajectories_to_binned_distributions(multi_trajectories[multi_trajectories$location == location,]$trajectories[[1]],
                                            targets = targets,
                                            baseline = local_baseline,

@@ -24,5 +24,5 @@ date_start_and_end_to_date_seq <- function(date_start,date_end){
     }
   }))
   
-  return(paste0(back_to_dates$MMWRyear,"-EW",back_to_dates$MMWRweek))
+  return(paste0(back_to_dates$MMWRyear,"-ew",back_to_dates$MMWRweek))
 }
