@@ -3,7 +3,7 @@
 #' This function reads in the csv file and arranges it for consistency.
 #'
 #' @param file A csv file path
-#' @return An arranged data.frame
+#' @return A reformatted csv file
 #' @import dplyr
 #' @export
 write_sanitized_file <- function(file, challenge = "ilinet") {
