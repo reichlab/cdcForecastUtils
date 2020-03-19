@@ -4,6 +4,7 @@
 #'
 #' @param entry A data.frame of a csv entry
 #' @return A correctly formatted data.frame
+#' @import dplyr
 #' @export
 sanitize_entry <- function(entry){
   # change all column names to lower case
@@ -21,15 +22,18 @@ sanitize_entry <- function(entry){
   entry$bin <- tolower(trimws(entry$bin, which="both"))
   
   # add .0 to 1-25 integer bins if exist
-  if(length(entry$bin[which(entry$type=="bin" & (grepl("wk ahead",entry$target) | grepl("Peak height",entry$target)) & 
-             (!is.na(entry$bin)) & (nchar(entry$bin) <=2))])>0){
-    entry$bin[which(entry$type=="bin" & (grepl("wk ahead",entry$target) | grepl("Peak height",entry$target)) & 
+  if(length(
+      entry$bin[which(entry$type=="bin" & 
+                      (grepl("wk ahead",entry$target) | grepl("Peak height",entry$target)) & 
+                      (!is.na(entry$bin)) & (nchar(entry$bin) <=2))])>0){
+    entry$bin[which(entry$type=="bin" & 
+                      (grepl("wk ahead",entry$target) | grepl("Peak height",entry$target)) & 
                       (!is.na(entry$bin)) & (nchar(entry$bin) <=2))] <- 
       paste0(entry$bin[which(entry$type=="bin" & 
                                (grepl("wk ahead",entry$target) | grepl("Peak height",entry$target)) & 
                                (!is.na(entry$bin)) & (nchar(entry$bin) <=2))],".0")  
   } 
-    
+
   # sanitize value
   entry$value <- tolower(trimws(entry$value, which="both"))
   
