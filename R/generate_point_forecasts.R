@@ -100,7 +100,7 @@ generate_point_forecast <- function(d, method =
       dplyr::filter(dplyr::row_number() == min(which(cumulative >= 0.5))) %>%
       dplyr::select(location, target, value = bin, type) %>%
       dplyr::mutate(value = ifelse(target %in% c("Peak week","First week below baseline"),
-                                   paste0("2020-EW",as.character(value)),as.character(value))) 
+                                   paste0("2020-ew",as.character(value)),as.character(value))) 
   }
 
   # Mode method
@@ -110,7 +110,7 @@ generate_point_forecast <- function(d, method =
       dplyr::select(location, target, value = bin, type) %>%
       dplyr::mutate(type = "point",
                     value = ifelse(target %in% c("Peak week","First week below baseline"),
-                                   paste0("2020-EW",as.character(value)),as.character(value))) 
+                                   paste0("2020-ew",as.character(value)),as.character(value))) 
   }
   
   temp <- temp %>%

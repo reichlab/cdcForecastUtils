@@ -12,13 +12,17 @@
 #' @export
 #' @seealso \code{\link{verify_entry}}
 #' @examples
-#' file <- system.file("extdata", "valid-test.csv", package="cdcfluutils")
+#' file <- system.file("extdata", "valid-test.csv", package="cdcForecastUtils")
 #' verify_entry_file(file) # TRUE
 verify_entry_file <- function(file, challenge = "ilinet") {
   entry <- cdcForecastUtils::read_entry(file)
-  cdcForecastUtils::verify_entry(entry, challenge, check_week = F)
+  model_name<-basename(file)
+  if(cdcForecastUtils::verify_entry(entry, challenge, check_week = F)){
+    return(message(paste0(model_name," passed verification tests")))
+  } else {
+    return(message(paste0(model_name," failed verification tests")))
+  }
 }
-
 
 #' Verify entry stored as an R data.frame
 #'
@@ -43,13 +47,6 @@ verify_entry <- function(entry, challenge = "ilinet", check_week = T) {
   names(entry) <- tolower(names(entry))
   
   cdcForecastUtils::verify_colnames(entry, check_week)
-  # set <- entry %>%
-  #   dplyr::group_by(location,target) %>%
-  #   dplyr::select(location,target) %>%
-  #   dplyr::ungroup() %>%
-  #   unique() 
-  # set <- paste(set$location,set$target,sep="-")
-  # message("Forecasts detected for the following set of targets/locations: ", paste(set,sep=", "))
   
   # Verify column contents
   cdcForecastUtils::verify_locations(entry, challenge)

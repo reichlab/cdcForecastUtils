@@ -2,18 +2,22 @@
 % Please edit documentation in R/date_start_and_end_to_date_seq.R
 \name{date_start_and_end_to_date_seq}
 \alias{date_start_and_end_to_date_seq}
-\title{Get sequence of epidemic weeks between start and end points}
+\title{Compute the sequence of dates in CDCEpi format from the start date to the end date}
 \usage{
 date_start_and_end_to_date_seq(date_start, date_end)
 }
 \arguments{
-\item{date_start}{character: epidemic week in format "2020-EW10"}
+\item{date_start}{Start of the date sequence}
 
-\item{date_end}{character: epidemic week in format "2020-EW40"}
+\item{date_end}{End of the date sequence}
 }
 \value{
-character: sequence of epidemic weeks from date_start to date_end, inclusive
+Array of dates between date_start and date_end in CDCEpi format
 }
 \description{
-Get sequence of epidemic weeks between start and end points
+Compute the sequence of dates in CDCEpi format from the start date to the end date
 }
+\seealso{
+\code{\link{date_start_and_end_to_date_seq}}
+}
+\keyword{internal}
