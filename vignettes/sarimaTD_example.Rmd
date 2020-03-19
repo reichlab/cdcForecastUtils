@@ -78,7 +78,7 @@ get_trajectories_one_location <- function(
   
   # fit sarima model -- model-specific code
   sarima_fit <- sarimaTD::fit_sarima(tail(location_data[[target_variable]], 100),
-    ts_frequency = 52,seasonal_difference = T)
+    ts_frequency = 1,seasonal_difference = F)
   
   # determine forecast horizon
   # get_required_forecast_horizon is provided by the cdcForecastUtils package
@@ -112,6 +112,8 @@ get_trajectories_one_location <- function(
   # Here we truncate them to be between 0 and 100
   trajectory_matrix[trajectory_matrix < 0.0] <- 0.0
   trajectory_matrix[trajectory_matrix > 100] <- 99.9
+  trajectory_matrix[is.nan(trajectory_matrix)] <- 0.0
+  trajectory_matrix[is.infinite(trajectory_matrix)] <- 0.0
 
   return(trajectory_matrix)
 }
