@@ -47,7 +47,7 @@ verify_locations <- function(entry, challenge = "ilinet") {
   }
   if (length(possible_locations)>0)
     # message("Consider forecasting for these locations: ", paste(possible_locations))
-    message("These locations have no forecast: ", paste(possible_locations,sep=", "))
+    message("These locations have no forecast: ", paste(possible_locations, collapse = ", "))
   
   return(invisible(TRUE))
 }

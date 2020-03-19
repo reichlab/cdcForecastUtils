@@ -26,11 +26,11 @@ verify_colnames <- function(entry, check_week = T) {
         warning("Missing forecast_week - verification will proceed but forecast cannot be scored")
       }
     } else {
-      stop("Missing these columns: ", paste(missing_names))
+      stop("Missing these columns: ", paste(missing_names, collapse=", "))
     }
   }
   if (length(extra_names)>0)
-    warning("These extra columns are ignored: ", paste(extra_names))
+    warning("These extra columns are ignored: ", paste(extra_names, collapse=", "))
   
   return(invisible(TRUE))
 }

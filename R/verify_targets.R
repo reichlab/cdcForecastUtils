@@ -34,10 +34,10 @@ verify_targets <- function(entry, challenge = "ilinet") {
   
   if (length(missing_targets)>0)
     # message not warning or stop because it might be intentional
-    message("Please check if this is intended - Missing these targets: ", paste(missing_targets))
+    message("Please check if this is intended - Missing these targets: ", paste(missing_targets, collapse=", "))
   
   if (length(extra_targets)>0)
-    warning("These extra targets are not valid and are ignored. Please check capitalization or spelling: ", paste(extra_targets))
+    warning("These extra targets are not valid and are ignored. Please check capitalization or spelling: ", paste(extra_targets, collapse=", "))
   
   return(invisible(TRUE))
 }
