@@ -85,7 +85,7 @@ function(
       stop("Requested target involving baseline, but baseline not provided.")
     }
     
-    if(ncol(trajectories) < length(date_seq)+3) {
+    if(ncol(trajectories) < length(date_seq)+2) {
       stop("Requested target involving baseline, but did not provide long enough trajectories.")
     }
     
@@ -133,7 +133,7 @@ function(
   # peak height
   if("Peak height" %in% targets) {
     season_peak_height <- numeric_samples_to_binned_distribution(
-        x = rowMax(trajectories),
+        x = rowMax(trajectories[, seq_along(date_seq)]),
         bin = bins) %>%
       dplyr::mutate(
         target = "Peak height",
@@ -146,8 +146,8 @@ function(
   # peak week
   if("Peak week" %in% targets) {
     season_peak_week <- numeric_samples_to_binned_distribution(
-        x = rowMaxWeek(trajectories),
-        bin = seq(1,length(date_seq)+1)) %>%
+        x = rowMaxWeek(trajectories[, seq_along(date_seq)]),
+        bin = seq(1, length(date_seq) + 1)) %>%
       dplyr::mutate(
         target = "Peak week",
         type = "bin"
