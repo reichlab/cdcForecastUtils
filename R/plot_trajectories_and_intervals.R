@@ -72,7 +72,7 @@ plot_trajectories_and_intervals <- function(
       )
     ) %>%
     mutate_at(vars(starts_with("q")), as.numeric)
-  
+  if("Peak height" %in% sample_summaries$target | "Peak week" %in% sample_summaries$target){
   peak_height_summaries <- expand.grid(
     time = sort(unique(c(flu_data_to_plot$time, trajectories_df$time))),
     location = unique(flu_data_to_plot$location)
@@ -111,7 +111,7 @@ plot_trajectories_and_intervals <- function(
         ),
       by = "location"
     )
-  
+  }
   if("First week below baseline" %in% sample_summaries$target) {
     baseline_summaries <- sample_summaries %>%
       filter(target == "First week below baseline") %>%
