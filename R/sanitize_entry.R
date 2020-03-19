@@ -18,12 +18,18 @@ sanitize_entry <- function(entry){
   
   # sanitize bins
   # add .0 to 1-25 integer bins
-  entry$bin[which(entry$type=="bin" & (grepl("wk ahead",entry$target) | grepl("Peak height",entry$target)) & 
-             (!is.na(entry$bin)) & (nchar(entry$bin) <=2))] <- paste0(entry$bin,".0")  
+  if(length(entry$bin[which(entry$type=="bin" & (grepl("wk ahead",entry$target) | grepl("Peak height",entry$target)) & 
+             (!is.na(entry$bin)) & (nchar(entry$bin) <=2))])>0){
+    entry$bin[which(entry$type=="bin" & (grepl("wk ahead",entry$target) | grepl("Peak height",entry$target)) & 
+                      (!is.na(entry$bin)) & (nchar(entry$bin) <=2))] <- paste0(entry$bin,".0")  
+  } 
   # trim white spaces in week targets and change to lower case
-  entry$bin[which(entry$type=="bin" & 
+  if(length(entry$bin[which(entry$type=="bin" & 
                     (grepl("First week below baseline",entry$target) | grepl("Below baseline for 3 weeks",entry$target)) & 
-                    (!is.na(entry$bin)))] <- tolower(trimws(entry$bin, which="both")) 
+                    (!is.na(entry$bin)))])>0){
+    entry$bin[which(entry$type=="bin" & 
+                      (grepl("First week below baseline",entry$target) | grepl("Below baseline for 3 weeks",entry$target)) & 
+                                                             (!is.na(entry$bin)))] <- tolower(trimws(entry$bin, which="both"))}  
     
   # sanitize value
   entry$value <- tolower(trimws(entry$value, which="both"))
