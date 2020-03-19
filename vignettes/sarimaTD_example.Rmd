@@ -64,7 +64,7 @@ get_trajectories_one_location <- function(
   
   # fit sarima model -- model-specific code
   sarima_fit <- sarimaTD::fit_sarima(tail(location_data[[target_variable]], 100),
-    ts_frequency = 52,seasonal_difference = F)
+    ts_frequency = 52,seasonal_difference = T)
   
   # determine forecast horizon
   # get_required_forecast_horizon is provided by the cdcForecastUtils package
