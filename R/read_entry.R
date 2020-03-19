@@ -21,6 +21,7 @@ read_entry = function(file) {
   
   cdcForecastUtils::arrange_entry(entry = entry)
   cdcForecastUtils::sanitize_entry(entry = entry)
+  return(message("The file has been re-formatted and the forecast_week column has been added"))
 }
 
 #' Arrange an entry for consistency

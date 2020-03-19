@@ -17,6 +17,9 @@ sanitize_entry <- function(entry){
   entry$type <- tolower(trimws(entry$type, which="both"))
   
   # sanitize bins
+  # trim white spaces and lower case
+  entry$bin <- tolower(trimws(entry$bin, which="both"))
+  
   # add .0 to 1-25 integer bins if exist
   if(length(entry$bin[which(entry$type=="bin" & (grepl("wk ahead",entry$target) | grepl("Peak height",entry$target)) & 
              (!is.na(entry$bin)) & (nchar(entry$bin) <=2))])>0){
@@ -26,25 +29,9 @@ sanitize_entry <- function(entry){
                                (grepl("wk ahead",entry$target) | grepl("Peak height",entry$target)) & 
                                (!is.na(entry$bin)) & (nchar(entry$bin) <=2))],".0")  
   } 
-  # trim white spaces in week targets and change to lower case
-  if(length(entry$bin[which(entry$type=="bin" & 
-                    (grepl("First week below baseline",entry$target) | 
-                     grepl("Peak week",entry$target) |
-                     grepl("Below baseline for 3 weeks",entry$target)) & 
-                    (!is.na(entry$bin)))])>0){
-    entry$bin[which(entry$type=="bin" & 
-                      (grepl("First week below baseline",entry$target) | 
-                         grepl("Peak week",entry$target) |
-                         grepl("Below baseline for 3 weeks",entry$target)) & 
-                                                             (!is.na(entry$bin)))] <- 
-      tolower(trimws(entry$bin[which(entry$type=="bin" & 
-                                       (grepl("First week below baseline",entry$target) | 
-                                          grepl("Peak week",entry$target) |
-                                          grepl("Below baseline for 3 weeks",entry$target)) & 
-                                       (!is.na(entry$bin)))], which="both"))}  
     
   # sanitize value
   entry$value <- tolower(trimws(entry$value, which="both"))
   
-  return (entry)
+  return(entry)
 }
