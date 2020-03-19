@@ -1,9 +1,9 @@
 context("verify_entry")
 
 valid_file <- system.file("extdata/EW10-2019-valid_national_template.csv",package="cdcForecastUtils")
-valid_entry <- cdcForecastUtils::read_entry(valid_file)
+valid_entry <- read_entry(valid_file)
 valid_state_file <- system.file("extdata/EW10-2019-valid_state_template.csv", package = "cdcForecastUtils")
-valid_state_entry <- cdcForecastUtils::read_entry(valid_state_file)
+valid_state_entry <- read_entry(valid_state_file)
 
 test_that("Valid entry passes", {
   expect_true(verify_entry_file(valid_file))
