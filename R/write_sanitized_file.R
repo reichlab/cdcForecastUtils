@@ -7,11 +7,11 @@
 #' @return A reformatted csv file
 #' @import dplyr
 #' @export
-write_sanitized_file <- function(file, challenge = "ilinet") {
+write_sanitized_file_c <- function(file, challenge = "ilinet") {
   entry <- cdcForecastUtils::read_entry(file)
   model_name<-basename(file)
   if(cdcForecastUtils::verify_entry(entry, challenge, check_week = F)){
-    write.csv(entry,file)
+    write.csv(entry,file,row.names=FALSE)
     return(message(paste0(model_name," has been sanitized and re-written.")))
   } else {
     return(message(paste0(model_name," failed verification tests and has not been re-written.")))
