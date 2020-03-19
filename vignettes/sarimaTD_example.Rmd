@@ -5,16 +5,27 @@ date: "3/13/2020"
 output: pdf_document
 ---
 
-# An example of cdcForecast Utils for the sarimaTD model at the regional level
+
+```{r setup, include=T}
+knitr::opts_chunk$set(message=FALSE, warning=FALSE)
+```
+
+# An example of cdcForecastUtils for the sarimaTD model at the regional level
 
 We will use the following packages:
 
-```{r setup, include=T}
+```{r packages, include=T}
 library(sarimaTD)
 library(cdcForecastUtils)
 library(lubridate)
 library(dplyr)
 library(ggplot2)
+```
+
+Please note that the `sarimaTD` and `cdcForecastUtils` packages can be installed by running the following code:
+```{r install, eval=FALSE}
+devtools::install_github("reichlab/sarimaTD")
+devtools::install_github("reichlab/cdcForecastUtils")
 ```
 
 
@@ -26,7 +37,7 @@ We define a function that creates a matrix of forecast trajectories from a SARIM
  * Fit a sarima model to the data for that state
  * Determine the `forecast_horizon`: how many steps ahead we need to forecast.  This will depend on the targets we are interested in and where we are in the current season.
  * Simulate "trajectories" of incidence.  At this point, we have an `nsims` by `forecast_horizon` matrix, where each row is one simulated trajectory of forecasted incidence after the most recent ILINet report.
- * Prepend reported data.  Here we prepend the most recent values from ILINet.  Note that this does not make any adjustments for backfill.
+ * Prepend reported data.  Here we prepend the most recent values from ILINet.  Note that this does not make any adjustments for possible future revisions to the ILINet data, sometimes referred to as ``backfill''.
 
 ```{r}
 #' Function to fit a sarimaTD model and generate predictions for a single
