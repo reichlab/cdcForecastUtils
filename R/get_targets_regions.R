@@ -15,7 +15,7 @@ get_targets_regions<- function(sanitized_file) {
     dplyr::select(location,target) %>%
     dplyr::ungroup() %>%
     unique()
-  model_name<-substr(basename(sanitized_file),1,nchar(basename(sanitized_file))-4)
+  model_name<-substr(basename(sanitized_file),11,nchar(basename(sanitized_file))-4)
   forecast_week<-as.numeric(gsub("EW", "", 
                                  regmatches(sanitized_file, regexpr("(?:EW)[0-9]{2}", sanitized_file))))
   date_file <- cdcForecastUtils::covid_19_forecast_dates
