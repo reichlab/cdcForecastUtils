@@ -71,7 +71,7 @@ generate_point_forecast <- function(d, method =
   d2 <- d %>% 
     dplyr::filter(target %in% c("Peak week","First week below baseline")) %>%
     dplyr::mutate(bin=replace(bin, !(is.na(bin)), 
-                              gsub("EW", "", regmatches(bin, regexpr("(?:EW)[0-9]{2}", bin))))) %>%
+                              gsub("ew", "", regmatches(bin, regexpr("(?:ew)[0-9]{2}", bin))))) %>%
     dplyr::mutate(bin=as.numeric(bin),value = suppressWarnings(as.numeric(value)))
 
   # combine with bin being numeric
@@ -88,7 +88,7 @@ generate_point_forecast <- function(d, method =
       dplyr::summarize(value = sum(value*probability)) %>%
       dplyr::mutate(type = "point",
                     value = ifelse(target %in% c("Peak week","First week below baseline"),
-                                   paste0("2020-EW",round(value, 0)),
+                                   paste0("2020-ew",round(value, 0)),
                                    value))
   }
   
@@ -100,7 +100,7 @@ generate_point_forecast <- function(d, method =
       dplyr::filter(dplyr::row_number() == min(which(cumulative >= 0.5))) %>%
       dplyr::select(location, target, value = bin, type) %>%
       dplyr::mutate(value = ifelse(target %in% c("Peak week","First week below baseline"),
-                                   paste0("2020-EW",as.character(value)),as.character(value))) 
+                                   paste0("2020-ew",as.character(value)),as.character(value))) 
   }
 
   # Mode method
@@ -110,7 +110,7 @@ generate_point_forecast <- function(d, method =
       dplyr::select(location, target, value = bin, type) %>%
       dplyr::mutate(type = "point",
                     value = ifelse(target %in% c("Peak week","First week below baseline"),
-                                   paste0("2020-EW",as.character(value)),as.character(value))) 
+                                   paste0("2020-ew",as.character(value)),as.character(value))) 
   }
   
   temp <- temp %>%

@@ -12,10 +12,9 @@ test_that("Valid entry passes", {
   expect_true(verify_entry(valid_state_entry, challenge = "state_ili"))
 })
 
-# test_that("Entry without forecast week generates warnings", {
-#   expect_warning(verify_entry_file(valid_file))
-#   expect_warning(verify_entry(valid_entry))
-# })
+test_that("Read entry sends message", {
+   expect_message(read_entry(valid_file))
+ })
 
 
 test_that("Return error when required column name doesn't exist", {

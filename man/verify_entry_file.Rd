@@ -22,7 +22,7 @@ the forecast probabilities are non-negative and sum to a value between
 provavilities are between 0 and 1.
 }
 \examples{
-file <- system.file("extdata", "valid-test.csv", package="cdcfluutils")
+file <- system.file("extdata", "valid-test.csv", package="cdcForecastUtils")
 verify_entry_file(file) # TRUE
 }
 \seealso{
