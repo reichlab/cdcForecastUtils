@@ -11,7 +11,10 @@ plot_trajectories_and_intervals(
   submission,
   season_start_ew,
   season_end_ew,
-  cdc_report_ew
+  cdc_report_ew,
+  ylim,
+  lookback_length = 30,
+  plot = TRUE
 )
 }
 \arguments{
@@ -29,9 +32,16 @@ download_and_preprocess...}
 \item{season_end_ew}{epidemic week ending the season}
 
 \item{cdc_report_ew}{epidemic week of the CDC data}
+
+\item{ylim}{numeric vector specifying lower and upper limits of y axis; optional}
+
+\item{lookback_length}{integer number of weeks of reported ILINet data to
+include}
+
+\item{plot}{boolean;}
 }
 \value{
-A plot
+logical. If TRUE (default), the plot is printed.
 }
 \description{
 Plot trajectories and intervals
