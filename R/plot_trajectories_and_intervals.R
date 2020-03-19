@@ -1,12 +1,12 @@
 #' Plot trajectories and intervals
 #' @param flu_data A dataframe housing the flu data from the result of 
 #'     download_and_preprocess...
-#' @param target_variable 
+#' @param target_variable variable to be plotted
 #' @param trajectories_by_location A series of trajectories (nsim*h) per location
 #' @param submission the submission dataframe
-#' @param season_start_ew
-#' @param season_end_ew
-#' @param cdc_report_ew
+#' @param season_start_ew epidemic week starting the season
+#' @param season_end_ew epidemic week ending the season
+#' @param cdc_report_ew epidemic week of the CDC data
 #' @return A plot
 #' @import magrittr
 #' @export

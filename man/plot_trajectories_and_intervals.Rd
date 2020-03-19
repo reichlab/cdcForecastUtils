@@ -18,11 +18,17 @@ plot_trajectories_and_intervals(
 \item{flu_data}{A dataframe housing the flu data from the result of 
 download_and_preprocess...}
 
-\item{target_variable}{}
+\item{target_variable}{variable to be plotted}
 
 \item{trajectories_by_location}{A series of trajectories (nsim*h) per location}
 
 \item{submission}{the submission dataframe}
+
+\item{season_start_ew}{epidemic week starting the season}
+
+\item{season_end_ew}{epidemic week ending the season}
+
+\item{cdc_report_ew}{epidemic week of the CDC data}
 }
 \value{
 A plot
