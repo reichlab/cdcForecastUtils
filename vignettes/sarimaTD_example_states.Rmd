@@ -1,0 +1,112 @@
+---
+title: "sarimaTD_example_states.Rmd"
+author: "Graham Casey Gibson"
+date: "3/19/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# An example of cdcForecast Utils for the sarimaTD model at the state level
+
+### Load data
+
+Here we are using the `cdcForecastUtils::download_and_preprocess_state_flu_data` function to download state level ILINet data.
+
+```{r}
+flu_data <- download_and_preprocess_state_flu_data()
+```
+
+Here is a plot of the data for Massachusetts
+
+```{r}
+ma_data <- flu_data[flu_data$region == "Massachusetts",]
+plot(ma_data$unweighted_ili,type='l')
+```
+
+### Forecasts for Multiple States
+
+Let's generate a submission file for the first 5 states:
+
+```{r}
+states <- unique(flu_data$region)[1:5]
+states
+```
+
+#### Assemble simulated incidence trajectories across all locations of interest
+
+We now call the function defined above once for each state, and assemble the resulting matrices in a tibble.  **This is the required input to the `multi_trajectories_to_binned_distributions` function below.**
+
+```{r}
+trajectories_by_location <- tibble(
+  location = states
+) %>%
+  mutate(
+    trajectories = purrr::map(
+      location,
+      get_trajectories_one_location,
+      nsim = 1000,
+      flu_data = flu_data,
+      target_variable = "unweighted_ili",
+      season_start_ew = season_start_ew,
+      season_end_ew = season_end_ew,
+      cdc_report_ew = cdc_report_ew,
+      targets = targets)
+  )
+```
+
+```{r}
+trajectories_by_location
+```
+
+The `trajectories_by_state` object is a tibble with the `trajectories` column being a list of matrices.  The first component of this list is a 1000 by 26 matrix of incidence trajectories:
+ * 1000 is the number of simulated trajectories we generated
+ * To generate predictions for the "1 wk ahead", ..., "6 wk ahead", "Peak height", and "Peak week" targets at this point in the season, we need simulated trajectories covering all 26 epidemic weeks between the season start and season end, inclusive.
+
+#### Convert incidence trajectories to a submission data frame and output to csv
+
+```{r}
+distributional_submission_df <- multi_trajectories_to_binned_distributions(
+  multi_trajectories = trajectories_by_location,
+  targets = c("wk ahead", "Peak height", "Peak week"),
+  h_max = 6,
+  bins = c(seq(0, 25, by = .1), 100),
+  season_start_ew = season_start_ew,
+  season_end_ew = season_end_ew,
+  cdc_report_ew = cdc_report_ew)
+```
+
+```{r}
+head(distributional_submission_df)
+```
+
+```{r}
+distributional_submission_df %>%
+  distinct(location, target) %>%
+  as.data.frame()
+head(distributional_submission_df)
+
+distributional_submission_df <- sanitize_entry(distributional_submission_df)
+point_forecasts <- generate_point_forecasts(distributional_submission_df,method="Median")
+
+submission_df <- rbind(distributional_submission_df,point_forecasts)
+
+verify_entry(submission_df,challenge='state_ili')
+
+
+```
+
+
+```{r}
+plot_trajectories_and_intervals(
+  flu_data = flu_data,
+  target_variable = "unweighted_ili",
+  trajectories_by_location = trajectories_by_location,
+  submission = distributional_submission_df,
+  season_start_ew = season_start_ew,
+  season_end_ew = season_end_ew,
+  cdc_report_ew = cdc_report_ew
+)
+```
+
