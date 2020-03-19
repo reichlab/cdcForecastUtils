@@ -1,9 +1,6 @@
 #' Save submitted targets/locations of a file
 #'
-#' This function will check to make sure the structure is correct and that
-#' the forecast probabilities are non-negative and sum to a value between
-#' 0.9 and 1.1. For binary targets, this function will check if the forecast
-#' provavilities are between 0 and 1.
+#' This function will retrieve information from submitted model 
 #'
 #' @param file A csv entry file path
 #' @return A data.frame of a set of submitted targets/locations of a model
