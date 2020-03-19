@@ -10,7 +10,7 @@ write_sanitized_file(file, challenge = "ilinet")
 \item{file}{A csv file path}
 }
 \value{
-An arranged data.frame
+A reformatted csv file
 }
 \description{
 This function reads in the csv file and arranges it for consistency.
