@@ -17,7 +17,7 @@
 verify_entry_file <- function(file, challenge = "ilinet") {
   entry <- cdcForecastUtils::read_entry(file)
   model_name<-basename(file)
-  if(cdcForecastUtils::verify_entry(entry, challenge, check_week = F)){
+  if(cdcForecastUtils::verify_entry(entry, challenge)){
     return(message(paste0(model_name," passed verification tests")))
   } else {
     return(message(paste0(model_name," failed verification tests")))
@@ -38,7 +38,7 @@ verify_entry_file <- function(file, challenge = "ilinet") {
 #' @seealso \code{\link{verify_entry_file}}
 #' @examples
 #' verify_entry(full_entry_score_new)
-verify_entry <- function(entry, challenge = "ilinet", check_week = T) {
+verify_entry <- function(entry, challenge = "ilinet") {
   
   if (!(challenge %in% c("ilinet", "state_ili"))) {
     stop("challenge must be one of ilinet or state_ili")
@@ -46,7 +46,7 @@ verify_entry <- function(entry, challenge = "ilinet", check_week = T) {
   
   names(entry) <- tolower(names(entry))
   
-  cdcForecastUtils::verify_colnames(entry, check_week)
+  cdcForecastUtils::verify_colnames(entry)
   
   # Verify column contents
   cdcForecastUtils::verify_locations(entry, challenge)

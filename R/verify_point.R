@@ -14,9 +14,15 @@ verify_point <- function(entry) {
   names(entry) <- tolower(names(entry))
   
   point <- entry %>%
-    dplyr::filter(type == "point") %>%
+    # add target to allow NA for first week below baseline if none is in allowed week range
+    dplyr::filter(type == "point",target != "First week below baseline") %>%
     dplyr::mutate(miss = is.na(value),
            negative = (!is.na(value) & suppressWarnings(as.numeric(value)) < 0))
+  # check negative probs separately for first week below baseline
+  point_firstweek <- entry %>%
+    # add target to allow NA for first week below baseline if none is in allowed week range
+    dplyr::filter(type == "point",target == "First week below baseline") %>%
+    dplyr::mutate(negative = (!is.na(value) & suppressWarnings(as.numeric(value)) < 0))
   
   point_char <- entry %>%
     dplyr::filter(type == "point",target %in% c("Peak week","First week below baseline")) %>%
@@ -37,8 +43,16 @@ verify_point <- function(entry) {
   }
   
   # Report error for negative point predictions
-  if (any(point[point$target %in% c(paste(1:4, " wk ahead")),]$negative)) {
+  if (any(point$negative)) {
     tmp <- point %>%
+      dplyr::filter(negative)
+    
+    stop(paste0("ERROR: Negative point predictions detected in ",
+                paste(tmp$location, tmp$target), ". \n",
+                "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
+  }
+  if (any(point_firstweek$negative)) {
+    tmp <- point_firstweek %>%
       dplyr::filter(negative)
     
     stop(paste0("ERROR: Negative point predictions detected in ",

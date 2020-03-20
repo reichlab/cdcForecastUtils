@@ -10,24 +10,18 @@
 #' @return Invisibly returns \code{TRUE} if successful
 #' @export
 #' @keywords internal
-verify_colnames <- function(entry, check_week = T) {
+verify_colnames <- function(entry) {
   
   names(entry) <- tolower(names(entry))
   
   entry_names <- colnames(entry)
-  valid_names <- colnames(cdcForecastUtils::full_entry_score_new)
+  valid_names <- colnames(cdcForecastUtils::full_entry_new)
   
   missing_names <- setdiff(valid_names, entry_names)
   extra_names   <- setdiff(entry_names, valid_names)
   
   if (length(missing_names) > 0) {
-    if (length(missing_names) == 1 && missing_names == "forecast_week") {
-      if (check_week == T) {
-        warning("Missing forecast_week - verification will proceed but forecast cannot be scored")
-      }
-    } else {
       stop("Missing these columns: ", paste(missing_names, collapse=", "))
-    }
   }
   if (length(extra_names)>0)
     warning("These extra columns are ignored: ", paste(extra_names, collapse=", "))

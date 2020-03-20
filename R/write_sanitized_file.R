@@ -10,8 +10,7 @@
 write_sanitized_file <- function(file, challenge = "ilinet") {
   entry <- cdcForecastUtils::read_entry(file)
   model_name<-basename(file)
-  if(cdcForecastUtils::verify_entry(entry, challenge, check_week = F)){
-    entry <- dplyr::select(entry, -"forecast_week")
+  if(cdcForecastUtils::verify_entry(entry, challenge)){
     write.csv(entry,file,row.names=FALSE)
     return(message(paste0(model_name," has been sanitized and re-written.")))
   } else {

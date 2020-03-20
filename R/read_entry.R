@@ -12,13 +12,13 @@ read_entry = function(file) {
                     colClasses = "character",
                     stringsAsFactors = FALSE)
 
-  # Add forecast week to imported data
-  forecast_week <- as.numeric(gsub("ew", "", 
-                                   regmatches(file, regexpr("(?:ew)[0-9]{2}", file))))
+  # # Add forecast week to imported data - Not added at this moment
+  # forecast_week <- as.numeric(gsub("ew", "", 
+  #                                  regmatches(file, regexpr("(?:ew)[0-9]{2}", file))))
   
-  if (length(forecast_week > 0))
-    entry <- dplyr::mutate(entry, forecast_week  = forecast_week)
-  
+  # if (length(forecast_week > 0))
+  #   entry <- dplyr::mutate(entry, forecast_week  = forecast_week)
+  # 
   cdcForecastUtils::arrange_entry(entry = entry)
   cdcForecastUtils::sanitize_entry(entry = entry)
 }
@@ -32,7 +32,7 @@ read_entry = function(file) {
 #' @keywords internal
 arrange_entry <- function(entry) {
   
-  cdcForecastUtils::verify_colnames(entry, check_week = F)
+  cdcForecastUtils::verify_colnames(entry)
   
   # Arrange entry by type, location, target, bin
   entry %>%
