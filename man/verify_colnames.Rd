@@ -4,7 +4,7 @@
 \alias{verify_colnames}
 \title{Verify the column names of an entry}
 \usage{
-verify_colnames(entry, check_week = T)
+verify_colnames(entry)
 }
 \arguments{
 \item{entry}{An entry data.frame}

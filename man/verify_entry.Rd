@@ -4,7 +4,7 @@
 \alias{verify_entry}
 \title{Verify entry stored as an R data.frame}
 \usage{
-verify_entry(entry, challenge = "ilinet", check_week = T)
+verify_entry(entry, challenge = "ilinet")
 }
 \arguments{
 \item{entry}{A data.frame}
