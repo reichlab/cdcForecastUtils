@@ -13,14 +13,14 @@
 #' @seealso \code{\link{verify_entry}}
 #' @examples
 #' file <- system.file("extdata/EW10-2019-valid_national_template.csv",package="cdcForecastUtils")
-#' verify_entry_file(file) # TRUE
+#' verify_entry_file(file) 
 verify_entry_file <- function(file, challenge = "ilinet") {
   entry <- cdcForecastUtils::read_entry(file)
   model_name<-basename(file)
   if(cdcForecastUtils::verify_entry(entry, challenge)){
     return(message(paste0(model_name," passed verification tests")))
   } else {
-    return(message(paste0(model_name," failed verification tests")))
+    return(warning(paste0(model_name," failed verification tests")))
   }
 }
 
