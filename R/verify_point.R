@@ -15,15 +15,14 @@ verify_point <- function(entry) {
   
   point <- entry %>%
     # add target to allow NA for first week below baseline if none is in allowed week range
-    dplyr::filter(type == "point",target != "First week below baseline") %>%
+    dplyr::filter(type == "point",target %in% c("1 wk ahead","2 wk ahead","3 wk ahead","4 wk ahead","5 wk ahead","6 wk ahead")) %>%
     dplyr::mutate(miss = is.na(value),
            negative = (!is.na(value) & suppressWarnings(as.numeric(value)) < 0))
-  # check negative probs separately for first week below baseline
-  point_firstweek <- entry %>%
+  # check missing for peak week
+  point_peakweek <- entry %>%
     # add target to allow NA for first week below baseline if none is in allowed week range
-    dplyr::filter(type == "point",target == "First week below baseline") %>%
-    dplyr::mutate(negative = (!is.na(value) & suppressWarnings(as.numeric(value)) < 0))
-  
+    dplyr::filter(type == "point",target == "Peak week") %>%
+    dplyr::mutate(miss = is.na(value))
   point_char <- entry %>%
     dplyr::filter(type == "point",target %in% c("Peak week","First week below baseline")) %>%
     dplyr::mutate(weekrange=ifelse(!(is.na(value)), 
@@ -41,7 +40,14 @@ verify_point <- function(entry) {
                    paste(tmp$location, tmp$target), ". \n",
                    "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
   }
-  
+  if (any(point_peakweek$miss)) {
+    tmp <- point_peakweek %>%
+      dplyr::filter(miss)
+    
+    stop(paste0("ERROR: Missing point predictions detected in ",
+                paste(tmp$location, tmp$target), ". \n",
+                "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
+  }
   # Report error for negative point predictions
   if (any(point$negative)) {
     tmp <- point %>%
@@ -51,14 +57,7 @@ verify_point <- function(entry) {
                 paste(tmp$location, tmp$target), ". \n",
                 "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
   }
-  if (any(point_firstweek$negative)) {
-    tmp <- point_firstweek %>%
-      dplyr::filter(negative)
-    
-    stop(paste0("ERROR: Negative point predictions detected in ",
-                paste(tmp$location, tmp$target), ". \n",
-                "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
-  }
+
   # Report error for out of range week
   if (any(point_char$check_range)) {
     tmp <- point_char %>%

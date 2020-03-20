@@ -37,7 +37,7 @@ verify_entry_file <- function(file, challenge = "ilinet") {
 #' @export
 #' @seealso \code{\link{verify_entry_file}}
 #' @examples
-#' verify_entry(full_entry_score_new)
+#' verify_entry(full_entry_new)
 verify_entry <- function(entry, challenge = "ilinet") {
   
   if (!(challenge %in% c("ilinet", "state_ili"))) {
