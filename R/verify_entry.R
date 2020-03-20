@@ -12,7 +12,7 @@
 #' @export
 #' @seealso \code{\link{verify_entry}}
 #' @examples
-#' file <- system.file("extdata", "valid-test.csv", package="cdcForecastUtils")
+#' file <- system.file("extdata/EW10-2019-valid_national_template.csv",package="cdcForecastUtils")
 #' verify_entry_file(file) # TRUE
 verify_entry_file <- function(file, challenge = "ilinet") {
   entry <- cdcForecastUtils::read_entry(file)

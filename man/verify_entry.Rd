@@ -23,7 +23,7 @@ Invisibly returns \code{TRUE} if successful
 Verify entry stored as an R data.frame
 }
 \examples{
-verify_entry(full_entry_score_new)
+verify_entry(full_entry_new)
 }
 \seealso{
 \code{\link{verify_entry_file}}
