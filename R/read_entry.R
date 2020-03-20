@@ -7,7 +7,7 @@
 #' @import dplyr
 #' @export
 read_entry = function(file) {
-  message("The file has been re-formatted and the forecast_week column has been added")
+  message("The file has been re-formatted.")
   entry <- read.csv(file, 
                     colClasses = "character",
                     stringsAsFactors = FALSE)
