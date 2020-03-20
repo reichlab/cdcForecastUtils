@@ -15,7 +15,8 @@ verify_point <- function(entry) {
   
   point <- entry %>%
     # add target to allow NA for first week below baseline if none is in allowed week range
-    dplyr::filter(type == "point",target %in% c("1 wk ahead","2 wk ahead","3 wk ahead","4 wk ahead","5 wk ahead","6 wk ahead")) %>%
+    dplyr::filter(type == "point",target %in% c("1 wk ahead","2 wk ahead","3 wk ahead","4 wk ahead",
+                                                "5 wk ahead","6 wk ahead","Peak height")) %>%
     dplyr::mutate(miss = is.na(value),
            negative = (!is.na(value) & suppressWarnings(as.numeric(value)) < 0))
   # check missing for peak week
