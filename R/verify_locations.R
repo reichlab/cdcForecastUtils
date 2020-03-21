@@ -39,15 +39,16 @@ verify_locations <- function(entry, challenge = "ilinet") {
   extra_locations   <- setdiff(entry_locations, valid_locations)
   possible_locations <- setdiff(valid_locations, entry_locations)
   if (length(intersect(entry_locations, valid_locations))==0){
-    stop("Missing all valid locations. Wrong challenge?: ", paste(extra_locations,sep=""))
+    stop("Missing all valid locations. Wrong challenge?: ", paste(extra_locations,sep=", "))
   }
   if (length(extra_locations)>0){ 
-    warning("These extra locations are ignored. Please check for possible spelling errors: ", 
+    stop("These extra locations are ignored. Please check for possible spelling errors: ", 
             paste(extra_locations,sep=""))
   }
   if (length(possible_locations)>0)
     # message("Consider forecasting for these locations: ", paste(possible_locations))
-    message("These locations have no forecast: ", paste(possible_locations, collapse = ", "))
+    message("Please check if this is intended - these locations have no forecast: ", 
+            paste(possible_locations, collapse = ", "))
   
   return(invisible(TRUE))
 }

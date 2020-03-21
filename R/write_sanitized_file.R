@@ -10,8 +10,9 @@
 write_sanitized_file <- function(file, challenge = "ilinet") {
   entry <- cdcForecastUtils::read_entry(file)
   model_name<-basename(file)
+  formatted_filename <- ifelse(grepl("2020-EW[0-9]{2}",file),gsub("2020-EW",replacement="2020-ew",file),file)
   if(cdcForecastUtils::verify_entry(entry, challenge)){
-    write.csv(entry,file,row.names=FALSE)
+    write.csv(entry,formatted_filename,row.names=FALSE)
     return(message(paste0(model_name," has been sanitized and re-written.")))
   } else {
     return(message(paste0(model_name," failed verification tests and has not been re-written.")))

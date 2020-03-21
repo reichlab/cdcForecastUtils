@@ -26,11 +26,10 @@ verify_point <- function(entry) {
     dplyr::mutate(miss = is.na(value))
   point_char <- entry %>%
     dplyr::filter(type == "point",target %in% c("Peak week","First week below baseline")) %>%
-    dplyr::mutate(weekrange=ifelse(!(is.na(value)), 
-                               as.numeric(substr(value,8,10))),
-                  check_range=(weekrange>35 |weekrange<10),
-                  check_char=(regmatches(value,regexpr("2020-ew",value))!="2020-ew")
-                  )
+    dplyr::mutate(weekformat=ifelse(!(is.na(value)), !(grepl("2020-ew[0-9]{2}", value)), FALSE)) %>%
+    dplyr::mutate(weekrange=ifelse((!(is.na(value)) &  grepl("2020-ew[0-9]{2}", value)),
+                               as.numeric(substr(value,8,10)),NA),
+                  check_range=ifelse((!(is.na(weekrange)) ),(weekrange>35 |weekrange<10),FALSE))
   
   # Report warning for missing point predictions
   if (any(point$miss)) {
@@ -62,20 +61,20 @@ verify_point <- function(entry) {
   # Report error for out of range week
   if (any(point_char$check_range)) {
     tmp <- point_char %>%
-      dplyr::filter(point_char)
+      dplyr::filter(check_range)
     
     stop(paste0("ERROR: Out-of-range point predictions for week targets detected in ",
                 paste(tmp$location, tmp$target), ". \n",
                 "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
   }
-  
-  if (any(point_char$check_char)) {
+  # Report week format error
+  if (any(point_char$weekformat)) {
     tmp <- point_char %>%
-      dplyr::filter(point_char)
+      dplyr::filter(weekformat)
     
-    stop(paste0("ERROR: Incorrect point prediction format for week targets detected in ",
+    stop(paste0("ERROR: Incorrect format or season for week target's point predictions detected in ",
                 paste(tmp$location, tmp$target), ". \n",
-                "Please take a look at the template and at cdcForecastUtils::generate_point_forecasts().\n"))
+                "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
   }
   return(invisible(TRUE))
 }

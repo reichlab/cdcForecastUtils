@@ -24,7 +24,7 @@ verify_colnames <- function(entry) {
       stop("Missing these columns: ", paste(missing_names, collapse=", "))
   }
   if (length(extra_names)>0)
-    warning("These extra columns are ignored: ", paste(extra_names, collapse=", "))
+      stop("These extra columns are not valid: ", paste(extra_names, collapse=", "))
   
   return(invisible(TRUE))
 }

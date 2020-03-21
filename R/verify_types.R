@@ -35,7 +35,7 @@ verify_types <- function(entry, challenge = "ilinet") {
     stop("Missing these types: ", paste(missing_types, collapse=", "))
   
   if (length(extra_types)>0 && extra_types != "point")
-    warning("These extra types are ignored: ", paste(extra_types, collapse=", "))
+    stop("These extra types are not valid: ", paste(extra_types, collapse=", "))
   
   return(invisible(TRUE))
 }
