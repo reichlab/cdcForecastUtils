@@ -14,7 +14,7 @@ test_that("Missing point predictions return warning", {
                        invalid_full$target == rand_target &
                        invalid_full$type == "point"] <- NA
   
-  expect_warning(verify_point(invalid_full))
+  expect_error(verify_point(invalid_full))
 
 })
 

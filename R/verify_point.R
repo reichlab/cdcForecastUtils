@@ -20,13 +20,10 @@ verify_point <- function(entry) {
     dplyr::mutate(miss = is.na(value),
            negative = (!is.na(value) & suppressWarnings(as.numeric(value)) < 0))
   # check missing for peak week
-  point_peakweek <- entry %>%
-    # add target to allow NA for first week below baseline if none is in allowed week range
-    dplyr::filter(type == "point",target == "Peak week") %>%
-    dplyr::mutate(miss = is.na(value))
   point_char <- entry %>%
     dplyr::filter(type == "point",target %in% c("Peak week","First week below baseline")) %>%
-    dplyr::mutate(weekformat=ifelse(!(is.na(value)), !(grepl("2020-ew[0-9]{2}", value)), FALSE)) %>%
+    dplyr::mutate(miss = is.na(value),
+      weekformat=ifelse(!(is.na(value)), !(grepl("2020-ew[0-9]{2}", value)), FALSE)) %>%
     dplyr::mutate(weekrange=ifelse((!(is.na(value)) &  grepl("2020-ew[0-9]{2}", value)),
                                as.numeric(substr(value,8,10)),NA),
                   check_range=ifelse((!(is.na(weekrange)) ),(weekrange>35 |weekrange<10),FALSE))
@@ -36,12 +33,12 @@ verify_point <- function(entry) {
     tmp <- point %>%
       dplyr::filter(miss)
     
-    warning(paste0("WARNING: Missing point predictions detected in ",
+    stop(paste0("WARNING: Missing point predictions detected in ",
                    paste(tmp$location, tmp$target), ". \n",
                    "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
   }
-  if (any(point_peakweek$miss)) {
-    tmp <- point_peakweek %>%
+  if (any(point_char$miss)) {
+    tmp <- point_char %>%
       dplyr::filter(miss)
     
     stop(paste0("ERROR: Missing point predictions detected in ",
