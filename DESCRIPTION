@@ -1,7 +1,7 @@
 Package: cdcForecastUtils
 Type: Package
 Title: Utility functions for CDC forecasts
-Version: 0.1.4
+Version: 0.1.5
 Date: 2020-03-20
 Authors@R: c(person("Nutcha", "Wattanachit", email = "nwattanachit@umass.edu", role = c("aut", "cre")),
   person("Graham Casey", "Gibson", email = "gcgibson@umass.edu", role = "aut"),

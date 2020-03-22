@@ -7,11 +7,12 @@
 get_targets_regions(sanitized_file)
 }
 \arguments{
-\item{file}{A csv entry file path}
+\item{sanitized_file}{A csv entry file path}
 }
 \value{
 A data.frame of a set of submitted targets/locations of a model
 }
 \description{
-This function will retrieve information from submitted model
+This function will retrieve information from an entry file about what 
+locations and targets were submitted for a particular forecast due date.
 }

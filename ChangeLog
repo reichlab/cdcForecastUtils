@@ -1,0 +1,5 @@
+ChangeLog file for cdcForecatUtils
+
+v0.1.5 - adding verify_filename() checks to verify_entry_file() and removed filename changes.
+
+v0.1.4 - updates for point forecast verification 

@@ -15,12 +15,18 @@
 #' file <- system.file("extdata/EW10-2019-valid_national_template.csv",package="cdcForecastUtils")
 #' verify_entry_file(file) 
 verify_entry_file <- function(file, challenge = "ilinet") {
+
+  filename <- basename(file)
+  
+  ## verify filename conventions
+  cdcForecastUtils::verify_filename(filename, challenge)
+  
+  ## read and verify entry contents
   entry <- cdcForecastUtils::read_entry(file)
-  model_name<-basename(file)
   if(cdcForecastUtils::verify_entry(entry, challenge)){
-    return(message(paste0(model_name," passed verification tests")))
+    return(message(paste0(filename," passed verification tests")))
   } else {
-    return(warning(paste0(model_name," failed verification tests")))
+    return(warning(paste0(filename," failed verification tests")))
   }
 }
 
