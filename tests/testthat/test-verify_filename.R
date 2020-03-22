@@ -9,8 +9,6 @@ invalid_filenames <- c(
   "2020-ew34-JD&U-DLSpecialSauce.csv" ## non-alphanumeric in team
 )
 
-
-
 test_that("Valid entry filename passes", {
   expect_true(verify_filename(valid_filename, challenge="ilinet"))
   expect_true(verify_filename(valid_filename, challenge="state_ili"))

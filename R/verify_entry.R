@@ -12,8 +12,10 @@
 #' @export
 #' @seealso \code{\link{verify_entry}}
 #' @examples
-#' file <- system.file("extdata/EW10-2019-valid_national_template.csv",package="cdcForecastUtils")
+#'\dontrun{
+#' file <- system.file("extdata/2020-ew10-valid-national.csv",package="cdcForecastUtils")
 #' verify_entry_file(file) 
+#' }
 verify_entry_file <- function(file, challenge = "ilinet") {
 
   filename <- basename(file)

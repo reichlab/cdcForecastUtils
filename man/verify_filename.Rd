@@ -4,7 +4,7 @@
 \alias{verify_filename}
 \title{Verifies appropriate filename structure}
 \usage{
-verify_filename(filename, challenge)
+verify_filename(filename, challenge = "ilinet")
 }
 \arguments{
 \item{filename}{a string representing a forecast entry filename}

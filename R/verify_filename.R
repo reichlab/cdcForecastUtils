@@ -6,7 +6,7 @@
 #' @return
 #' @export
 #'
-verify_filename <- function(filename, challenge){
+verify_filename <- function(filename, challenge = "ilinet"){
     
     if (!(challenge %in% c("ilinet", "state_ili"))) {
         stop("verifying filename is only supported for ilinet or state_ili projects")
