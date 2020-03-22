@@ -6,10 +6,13 @@ valid_state_file <- system.file("extdata/EW10-2019-valid_state_template.csv", pa
 valid_state_entry <- read_entry(valid_state_file)
 
 test_that("Valid entry passes", {
-  expect_message(verify_entry_file(valid_file))
   expect_true(verify_entry(valid_entry))
-  expect_message(verify_entry_file(valid_state_file, challenge = "state_ili"))
   expect_true(verify_entry(valid_state_entry, challenge = "state_ili"))
+})
+
+test_that("Wrong filenames trigger errors", {
+  expect_error(verify_entry_file(valid_file))
+  expect_error(verify_entry_file(valid_state_file, challenge = "state_ili"))
 })
 
 test_that("Read entry sends message", {
@@ -88,17 +91,15 @@ test_that("Return error when probabilities sum to more than 1.1", {
 
 test_that("Return warning when point forecast is missing", {
   rand_location <- sample(unique(valid_entry$location), 1)
-  valid_tar<-c("1 wk ahead","2 wk ahead","3 wk ahead","4 wk ahead","5 wk ahead","6 wk ahead",
-               "First week below baseline","Peak week", "Peak height", "Below baseline for 3 weeks")
-  rand_target <- sample(valid_tar, 1)
+  rand_target <- sample(unique(valid_entry$target), 1)
   
   invalid_entry <- valid_entry
   invalid_entry$value[invalid_entry$location == rand_location &
                         invalid_entry$target == rand_target &
                         invalid_entry$type == "point"] <- NA
   
-  expect_warning(verify_point(invalid_entry))
-  expect_warning(verify_entry(invalid_entry))
+  expect_error(verify_point(invalid_entry))
+  expect_error(verify_entry(invalid_entry))
   
 })
 
