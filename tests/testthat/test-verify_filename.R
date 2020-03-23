@@ -16,7 +16,6 @@ test_that("Valid entry filename passes", {
 
 test_that("Invalid entry filenames do not pass", {
   for(invalid_filename in invalid_filenames) {
-    # change to expect error instead of expect failure
     expect_error(verify_filename(invalid_filename, challenge="ilinet"))
     expect_error(verify_filename(invalid_filename, challenge="state_ili"))
   }

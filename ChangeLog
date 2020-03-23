@@ -1,7 +1,8 @@
 ChangeLog file for cdcForecatUtils
 
-v0.1.7 - change examples and set default parameter for verify_entry() and verify_filename()
-         to make devtools::check() pass
+v0.1.8 - update write_sanitized_file() to include verify_entry_file() for error-checking.
+
+v0.1.7 - change examples and set default parameter for verify_entry() and verify_filename() to make devtools::check() pass
 
 v0.1.6 - fix unit tests for verify_entry() and verify_filename()
 
