@@ -13,7 +13,7 @@ verify_entry_file(file, challenge = "ilinet")
 challenge the submission is for}
 }
 \value{
-Invisibly returns \code{TRUE} if successful
+Invisibly returns \code{TRUE} if successful, \code{FALSE} if not
 }
 \description{
 This function will check to make sure the structure is correct and that

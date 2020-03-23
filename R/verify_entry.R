@@ -8,7 +8,7 @@
 #' @param file A csv entry file
 #' @param challenge one of "ilinet" or "state_ili", indicating which
 #'   challenge the submission is for
-#' @return Invisibly returns \code{TRUE} if successful
+#' @return Invisibly returns \code{TRUE} if successful, \code{FALSE} if not
 #' @export
 #' @seealso \code{\link{verify_entry}}
 #' @examples
@@ -26,9 +26,11 @@ verify_entry_file <- function(file, challenge = "ilinet") {
   ## read and verify entry contents
   entry <- cdcForecastUtils::read_entry(file)
   if(cdcForecastUtils::verify_entry(entry, challenge)){
-    return(message(paste0(filename," passed verification tests")))
+    message(paste0(filename," passed verification tests"))
+    return(invisible(TRUE))
   } else {
-    return(warning(paste0(filename," failed verification tests")))
+    warning(paste0(filename," failed verification tests"))
+    return(invisible(FALSE))
   }
 }
 
