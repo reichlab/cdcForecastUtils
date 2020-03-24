@@ -27,7 +27,7 @@ verify_bins <- function(entry, challenge = "ilinet") {
   entry_targets <- unique(entry$target)  
   
   errors <- character()
-  warnings <- character()
+  errors_x <- character()
   
   for(i in seq_along(entry_targets)) {
     entry_bins <- unique(entry$bin[entry$target == entry_targets[i] & 
@@ -39,19 +39,19 @@ verify_bins <- function(entry, challenge = "ilinet") {
     extra_bins <- setdiff(entry_bins, valid_bins)
     
     if (length(missing_bins) > 0)
-      errors <- c(errors, paste0("Please check bin range or bin format- missing valid bins for ", 
+      errors <- c(errors, paste0("Bin column must be NA for point predictions. Check bin range or format- missing valid bins for ", 
                                  entry_targets[i], ": ", missing_bins, "\n"))
     
     if (length(extra_bins) > 0)
-      errors_x <- c(warnings, paste0("Please check bin range - these extra bins for ",
-                                     entry_targets[i], " are ignored: ",
+      errors_x <- c(errors_x, paste0("Bin column must be NA for point predictions. Check bin range or format - these bins for ",
+                                     entry_targets[i], " are invalid: ",
                                      extra_bins, "\n"))
   }
   
   if (length(errors) > 0)
     stop(errors)
   
-  if (length(warnings) > 0)
+  if (length(errors_x) > 0)
     stop(errors_x)
   
   return(invisible(TRUE))

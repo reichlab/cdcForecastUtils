@@ -69,7 +69,7 @@ verify_point <- function(entry) {
     tmp <- point_char %>%
       dplyr::filter(weekformat)
     
-    stop(paste0("ERROR: Incorrect format or season for week target's point predictions detected in ",
+    stop(paste0("ERROR: Empty, incorrect format or season for week target's point predictions detected in ",
                 paste(tmp$location, tmp$target), ". \n",
                 "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
   }
