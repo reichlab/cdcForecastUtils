@@ -16,6 +16,9 @@ generate_point_forecasts <- function(entry, method =
   if (sum(entry$type == "point") > 0) {
     warning("It appears point forecasts already exist.")
   }
+  if (method=="Mode") {
+    message("There might be two point predictions with equal probabilities. If so, please check and select one.")
+  }
   # Generate point forecasts
   entry <- entry %>%
     dplyr::filter(type == "bin") %>%
