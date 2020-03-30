@@ -37,5 +37,9 @@ sanitize_entry <- function(entry){
   # sanitize value
   entry$value <- tolower(trimws(entry$value, which="both"))
   
+  # add NA in bin for point prediction
+  entry$bin[which(entry$type=="point")]<-ifelse(entry$bin[which(entry$type=="point")]=="",NA,
+                                                entry$bin[which(entry$type=="point")])
+  
   return(entry)
 }

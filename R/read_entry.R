@@ -19,8 +19,8 @@ read_entry = function(file) {
   # if (length(forecast_week > 0))
   #   entry <- dplyr::mutate(entry, forecast_week  = forecast_week)
   # 
-  cdcForecastUtils::arrange_entry(entry = entry)
   cdcForecastUtils::sanitize_entry(entry = entry)
+  cdcForecastUtils::arrange_entry(entry = entry)
 }
 
 #' Arrange an entry for consistency
@@ -36,7 +36,7 @@ arrange_entry <- function(entry) {
   
   # Arrange entry by type, location, target, bin
   entry %>%
-    dplyr::arrange(type, location, target) %>% 
+    dplyr::arrange(type, location, target) %>%
     dplyr::select(location, target, type, bin, value, everything())
   
 }

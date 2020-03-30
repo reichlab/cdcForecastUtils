@@ -30,11 +30,9 @@ verify_bins <- function(entry, challenge = "ilinet") {
   errors_x <- character()
   
   for(i in seq_along(entry_targets)) {
-    entry_bins <- unique(entry$bin[entry$target == entry_targets[i] & 
-                                                entry$type == "bin"])
+    entry_bins <- unique(entry$bin[entry$target == entry_targets[i]])
     
-    valid_bins <- unique(valid$bin[valid$target == entry_targets[i] &
-                                                valid$type == "bin"])
+    valid_bins <- unique(valid$bin[valid$target == entry_targets[i]])
     missing_bins <- setdiff(valid_bins, entry_bins)
     extra_bins <- setdiff(entry_bins, valid_bins)
     
