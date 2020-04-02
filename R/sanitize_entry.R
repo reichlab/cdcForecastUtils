@@ -39,6 +39,5 @@ sanitize_entry <- function(entry){
   
   # add NA in bin for point prediction
   entry$bin[which(entry$type=="point")]<-NA
-                                                
   return(entry)
 }
