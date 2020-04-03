@@ -37,11 +37,11 @@ verify_bins <- function(entry, challenge = "ilinet") {
     extra_bins <- setdiff(entry_bins, valid_bins)
     
     if (length(missing_bins) > 0)
-      errors <- c(errors, paste0("Bin column must be NA for point predictions. Check bin range or format- missing valid bins for ", 
+      errors <- c(errors, paste0("Check bin range or format- missing valid bins for ", 
                                  entry_targets[i], ": ", missing_bins, "\n"))
     
     if (length(extra_bins) > 0)
-      errors_x <- c(errors_x, paste0("Bin column must be NA for point predictions. Check bin range or format - these bins for ",
+      errors_x <- c(errors_x, paste0("Check bin range or format - these bins for ",
                                      entry_targets[i], " are invalid: ",
                                      extra_bins, "\n"))
   }

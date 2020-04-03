@@ -5,9 +5,10 @@ valid_entry <- read_entry(valid_file)
 valid_state_file <- system.file("extdata/EW10-2019-valid_state_template.csv", package = "cdcForecastUtils")
 valid_state_entry <- read_entry(valid_state_file)
 valid_name<-system.file("extdata/2020-ew10-valid-national.csv",package="cdcForecastUtils")
-
+check<-read_entry(valid_name)
 test_that("Valid entry passes", {
   expect_true(verify_entry(valid_entry))
+  expect_true(verify_entry(check))
   expect_message(verify_entry_file(valid_name))
   expect_true(verify_entry(valid_state_entry, challenge = "state_ili"))
 })

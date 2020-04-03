@@ -18,9 +18,7 @@ sanitize_entry <- function(entry){
   entry$type <- tolower(trimws(entry$type, which="both"))
   
   # sanitize bins
-  # trim white spaces and lower case
-  entry$bin <- tolower(trimws(entry$bin, which="both"))
-  
+
   # add .0 to 1-25 integer bins if exist
   if(length(
       entry$bin[which(entry$type=="bin" & 
@@ -34,10 +32,14 @@ sanitize_entry <- function(entry){
                                (!is.na(entry$bin)) & (nchar(entry$bin) <=2))],".0")  
   } 
 
+  # add NA in bin for point prediction
+  entry$bin[which(entry$type=="point")]<-NA
+  
+  # trim white spaces and lower case
+  entry$bin <- tolower(trimws(entry$bin, which="both"))
+  
   # sanitize value
   entry$value <- tolower(trimws(entry$value, which="both"))
   
-  # add NA in bin for point prediction
-  entry$bin[which(entry$type=="point")]<-NA
   return(entry)
 }

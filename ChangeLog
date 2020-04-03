@@ -1,5 +1,9 @@
 ChangeLog file for cdcForecatUtils
 
+0.1.8.5 - add some functions for internal use and fix verify
+
+0.1.8.4 - fix row issues
+
 0.1.8.3 - update verify_bins and sanitize_entry to fix empty bins for point predictions
 
 v0.1.8 - update write_sanitized_file() to include verify_entry_file() for error-checking.
