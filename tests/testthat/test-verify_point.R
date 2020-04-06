@@ -3,6 +3,7 @@ context("verify_point")
 test_that("Valid entry passes", {
   expect_true(verify_point(full_entry_new))
   expect_true(verify_point(full_entry_state_new))
+  expect_true(verify_point(hosp_template,challenge = "hospitalization"))
 })
 
 test_that("Missing point predictions return warning", {
