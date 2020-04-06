@@ -14,8 +14,8 @@
 #' verify_types(full_entry_new)
 verify_types <- function(entry, challenge = "ilinet") {
   
-  if (!(challenge %in% c("ilinet", "state_ili"))) {
-    stop("challenge must be one of ilinet, hospital, or state_ili")
+  if (!(challenge %in% c("ilinet", "state_ili","hospitalization"))) {
+    stop("challenge must be one of ilinet, hospital, or state_ili or hospitalization")
   }
   
   names(entry) <- tolower(names(entry))
