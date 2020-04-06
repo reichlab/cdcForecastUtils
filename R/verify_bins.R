@@ -30,7 +30,6 @@ verify_bins <- function(entry, challenge = "ilinet") {
   errors_x <- character()
   
   for(i in seq_along(entry_targets)) {
-<<<<<<< HEAD
     entry_bins <- unique(entry$bin[entry$target == entry_targets[i]])
     
     valid_bins <- unique(valid$bin[valid$target == entry_targets[i]])
