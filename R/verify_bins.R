@@ -22,7 +22,7 @@ verify_bins <- function(entry, challenge = "ilinet") {
     valid <- cdcForecastUtils::full_entry_new
   } else if (challenge == "state_ili") {
     valid <- cdcForecastUtils::full_entry_state_new
-  } else{
+  } else if (challenge == "hospitalization"){
     valid <- cdcForecastUtils::hosp_template
   }
   

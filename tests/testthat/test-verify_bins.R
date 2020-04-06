@@ -30,6 +30,6 @@ test_that("Extra bin reports warning.", {
   extra_row$bin <- "extra"
   tmp_entry <- rbind(full_entry_new, extra_row)
   
-  expect_warning(verify_bins(tmp_entry))
+  expect_error(verify_bins(tmp_entry))
 })
 
