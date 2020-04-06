@@ -31,8 +31,11 @@ verify_locations <- function(entry, challenge = "ilinet") {
   }
   
   if (challenge == "hospitalization"){
-    
-    valid_locations <- c(unique(cdcForecastUtils::hospitalization_locations$county_code),unique(cdcForecastUtils::hospitalization_locations$state_code))
+    valid_locations <- c(unique(cdcForecastUtils::hospitalization_locations$county_code),
+                         unique(cdcForecastUtils::hospitalization_locations$state_code),
+                         unique(cdcForecastUtils::hospitalization_locations$state),
+                         unique(cdcForecastUtils::hospitalization_locations$county),
+                         "US")
   }
   
   # Identify missing locations and throw error

@@ -3,6 +3,8 @@ context("verify_locations")
 test_that("Correct entries are successful.",{
   expect_true(verify_locations(full_entry_new))
   expect_true(verify_locations(full_entry_state_new, "state_ili"))
+  expect_true(verify_locations(hosp_template, "hospitalization"))
+    
 })
 
 test_that("Wrong challenge specification reports errors.", {
@@ -12,10 +14,10 @@ test_that("Wrong challenge specification reports errors.", {
 test_that("Extra location reports warning.", {
   tmp_entry <- full_entry_new
   tmp_entry$location[1] = "extra location"
-  expect_warning(verify_locations(tmp_entry))
+  expect_error(verify_locations(tmp_entry))
   tmp_entry_state <- full_entry_state_new
   tmp_entry_state$location[1] = "extra location"
-  expect_warning(verify_locations(tmp_entry_state, "state_ili"))
+  expect_error(verify_locations(tmp_entry_state, "state_ili"))
 })
 
 test_that("Missing regional location reports message.", {
