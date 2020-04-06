@@ -4,7 +4,7 @@
 #' for all targets
 #'
 #' @param entry An entry data.frame
-#' @param challenge one of "ilinet" or "state_ili", indicating which
+#' @param challenge one of "ilinet" or "state_ili" or "hospitalization", indicating which
 #'   challenge the submission is for
 #' @return Invisibly returns \code{TRUE} if successful
 #' @export
@@ -20,8 +20,10 @@ verify_bins <- function(entry, challenge = "ilinet") {
   
   if (challenge == "ilinet") {
     valid <- cdcForecastUtils::full_entry_new
-  } else {
+  } else if (challenge == "state_ili") {
     valid <- cdcForecastUtils::full_entry_state_new
+  } else{
+    valid <- cdcForecastUtils::hosp_template
   }
   
   entry_targets <- unique(entry$target)  
