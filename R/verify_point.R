@@ -1,6 +1,8 @@
 #' Verify validity of point predictions
 #'
 #' @param entry An entry data.frame
+#' @param challenge one of "ilinet" or "state_ili", indicating which
+#'   challenge the submission is for
 #' @import dplyr
 #' @return Invisibly returns \code{TRUE} or a descriptive warning/error 
 #' message
@@ -9,19 +11,26 @@
 #' @seealso \code{\link{verify_entry}}
 #' @examples 
 #' verify_point(full_entry_new)
-verify_point <- function(entry) {
+verify_point <- function(entry,challenge="ilinet") {
   
   names(entry) <- tolower(names(entry))
+  if (challenge == "ilinet" | challenge == "state_ili"){
+    point_targets <-  c("1 wk ahead","2 wk ahead","3 wk ahead","4 wk ahead",
+                        "5 wk ahead","6 wk ahead","Peak height")
+    week_targets <- c("Peak week","First week below baseline")
+  } else{
+    point_targets <-  c(paste0(1:25," wk ahead"),"Peak hospitalizations")
+    week_targets <- c("Peak week")
+  }
   
   point <- entry %>%
     # add target to allow NA for first week below baseline if none is in allowed week range
-    dplyr::filter(type == "point",target %in% c("1 wk ahead","2 wk ahead","3 wk ahead","4 wk ahead",
-                                                "5 wk ahead","6 wk ahead","Peak height")) %>%
+    dplyr::filter(type == "point",target %in% point_targets) %>%
     dplyr::mutate(miss = is.na(value),
            negative = (!is.na(value) & suppressWarnings(as.numeric(value)) < 0))
   # check missing for peak week
   point_char <- entry %>%
-    dplyr::filter(type == "point",target %in% c("Peak week","First week below baseline")) %>%
+    dplyr::filter(type == "point",target %in% week_targets) %>%
     dplyr::mutate(miss = is.na(value),
       weekformat=ifelse(!(is.na(value)), !(grepl("2020-ew[0-9]{2}", value)), FALSE)) %>%
     dplyr::mutate(weekrange=ifelse((!(is.na(value)) &  grepl("2020-ew[0-9]{2}", value)),

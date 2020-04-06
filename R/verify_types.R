@@ -25,6 +25,8 @@ verify_types <- function(entry, challenge = "ilinet") {
     valid_types <- unique(cdcForecastUtils::full_entry_new$type)
   } else if (challenge == "state_ili") {
     valid_types <- unique(cdcForecastUtils::full_entry_state_new$type)
+  } else if (challenge == "hospitalization"){
+    valid_types <- unique(cdcForecastUtils::hosp_template$type)
   } 
   entry_types <- unique(entry$type)
   

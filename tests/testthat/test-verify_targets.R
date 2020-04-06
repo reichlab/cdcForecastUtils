@@ -4,6 +4,8 @@ context("verify_targets")
 test_that("Correct entries are successful.",{
   expect_true(verify_targets(full_entry_new))
   expect_true(verify_targets(full_entry_state_new, challenge = "state_ili"))
+  expect_true(verify_targets(hosp_template, challenge = "hospitalization"))
+  
 })
 
 test_that("Missing targets report message.", {

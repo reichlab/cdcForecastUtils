@@ -31,10 +31,10 @@ verify_locations <- function(entry, challenge = "ilinet") {
   }
   
   if (challenge == "hospitalization"){
-    valid_locations <- c(unique(cdcForecastUtils::hospitalization_locations$county_code),
-                         unique(cdcForecastUtils::hospitalization_locations$state_code),
-                         unique(cdcForecastUtils::hospitalization_locations$state),
-                         unique(cdcForecastUtils::hospitalization_locations$county),
+    state_country_code <- expand.grid(str_pad(unique(cdcForecastUtils::hospitalization_locations$state_code),width =2,pad = "0"),
+                                      str_pad(unique(cdcForecastUtils::hospitalization_locations$county_code),width =3,pad = "0"))
+    valid_locations <- c(paste0(state_country_code$Var1 ,state_country_code$Var2),
+                         str_pad(unique(cdcForecastUtils::hospitalization_locations$state_code),width =2,pad = "0"),
                          "US")
   }
   

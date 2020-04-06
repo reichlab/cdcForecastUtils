@@ -25,7 +25,9 @@ verify_targets <- function(entry, challenge = "ilinet") {
     valid_targets <- unique(cdcForecastUtils::full_entry_new$target)
   } else if (challenge == "state_ili") {
     valid_targets <- unique(cdcForecastUtils::full_entry_state_new$target)
-  } 
+  } else if (challenge == "hospitalization"){
+    valid_targets <- unique(cdcForecastUtils::hosp_template$target)
+  }
   
   entry_targets <- unique(entry$target)
   
