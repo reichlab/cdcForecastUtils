@@ -64,7 +64,7 @@ verify_entry <- function(entry, challenge = "ilinet") {
   cdcForecastUtils::verify_types(entry, challenge)
   cdcForecastUtils::verify_bins(entry, challenge)
   cdcForecastUtils::verify_probabilities(entry)
-  cdcForecastUtils::verify_point(entry)
+  cdcForecastUtils::verify_point(entry, challenge)
   
   return(invisible(TRUE))
 }

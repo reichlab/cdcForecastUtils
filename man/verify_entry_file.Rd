@@ -9,7 +9,7 @@ verify_entry_file(file, challenge = "ilinet")
 \arguments{
 \item{file}{A csv entry file}
 
-\item{challenge}{one of "ilinet" or "state_ili", indicating which
+\item{challenge}{one of "ilinet" or "state_ili" or "hospitalization", indicating which
 challenge the submission is for}
 }
 \value{
