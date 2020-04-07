@@ -1,5 +1,7 @@
 ChangeLog file for cdcForecatUtils
 
+0.1.9.0 - Hospitalization challenge functionality added to verify
+
 0.1.8.5 - add some functions for internal use and fix verify
 
 0.1.8.4 - fix row issues

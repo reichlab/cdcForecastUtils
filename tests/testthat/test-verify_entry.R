@@ -11,6 +11,7 @@ test_that("Valid entry passes", {
   expect_true(verify_entry(check))
   expect_message(verify_entry_file(valid_name))
   expect_true(verify_entry(valid_state_entry, challenge = "state_ili"))
+  expect_true(verify_entry(hosp_template, challenge = "hospitalization"))
 })
 
 test_that("Test challenge names", {
