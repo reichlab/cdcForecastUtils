@@ -30,6 +30,7 @@ verify_bins <- function(entry, challenge = "ilinet") {
   
   errors <- character()
   errors_x <- character()
+  has_error <- FALSE
   
   for(i in seq_along(entry_targets)) {
     entry_bins <- unique(entry$bin[entry$target == entry_targets[i]])
@@ -49,11 +50,20 @@ verify_bins <- function(entry, challenge = "ilinet") {
                                      extra_bins, "\n"))
   }
   
-  if (length(errors) > 0)
-    stop(errors)
+  if (length(errors) > 0) {
+    warning(errors)
+    has_error <- TRUE
+  }
   
-  if (length(errors_x) > 0)
-    stop(errors_x)
+  if (length(errors_x) > 0) {
+    warning(errors_x)
+    has_error <- TRUE
+  }
   
-  return(invisible(TRUE))
+  if (has_error) {
+    return(invisible(FALSE))
+  } else {
+    return(invisible(TRUE))
+  }
+  
 }

@@ -46,7 +46,7 @@ test_that("Return error when probabilities are missing", {
                         invalid_entry$target == rand_target &
                         invalid_entry$type == "bin"] <- NA
   
-  expect_error(verify_probabilities(invalid_entry))
+  expect_warning(verify_probabilities(invalid_entry))
   expect_error(verify_entry(invalid_entry))
   
 })
@@ -61,7 +61,7 @@ test_that("Return error when probabilities are negative", {
                         invalid_entry$target == rand_target &
                         invalid_entry$type == "bin"] <- -0.5
   
-  expect_error(verify_probabilities(invalid_entry))
+  expect_warning(verify_probabilities(invalid_entry))
   expect_error(verify_entry(invalid_entry))
   
 })
@@ -76,7 +76,7 @@ test_that("Return error when probabilities sum to less than 0.9", {
                         invalid_entry$target == rand_target &
                         invalid_entry$type == "bin"] <- 0.01
   
-  expect_error(verify_probabilities(invalid_entry))
+  expect_warning(verify_probabilities(invalid_entry))
   expect_error(verify_entry(invalid_entry))
   
   
@@ -92,7 +92,7 @@ test_that("Return error when probabilities sum to more than 1.1", {
                         invalid_entry$target == rand_target &
                         invalid_entry$type == "bin"] <- 0.1
   
-  expect_error(verify_probabilities(invalid_entry))
+  expect_warning(verify_probabilities(invalid_entry))
   expect_error(verify_entry(invalid_entry))
   
 })
@@ -106,7 +106,7 @@ test_that("Return warning when point forecast is missing", {
                         invalid_entry$target == rand_target &
                         invalid_entry$type == "point"] <- NA
   
-  expect_error(verify_point(invalid_entry))
+  expect_warning(verify_point(invalid_entry))
   expect_error(verify_entry(invalid_entry))
   
 })
@@ -119,7 +119,7 @@ test_that("Return error when point forecast is negative", {
   invalid_entry$value[invalid_entry$location == rand_location &
                         invalid_entry$target == rand_target &
                         invalid_entry$type == "point"] <- -1
-  expect_error(verify_point(invalid_entry))
+  expect_warning(verify_point(invalid_entry))
   expect_error(verify_entry(invalid_entry))
   
 })
