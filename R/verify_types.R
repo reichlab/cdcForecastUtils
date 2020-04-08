@@ -30,12 +30,21 @@ verify_types <- function(entry, challenge = "ilinet") {
   
   missing_types <- setdiff(valid_types, entry_types)
   extra_types   <- setdiff(entry_types, valid_types)
+  has_error <- FALSE
   
-  if (length(missing_types)>0)
-    stop("Missing these types: ", paste(missing_types, collapse=", "))
+  if (length(missing_types)>0) {
+    warning("Missing these types: ", paste(missing_types, collapse=", "))
+    has_error <- TRUE
+  }
   
-  if (length(extra_types)>0 && extra_types != "point")
-    stop("These extra types are not valid: ", paste(extra_types, collapse=", "))
+  if (length(extra_types)>0 && extra_types != "point") {
+    warning("These extra types are not valid: ", paste(extra_types, collapse=", "))
+    has_error <- TRUE
+  }
   
-  return(invisible(TRUE))
+  if (has_error) {
+    return(invisible(FALSE))
+  } else {
+    return(invisible(TRUE))
+  }
 }

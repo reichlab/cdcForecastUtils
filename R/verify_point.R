@@ -27,32 +27,36 @@ verify_point <- function(entry) {
     dplyr::mutate(weekrange=ifelse((!(is.na(value)) &  grepl("2020-ew[0-9]{2}", value)),
                                as.numeric(substr(value,8,10)),NA),
                   check_range=ifelse((!(is.na(weekrange)) ),(weekrange>35 |weekrange<10),FALSE))
+  has_error <- FALSE
   
   # Report warning for missing point predictions
   if (any(point$miss)) {
     tmp <- point %>%
       dplyr::filter(miss)
     
-    stop(paste0("WARNING: Missing point predictions detected in ",
+    warning(paste0("WARNING: Missing point predictions detected in ",
                    paste(tmp$location, tmp$target), ". \n",
                    "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
+    has_error <- TRUE
   }
   if (any(point_char$miss)) {
     tmp <- point_char %>%
       dplyr::filter(miss)
     
-    stop(paste0("ERROR: Missing point predictions detected in ",
+    warning(paste0("ERROR: Missing point predictions detected in ",
                 paste(tmp$location, tmp$target), ". \n",
                 "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
+    has_error <- TRUE
   }
   # Report error for negative point predictions
   if (any(point$negative)) {
     tmp <- point %>%
       dplyr::filter(negative)
     
-    stop(paste0("ERROR: Negative point predictions detected in ",
+    warning(paste0("ERROR: Negative point predictions detected in ",
                 paste(tmp$location, tmp$target), ". \n",
                 "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
+    has_error <- TRUE
   }
 
   # Report error for out of range week
@@ -60,18 +64,25 @@ verify_point <- function(entry) {
     tmp <- point_char %>%
       dplyr::filter(check_range)
     
-    stop(paste0("ERROR: Out-of-range point predictions for week targets detected in ",
+    warning(paste0("ERROR: Out-of-range point predictions for week targets detected in ",
                 paste(tmp$location, tmp$target), ". \n",
                 "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
+    has_error <- TRUE
   }
   # Report week format error
   if (any(point_char$weekformat)) {
     tmp <- point_char %>%
       dplyr::filter(weekformat)
     
-    stop(paste0("ERROR: Empty, incorrect format or season for week target's point predictions detected in ",
+    warning(paste0("ERROR: Empty, incorrect format or season for week target's point predictions detected in ",
                 paste(tmp$location, tmp$target), ". \n",
                 "Please take a look at cdcForecastUtils::generate_point_forecasts().\n"))
+    has_error <- TRUE
   }
-  return(invisible(TRUE))
+  
+  if (has_error) {
+    return(invisible(FALSE))
+  } else {
+    return(invisible(TRUE))
+  }
 }

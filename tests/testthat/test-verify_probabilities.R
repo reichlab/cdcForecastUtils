@@ -19,8 +19,8 @@ test_that("Missing probabilities throw errors", {
                        invalid_full$target == rand_target &
                        invalid_full$type == "bin"] <- NA
   
-  expect_error(verify_probabilities(invalid_min))
-  expect_error(verify_probabilities(invalid_full))
+  expect_warning(verify_probabilities(invalid_min))
+  expect_warning(verify_probabilities(invalid_full))
   
 })
 
@@ -34,7 +34,7 @@ test_that("Negative probabilities throw errors", {
                        invalid_full$type == "bin"] <- -0.1
   
   expect_error(verify_probabilities(invalid_min))
-  expect_error(verify_probabilities(invalid_full))
+  expect_warning(verify_probabilities(invalid_full))
   
 })
 
@@ -48,7 +48,7 @@ test_that("Probabilities summing to < 0.9 throw errors", {
                        invalid_full$type == "bin"] <- 0.01
   
   expect_error(verify_probabilities(invalid_min))
-  expect_error(verify_probabilities(invalid_full))
+  expect_warning(verify_probabilities(invalid_full))
   
 })
 
@@ -62,7 +62,7 @@ test_that("Probabilities summing to > 1.1 throw errors", {
                        invalid_full$type == "bin"] <- 0.1
   
   expect_error(verify_probabilities(invalid_min))
-  expect_error(verify_probabilities(invalid_full))
+  expect_warning(verify_probabilities(invalid_full))
   
 })
 
@@ -76,6 +76,6 @@ test_that("Binary probabilities higher than 1 throw errors", {
                        invalid_full$type == "bin"] <- 1.1
   
   expect_error(verify_probabilities(invalid_min))
-  expect_error(verify_probabilities(invalid_full))
+  expect_warning(verify_probabilities(invalid_full))
   
 })

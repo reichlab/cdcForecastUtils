@@ -14,7 +14,7 @@ test_that("Missing point predictions return warning", {
                        invalid_full$target == rand_target &
                        invalid_full$type == "point"] <- NA
   
-  expect_error(verify_point(invalid_full))
+  expect_warning(verify_point(invalid_full))
 
 })
 
@@ -27,7 +27,7 @@ test_that("Negative point prediction return error", {
                        invalid_full$target == rand_target &
                        invalid_full$type == "point"] <- -1
   
-  expect_error(verify_point(invalid_full))
+  expect_warning(verify_point(invalid_full))
   
 })
 
@@ -42,7 +42,7 @@ test_that("Out of range point prediction for week targets return error", {
                        invalid_full$target == rand_target &
                        invalid_full$type == "point"] <- "2020-EW43"
   
-  expect_error(verify_point(invalid_full))
+  expect_warning(verify_point(invalid_full))
   
 })
 
@@ -57,6 +57,6 @@ test_that("Incorrect point prediction format for week targets return error", {
                        invalid_full$target == rand_target &
                        invalid_full$type == "point"] <- "2019-EW43"
   
-  expect_error(verify_point(invalid_full))
+  expect_warning(verify_point(invalid_full))
   
 })

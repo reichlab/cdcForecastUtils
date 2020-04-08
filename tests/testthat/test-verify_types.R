@@ -10,7 +10,7 @@ test_that("Missing types report errors.", {
   
   for (i in seq_along(valid_types)) {
     tmp_entry <- full_entry_new[full_entry_new$type != valid_types[i],]
-    expect_error(verify_types(tmp_entry))
+    expect_warning(verify_types(tmp_entry))
   }
 })
 
