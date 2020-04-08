@@ -33,11 +33,17 @@ verify_types <- function(entry, challenge = "ilinet") {
   missing_types <- setdiff(valid_types, entry_types)
   extra_types   <- setdiff(entry_types, valid_types)
   
-  if (length(missing_types)>0)
-    stop("Missing these types: ", paste(missing_types, collapse=", "))
-  
-  if (length(extra_types)>0 && extra_types != "point")
-    stop("These extra types are not valid: ", paste(extra_types, collapse=", "))
-  
+  if (challenge == "state_ili" | challenge == "ilinet"){
+    
+    if (length(missing_types)>0)
+      stop("Missing these types: ", paste(missing_types, collapse=", "))
+    
+    if (length(extra_types)>0 && extra_types != "point")
+      stop("These extra types are not valid: ", paste(extra_types, collapse=", "))
+  } else if (challenge == "hospitalization"){
+      if (length(missing_types)==2){
+        warning("Missing both bin and point types.")
+      }
+  }
   return(invisible(TRUE))
 }
