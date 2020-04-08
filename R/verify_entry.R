@@ -59,12 +59,14 @@ verify_entry <- function(entry, challenge = "ilinet") {
   cdcForecastUtils::verify_colnames(entry)
   
   # Verify column contents
-  cdcForecastUtils::verify_locations(entry, challenge)
-  cdcForecastUtils::verify_targets(entry, challenge)
-  cdcForecastUtils::verify_types(entry, challenge)
-  cdcForecastUtils::verify_bins(entry, challenge)
-  cdcForecastUtils::verify_probabilities(entry)
-  cdcForecastUtils::verify_point(entry)
+  verified_locations <- cdcForecastUtils::verify_locations(entry, challenge)
+  verified_targets <- cdcForecastUtils::verify_targets(entry, challenge)
+  verified_types <- cdcForecastUtils::verify_types(entry, challenge)
+  verified_bins <- cdcForecastUtils::verify_bins(entry, challenge)
+  verified_probabilities <- cdcForecastUtils::verify_probabilities(entry)
+  verified_point <- cdcForecastUtils::verify_point(entry)
   
-  return(invisible(TRUE))
+  if (verified_locations && verified_targets && verified_types && verified_bins && verified_probabilities && verified_point)
+    return(invisible(TRUE))
+  stop("Entry did not pass all verification test")
 }

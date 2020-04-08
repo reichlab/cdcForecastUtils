@@ -32,6 +32,7 @@ verify_probabilities <- function(entry) {
       negative = any(!is.na(value) & value < 0))
   
   errors <- character()
+  has_error <- FALSE
   # Report message for missing probabilities
   # fix for intentional missing for targets not forecasted
   if (any(probabilities$miss)) {
@@ -78,8 +79,13 @@ verify_probabilities <- function(entry) {
   }
   #Output probability related errors
   if (length(errors) != 0) {
-    stop(errors)
+    warning(errors)
+    has_error <- TRUE
   }
 
-  return(invisible(TRUE))
+  if (has_error) {
+    return(invisible(FALSE))
+  } else {
+    return(invisible(TRUE))
+  }
 }

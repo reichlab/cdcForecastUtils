@@ -16,7 +16,7 @@ test_that("Missing bins report errors.", {
   
   for (i in seq_along(valid_bins)) {
     tmp_entry <- full_entry_new[full_entry_new$bin != valid_bins[i], ]
-    expect_error(verify_bins(tmp_entry))
+    expect_warning(verify_bins(tmp_entry))
   }
 })
 
