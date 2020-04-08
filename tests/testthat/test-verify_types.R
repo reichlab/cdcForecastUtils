@@ -3,6 +3,7 @@ context("verify_types")
 test_that("Correct entries are successful.",{
   expect_true(verify_types(full_entry_new))
   expect_true(verify_types(full_entry_state_new, challenge = "state_ili"))
+  expect_true(verify_types(hosp_template, challenge = "hospitalization"))
 })
 
 test_that("Missing types report errors.", {
@@ -12,6 +13,10 @@ test_that("Missing types report errors.", {
     tmp_entry <- full_entry_new[full_entry_new$type != valid_types[i],]
     expect_warning(verify_types(tmp_entry))
   }
+  
+  tmp_entry <- NULL
+  expect_error(verify_types(tmp_entry))
+  
 })
 
 test_that("Extra type reports warning.", {

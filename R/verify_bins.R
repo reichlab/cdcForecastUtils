@@ -4,7 +4,7 @@
 #' for all targets
 #'
 #' @param entry An entry data.frame
-#' @param challenge one of "ilinet" or "state_ili", indicating which
+#' @param challenge one of "ilinet" or "state_ili" or "hospitalization", indicating which
 #'   challenge the submission is for
 #' @return Invisibly returns \code{TRUE} if successful
 #' @export
@@ -14,14 +14,16 @@
 #' verify_bins(full_entry_new)
 verify_bins <- function(entry, challenge = "ilinet") {
   
-  if (!(challenge %in% c("ilinet", "state_ili"))) {
-    stop("challenge must be one of ilinet or state_ili")
+  if (!(challenge %in% c("ilinet", "state_ili","hospitalization"))) {
+    stop("challenge must be one of ilinet or state_ili or hospitalization")
   }
   
   if (challenge == "ilinet") {
     valid <- cdcForecastUtils::full_entry_new
-  } else {
+  } else if (challenge == "state_ili") {
     valid <- cdcForecastUtils::full_entry_state_new
+  } else if (challenge == "hospitalization"){
+    valid <- cdcForecastUtils::hosp_template
   }
   
   entry_targets <- unique(entry$target)  
@@ -34,6 +36,7 @@ verify_bins <- function(entry, challenge = "ilinet") {
     entry_bins <- unique(entry$bin[entry$target == entry_targets[i]])
     
     valid_bins <- unique(valid$bin[valid$target == entry_targets[i]])
+
     missing_bins <- setdiff(valid_bins, entry_bins)
     extra_bins <- setdiff(entry_bins, valid_bins)
     

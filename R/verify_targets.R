@@ -14,8 +14,8 @@
 #' verify_targets(full_entry_new)
 verify_targets <- function(entry, challenge = "ilinet") {
   
-  if (!(challenge %in% c("ilinet", "state_ili"))) {
-    stop("challenge must be one of ilinet or state_ili")
+  if (!(challenge %in% c("ilinet", "state_ili","hospitalization"))) {
+    stop("challenge must be one of ilinet or state_ili or hospitalization")
   }
   
   names(entry) <- tolower(names(entry))
@@ -25,7 +25,9 @@ verify_targets <- function(entry, challenge = "ilinet") {
     valid_targets <- unique(cdcForecastUtils::full_entry_new$target)
   } else if (challenge == "state_ili") {
     valid_targets <- unique(cdcForecastUtils::full_entry_state_new$target)
-  } 
+  } else if (challenge == "hospitalization"){
+    valid_targets <- unique(cdcForecastUtils::hosp_template$target)
+  }
   
   entry_targets <- unique(entry$target)
   

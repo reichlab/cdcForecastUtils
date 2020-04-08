@@ -12,8 +12,8 @@
 #' @keywords internal
 verify_locations <- function(entry, challenge = "ilinet") {
   
-  if (!(challenge %in% c("ilinet", "state_ili"))) {
-    stop("challenge must be one of ilinet or state_ili")
+  if (!(challenge %in% c("ilinet", "state_ili", "hospitalization"))) {
+    stop("challenge must be one of ilinet or state_ili or hospitalization")
   }
   
   names(entry) <- tolower(names(entry))
@@ -28,6 +28,14 @@ verify_locations <- function(entry, challenge = "ilinet") {
   if (challenge == "state_ili") {
     # required_locations <- NULL
     valid_locations <- unique(cdcForecastUtils::full_entry_state_new$location)
+  }
+  
+  if (challenge == "hospitalization"){
+    state_country_code <- expand.grid(str_pad(unique(cdcForecastUtils::hospitalization_locations$state_code),width =2,pad = "0"),
+                                      str_pad(unique(cdcForecastUtils::hospitalization_locations$county_code),width =3,pad = "0"))
+    valid_locations <- c(paste0(state_country_code$Var1 ,state_country_code$Var2),
+                         str_pad(unique(cdcForecastUtils::hospitalization_locations$state_code),width =2,pad = "0"),
+                         "US")
   }
   
   # Identify missing locations and throw error

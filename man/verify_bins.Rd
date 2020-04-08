@@ -9,7 +9,7 @@ verify_bins(entry, challenge = "ilinet")
 \arguments{
 \item{entry}{An entry data.frame}
 
-\item{challenge}{one of "ilinet" or "state_ili", indicating which
+\item{challenge}{one of "ilinet" or "state_ili" or "hospitalization", indicating which
 challenge the submission is for}
 }
 \value{

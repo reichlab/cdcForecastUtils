@@ -3,6 +3,8 @@ context("verify_bins")
 test_that("Correct entries are successful.",{
   expect_true(verify_bins(full_entry_new))
   expect_true(verify_bins(full_entry_state_new, challenge = "state_ili"))
+  expect_true(verify_bins(hosp_template, challenge = "hospitalization"))
+  
 })
 
 
@@ -28,6 +30,6 @@ test_that("Extra bin reports warning.", {
   extra_row$bin <- "extra"
   tmp_entry <- rbind(full_entry_new, extra_row)
   
-  expect_warning(verify_bins(tmp_entry))
+  expect_error(verify_bins(tmp_entry))
 })
 

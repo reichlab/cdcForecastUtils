@@ -4,10 +4,13 @@
 \alias{verify_point}
 \title{Verify validity of point predictions}
 \usage{
-verify_point(entry)
+verify_point(entry, challenge = "ilinet")
 }
 \arguments{
 \item{entry}{An entry data.frame}
+
+\item{challenge}{one of "ilinet" or "state_ili", indicating which
+challenge the submission is for}
 }
 \value{
 Invisibly returns \code{TRUE} or a descriptive warning/error 

@@ -9,7 +9,7 @@ verify_entry(entry, challenge = "ilinet")
 \arguments{
 \item{entry}{A data.frame}
 
-\item{challenge}{one of "ilinet" or "state_ili", indicating which
+\item{challenge}{one of "ilinet" or "state_ili" or "hospitalization", indicating which
 challenge the submission is for}
 
 \item{check_week}{A logical value (default `TRUE`) indicating whether to check
