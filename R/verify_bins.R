@@ -40,6 +40,11 @@ verify_bins <- function(entry, challenge = "ilinet") {
     missing_bins <- setdiff(valid_bins, entry_bins)
     extra_bins <- setdiff(entry_bins, valid_bins)
     
+    if (challenge == "hospitalization"){
+      missing_bins <- missing_bins[!is.na(missing_bins)]
+    }
+    
+    
     if (length(missing_bins) > 0)
       errors <- c(errors, paste0("Check bin range or format. If this is NA, there is a point prediction - missing valid bins for ", 
                                  entry_targets[i], ": ", missing_bins, "\n"))
