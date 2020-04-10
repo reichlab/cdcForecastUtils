@@ -8,8 +8,8 @@
 #'
 verify_filename <- function(filename, challenge = "ilinet"){
     
-    if (!(challenge %in% c("ilinet", "state_ili"))) {
-        stop("verifying filename is only supported for ilinet or state_ili projects")
+    if (!(challenge %in% c("ilinet", "state_ili", "hospitalization"))) {
+        stop("verifying filename is only supported for ilinet or state_ili or hosp projects")
     }
     
     message("checking that filename matches 'YYYY-ewZZ-teamabbr-modelabbr.csv' format.")
