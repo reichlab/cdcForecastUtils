@@ -57,7 +57,7 @@ verify_locations <- function(entry, challenge = "ilinet") {
             paste(extra_locations,collapse=", "))
     has_error <- TRUE
   }
-  if (length(possible_locations)>0)
+  if (length(possible_locations)>0 & challenge != "hospitalization")
     # message("Consider forecasting for these locations: ", paste(possible_locations))
     message("Please check if this is intended - these locations have no forecast: ", 
             paste(possible_locations, collapse = ", "))
