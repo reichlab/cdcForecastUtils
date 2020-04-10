@@ -8,7 +8,7 @@
 #' @import dplyr
 #' @export
 write_sanitized_file <- function(file, challenge = "ilinet") {
-  entry <- cdcForecastUtils::read_entry(file)
+  entry <- cdcForecastUtils::read_entry(file,challenge = challenge)
   model_name <- basename(file)
   if(cdcForecastUtils::verify_entry_file(file, challenge)){
     write.csv(entry,file,row.names=FALSE)
