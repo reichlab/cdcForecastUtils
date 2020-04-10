@@ -24,7 +24,7 @@ verify_entry_file <- function(file, challenge = "ilinet") {
   cdcForecastUtils::verify_filename(filename, challenge)
   
   ## read and verify entry contents
-  entry <- cdcForecastUtils::read_entry(file)
+  entry <- cdcForecastUtils::read_entry(file,challenge=challenge)
   if(cdcForecastUtils::verify_entry(entry, challenge)){
     message(paste0(filename," passed verification tests"))
     return(invisible(TRUE))
