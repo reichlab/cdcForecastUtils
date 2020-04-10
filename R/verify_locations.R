@@ -6,7 +6,7 @@
 #'
 #' @param entry An entry data.frame
 #' @return Invisibly returns \code{TRUE} if successful
-#' @param challenge one of "ilinet" or "state_ili", indicating which
+#' @param challenge one of "ilinet" or "state_ili" or "hospitalization", indicating which
 #'   challenge the submission is for
 #' @export
 #' @keywords internal

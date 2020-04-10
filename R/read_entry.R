@@ -3,10 +3,12 @@
 #' This function reads in the csv file and arranges it for consistency.
 #'
 #' @param file A csv file path
+#' @param challenge one of "ilinet" or "state_ili" or "hospitalization", indicating which
+#'   challenge the submission is for
 #' @return An arranged data.frame
 #' @import dplyr
 #' @export
-read_entry = function(file) {
+read_entry = function(file, challenge="ilinet") {
   message("The file has been re-formatted.")
   entry <- read.csv(file, 
                     colClasses = "character",
@@ -17,7 +19,7 @@ read_entry = function(file) {
   # if (length(forecast_week > 0))
   #   entry <- dplyr::mutate(entry, forecast_week  = forecast_week)
   # 
-  entry1 <- cdcForecastUtils::sanitize_entry(entry)
+  entry1 <- cdcForecastUtils::sanitize_entry(entry,challenge=challenge)
   entry2 <- cdcForecastUtils::arrange_entry(entry1)
   return(entry2)
 }
