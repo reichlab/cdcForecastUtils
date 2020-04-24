@@ -35,13 +35,18 @@ verify_bins <- function(entry, challenge = "ilinet") {
   for(i in seq_along(entry_targets)) {
     entry_bins <- unique(entry$bin[entry$target == entry_targets[i]])
     
+    if (challenge == "hopsitalization" & grepl("wk ahead",entry_targets[i] )){
+      entry_bins <- round(as.numeric(entry_bins))
+      
+    }
+    
     valid_bins <- as.character(unique(valid$bin[valid$target == entry_targets[i]]))
 
     missing_bins <- setdiff(valid_bins, entry_bins)
     extra_bins <- setdiff(entry_bins, valid_bins)
     
     if (challenge == "hospitalization"){
-      missing_bins <- missing_bins[!is.na(missing_bins)]
+      missing_bins <- c()# missing_bins[!is.na(missing_bins)]
     }
     if (challenge == "hospitalization" & all(is.na(entry_bins))){
       missing_bins <-c() 
